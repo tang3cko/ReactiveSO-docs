@@ -23,6 +23,13 @@ search_enabled: true
 color_scheme: light
 heading_anchors: true
 
+# Markdown and syntax highlighting
+markdown: kramdown
+kramdown:
+  input: GFM
+  syntax_highlighter: rouge
+highlighter: rouge
+
 # Mermaid diagrams
 mermaid:
   version: "11"
