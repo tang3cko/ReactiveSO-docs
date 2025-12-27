@@ -419,6 +419,48 @@ public class WeaponEventChannelSO : EventChannelSO<Weapon>
 }
 ```
 
+### シリアライズ要件
+
+カスタム型は完全にシリアライズ可能である必要があります。Unityは特定の型をシリアライズしません。
+
+**サポートされる型**
+
+- プリミティブ（`int`, `float`, `bool`, `string`）
+- Unity型（`Vector3`, `Color`, `Quaternion`）
+- シリアライズ可能な型の`List<T>`
+- シリアライズ可能な型の配列
+- 他の`[Serializable]`構造体/クラス
+
+**サポートされない型**
+
+- `Dictionary<K,V>`
+- 多次元配列（`int[,]`）
+- `HashSet<T>`, `Queue<T>`, `Stack<T>`
+- インターフェース
+- デリゲート
+
+**例**
+
+```csharp
+// 安全：全フィールドがシリアライズ可能
+[System.Serializable]
+public struct WeaponData
+{
+    public string name;
+    public int damage;
+    public List<string> tags;
+}
+
+// 危険：Dictionaryはシリアライズされない
+[System.Serializable]
+public struct InventoryData
+{
+    public Dictionary<string, int> items;  // リロード後は空になる！
+}
+```
+
+カスタム型にシリアライズ不可なフィールドが含まれている場合、UnityがScriptableObjectをアンロードして再ロードしたとき（例：シーン遷移時）にそれらのフィールドは失われます。詳細は[トラブルシューティング]({{ '/ja/troubleshooting' | relative_url }})を参照。
+
 ---
 
 ## 参照

@@ -166,6 +166,65 @@ Manual Trigger only supports the 12 built-in event types. Custom types display a
 
 Subscribers List only shows MonoBehaviour subscribers. Other subscribers (ScriptableObjects, static classes) appear in the #L count but not in the list.
 
+### Custom types with non-serializable fields
+
+When using custom types with Variables or Event Channels, only serializable fields persist across scene transitions or domain reloads.
+
+**Unsupported types in custom structs/classes**
+
+| Type | Status |
+|------|--------|
+| `Dictionary<K,V>` | Not serialized |
+| Multidimensional arrays (`int[,]`) | Not serialized |
+| Delegates / Events | Not serialized |
+| Interfaces | Not serialized |
+| `HashSet<T>`, `Queue<T>`, `Stack<T>` | Not serialized |
+
+**Example of problematic custom type**
+
+```csharp
+[System.Serializable]
+public struct GameProgress
+{
+    public int level;                              // OK
+    public Dictionary<string, bool> achievements;  // NOT serialized!
+}
+
+// VariableSO<GameProgress> will lose achievements data
+```
+
+**Solution**: Use serializable alternatives.
+
+```csharp
+[System.Serializable]
+public struct GameProgress
+{
+    public int level;
+    public List<string> achievementKeys;    // OK
+    public List<bool> achievementValues;    // OK
+}
+```
+
+### ScriptableObject data loss on scene transition
+
+Runtime data in ScriptableObjects may be lost if the SO is unloaded from memory. This can happen in the following cases.
+
+- **Editor**: SO not selected in Inspector during scene transition
+- **Build**: SO not referenced by any loaded scene
+
+**Affected components**
+
+- ReactiveEntitySetSO runtime data (entities)
+- RuntimeSetSO items
+- Custom non-serialized fields
+
+**Not affected**
+
+- VariableSO values (serialized by default)
+- Event channel subscriptions are expected to re-subscribe in `OnEnable`
+
+**Workaround**: Ensure critical SOs are referenced by a persistent object (e.g., a `DontDestroyOnLoad` manager).
+
 ---
 
 ## FAQ

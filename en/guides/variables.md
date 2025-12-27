@@ -419,6 +419,48 @@ public class WeaponEventChannelSO : EventChannelSO<Weapon>
 }
 ```
 
+### Serialization requirements
+
+Your custom type must be fully serializable. Unity does not serialize certain types.
+
+**Supported**
+
+- Primitives (`int`, `float`, `bool`, `string`)
+- Unity types (`Vector3`, `Color`, `Quaternion`)
+- `List<T>` of serializable types
+- Arrays of serializable types
+- Other `[Serializable]` structs/classes
+
+**Not supported**
+
+- `Dictionary<K,V>`
+- Multidimensional arrays (`int[,]`)
+- `HashSet<T>`, `Queue<T>`, `Stack<T>`
+- Interfaces
+- Delegates
+
+**Example**
+
+```csharp
+// SAFE: All fields are serializable
+[System.Serializable]
+public struct WeaponData
+{
+    public string name;
+    public int damage;
+    public List<string> tags;
+}
+
+// UNSAFE: Dictionary is not serialized
+[System.Serializable]
+public struct InventoryData
+{
+    public Dictionary<string, int> items;  // Will be empty after reload!
+}
+```
+
+If your custom type contains non-serializable fields, those fields will be lost when Unity unloads and reloads the ScriptableObject (e.g., during scene transitions). See [Troubleshooting]({{ '/en/troubleshooting' | relative_url }}) for details.
+
 ---
 
 ## References

@@ -166,6 +166,65 @@ Manual Triggerは12種類の組み込みイベント型のみをサポートし�
 
 Subscribers ListにはMonoBehaviourの購読者のみが表示されます。その他の購読者（ScriptableObject、静的クラス）は#Lカウントには含まれますが、リストには表示されません。
 
+### カスタム型のシリアライズ不可フィールド
+
+VariablesやEvent Channelsでカスタム型を使用する場合、シリアライズ可能なフィールドのみがシーン遷移やドメインリロード後に保持されます。
+
+**カスタム構造体/クラスでサポートされない型**
+
+| 型 | ステータス |
+|----|----------|
+| `Dictionary<K,V>` | シリアライズされない |
+| 多次元配列（`int[,]`） | シリアライズされない |
+| デリゲート / イベント | シリアライズされない |
+| インターフェース | シリアライズされない |
+| `HashSet<T>`, `Queue<T>`, `Stack<T>` | シリアライズされない |
+
+**問題のあるカスタム型の例**
+
+```csharp
+[System.Serializable]
+public struct GameProgress
+{
+    public int level;                              // OK
+    public Dictionary<string, bool> achievements;  // シリアライズされない！
+}
+
+// VariableSO<GameProgress>はachievementsデータを失う
+```
+
+**解決策**: シリアライズ可能な代替手段を使用
+
+```csharp
+[System.Serializable]
+public struct GameProgress
+{
+    public int level;
+    public List<string> achievementKeys;    // OK
+    public List<bool> achievementValues;    // OK
+}
+```
+
+### シーン遷移時のScriptableObjectデータ消失
+
+ScriptableObjectがメモリからアンロードされると、ランタイムデータが失われる可能性があります。以下の場合に発生します。
+
+- **エディタ**: シーン遷移時にSOがInspectorで選択されていない
+- **ビルド**: SOがどのロード中のシーンからも参照されていない
+
+**影響を受けるコンポーネント**
+
+- ReactiveEntitySetSOのランタイムデータ（エンティティ）
+- RuntimeSetSOのアイテム
+- カスタムの非シリアライズフィールド
+
+**影響を受けないもの**
+
+- VariableSOの値（デフォルトでシリアライズされる）
+- Event Channelの購読（`OnEnable`で再購読するのが前提）
+
+**回避策**: 重要なSOが永続的なオブジェクト（例：`DontDestroyOnLoad`マネージャー）から参照されていることを確認。
+
 ---
 
 ## FAQ
