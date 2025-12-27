@@ -1,6 +1,6 @@
 ---
 layout: default
-title: イベントチャンネル（Event Channels）
+title: Event Channels
 parent: ガイド
 nav_order: 1
 ---

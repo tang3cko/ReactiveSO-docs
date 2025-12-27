@@ -28,10 +28,11 @@ Navigate to **Window > Reactive SO > Runtime Set Monitor**.
 
 | Column | Description |
 |--------|-------------|
-| Name | Name of the runtime set asset |
+| Runtime Set | Name of the runtime set asset |
 | Type | Element type (GameObject, Transform, etc.) |
 | Count | Number of items currently in the set |
-| Path | Asset path in the Project |
+| Status | Active (green) when count > 0, Empty (gray) when count = 0 |
+| -> | Button to ping and select asset in Project window |
 
 ---
 
@@ -47,11 +48,22 @@ Type in the search box to filter sets by name. Useful when you have many runtime
 
 ### Ping asset
 
-Click any runtime set row to ping (highlight) the asset in the Project window. From there, select the asset to see its contents in the Inspector.
+Click the -> button or double-click any row to ping the asset in the Project window. The asset is also selected, so you can immediately view its contents in the Inspector.
 
 ### Real-time count
 
-The Count column updates automatically during Play Mode as objects register and unregister from sets.
+The Count and Status columns refresh automatically every 200ms during Play Mode. The [LIVE] indicator appears in the footer when auto-refresh is active.
+
+### Status indicator
+
+The Status column provides quick visual feedback about set state.
+
+- **Active** (green text) - Contains one or more items
+- **Empty** (gray text) - Contains no items
+
+### Refresh button
+
+Click the Refresh button in the toolbar to manually reload all runtime sets from the project. Use this after creating new runtime set assets to update the list without reopening the window.
 
 ---
 

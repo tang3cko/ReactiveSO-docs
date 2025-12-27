@@ -1,6 +1,6 @@
 ---
 layout: default
-title: ランタイムセットタイプ
+title: Runtime Set Types
 parent: リファレンス
 nav_order: 3
 ---
@@ -48,6 +48,13 @@ nav_order: 3
 |-------|------|-------------|
 | onItemsChanged | `VoidEventChannelSO` | アイテム追加/削除時に発火 |
 | onCountChanged | `IntEventChannelSO` | 新しいカウントで発火 |
+
+### エディターイベント
+
+| イベント | 説明 |
+|-------|-------------|
+| ItemsChanged | エディター更新用のActionコールバック |
+| OnAnyOperationPerformed | モニタリング用の静的イベント |
 
 ---
 
@@ -220,6 +227,18 @@ enemies.Add(enemy);  // 無視（カウント: 1）
 
 ---
 
+## null処理
+
+ランタイムセットはnullアイテムを受け入れません。`Add(null)`を呼び出しても無視されます。
+
+```csharp
+enemies.Add(null);  // 無視、エラーなし
+```
+
+nullになったアイテム（破棄されたオブジェクト）は、明示的に削除またはクリーンアップされるまでセット内に残ります。
+
+---
+
 ## カスタムタイプの作成
 
 `RuntimeSetSO<T>`を継承してカスタムランタイムセットタイプを作成できます。
@@ -244,6 +263,12 @@ public class EnemyRuntimeSetSO : RuntimeSetSO<Enemy>
     }
 }
 ```
+
+### カスタムタイプの注意事項
+
+- 適切なnullチェックのためにUnityEngine.Objectから派生する参照型を使用
+- タイプ固有のユーティリティメソッドの追加を検討
+- カスタムタイプはRuntime Set Monitorで動作します
 
 ---
 
@@ -275,6 +300,18 @@ activeEnemies?.Add(gameObject);
 
 // ❌ Bad: 割り当てられていない場合NullReferenceException
 activeEnemies.Add(gameObject);
+```
+
+### 反復処理中のnullチェック
+
+オブジェクトが破棄される可能性があるため、反復処理時は常にnullをチェックします。
+
+```csharp
+foreach (var item in runtimeSet.Items)
+{
+    if (item == null) continue;
+    // itemを安全に使用
+}
 ```
 
 ---

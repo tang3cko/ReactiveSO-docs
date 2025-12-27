@@ -44,7 +44,7 @@ flowchart LR
     EC -->|OnEventRaised| S3
 ```
 
-This decoupling offers several benefits:
+This decoupling offers several benefits.
 
 - Systems can be developed and tested independently
 - Event flow is visible in the Unity Inspector
@@ -55,13 +55,13 @@ This decoupling offers several benefits:
 
 ## When to use event channels
 
-Use Event Channels for:
+Use Event Channels for the following scenarios.
 
 - **Game-wide notifications** - Player died, level completed, game paused
 - **Cross-system communication** - UI responding to gameplay events
 - **Fire-and-forget messages** - Events where you don't need a return value
 
-Do not use Event Channels for:
+Do not use Event Channels for the following scenarios.
 
 - **Per-instance state** - Individual enemy health, specific object properties
 - **Request-response patterns** - When you need a return value immediately
@@ -85,7 +85,7 @@ Name it descriptively, such as `OnPlayerDeath` or `OnLevelCompleted`.
 
 ### Step 2: Create a publisher
 
-The publisher raises the event when something happens:
+The publisher raises the event when something happens.
 
 ```csharp
 using Tang3cko.ReactiveSO;
@@ -105,7 +105,7 @@ public class Player : MonoBehaviour
 
 ### Step 3: Create a subscriber
 
-The subscriber listens for the event and responds:
+The subscriber listens for the event and responds.
 
 ```csharp
 using Tang3cko.ReactiveSO;
@@ -145,7 +145,7 @@ Both components now communicate through the asset without referencing each other
 
 ## Event types
 
-Reactive SO provides 12 built-in event types:
+Reactive SO provides 12 built-in event types.
 
 | Type | Parameter | Example Use Case |
 |------|-----------|------------------|
@@ -168,7 +168,7 @@ For detailed information on each type, see the [Event Types Reference]({{ '/en/r
 
 ## Passing data with events
 
-For events with parameters, pass the data when raising:
+For events with parameters, pass the data when raising.
 
 ```csharp
 // Publisher
@@ -205,7 +205,7 @@ private void UpdateScoreUI(int newScore)
 
 ## Multiple subscribers
 
-One event channel can have multiple subscribers. All subscribers receive the event:
+One event channel can have multiple subscribers. All subscribers receive the event.
 
 ```csharp
 // All of these respond to the same OnPlayerDeath event:
@@ -223,7 +223,7 @@ Subscribers execute in the order they subscribed. Do not rely on execution order
 
 ### Always unsubscribe
 
-Failing to unsubscribe causes memory leaks and errors:
+Failing to unsubscribe causes memory leaks and errors.
 
 ```csharp
 // ✅ Good: Balanced subscribe/unsubscribe
@@ -249,7 +249,7 @@ private void Start()
 
 ### Use null-conditional operator
 
-Prevent errors when the event channel is not assigned:
+Prevent errors when the event channel is not assigned.
 
 ```csharp
 // ✅ Good: Safe if not assigned
@@ -261,7 +261,7 @@ onPlayerDeath.RaiseEvent();
 
 ### Name events clearly
 
-Use descriptive names that indicate what happened:
+Use descriptive names that indicate what happened.
 
 ```csharp
 // ✅ Good: Clear what happened
@@ -277,7 +277,7 @@ UpdateScore
 
 ### Organize event assets
 
-Create a folder structure for your event channels:
+Create a folder structure for your event channels.
 
 ```
 Assets/
@@ -297,7 +297,7 @@ Assets/
 
 ## Debugging
 
-Reactive SO includes debugging tools to help you understand event flow:
+Reactive SO includes debugging tools to help you understand event flow.
 
 - **Event Monitor Window** - See events in real-time during Play Mode
 - **Subscribers List** - View all current subscribers in the Inspector
@@ -335,4 +335,4 @@ For detailed debugging instructions, see the [Debugging Overview]({{ '/en/debugg
 - [Event Types Reference]({{ '/en/reference/event-types' | relative_url }})
 - [Variables Guide](variables) - For shared state that persists
 - [Debugging Overview]({{ '/en/debugging/' | relative_url }})
-- [Architecture Guide]({{ '/en/guides/architecture' | relative_url }}) - Choosing the right pattern
+- [Architecture Patterns]({{ '/en/design-philosophy/architecture-patterns' | relative_url }}) - Choosing the right pattern

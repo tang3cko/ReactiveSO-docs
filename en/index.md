@@ -73,7 +73,7 @@ Centralized, scene-independent entity state management.
 
 ```csharp
 // Scene-independent state with O(1) access
-entitySet.AddOrUpdate(entityId, new EntityData { ... });
+entitySet.Register(entityId, new EntityData { ... });
 ```
 
 [Learn more about Reactive Entity Sets]({{ '/en/guides/reactive-entity-sets' | relative_url }})

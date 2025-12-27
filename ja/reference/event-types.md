@@ -1,6 +1,6 @@
 ---
 layout: default
-title: イベントタイプ
+title: Event Types
 parent: リファレンス
 nav_order: 1
 ---

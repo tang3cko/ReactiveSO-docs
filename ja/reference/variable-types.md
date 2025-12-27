@@ -1,6 +1,6 @@
 ---
 layout: default
-title: 変数タイプ
+title: Variable Types
 parent: リファレンス
 nav_order: 2
 ---
@@ -120,6 +120,38 @@ int score = _PlayerScore;
 
 ---
 
+## Long
+
+64ビット整数変数。大きな数値とタイムスタンプ用。
+
+### 作成
+
+```text
+Create > Reactive SO > Variables > Long Variable
+```
+
+### 使用方法
+
+```csharp
+[SerializeField] private LongVariableSO lastSaveTime;
+
+// 書き込み
+lastSaveTime.Value = DateTimeOffset.UtcNow.ToUnixTimeMilliseconds();
+
+// 読み取り
+long timestamp = lastSaveTime.Value;
+```
+
+### 一般的なユースケース
+
+- Unixタイムスタンプ
+- 大きなスコア値（20億以上）
+- ユニーク識別子
+- 長時間セッションでのフレームカウンター
+- データベースキー
+
+---
+
 ## Float
 
 小数値とパーセンテージのための変数。
@@ -158,6 +190,37 @@ float healthFactor = saturate(_PlayerHealthPercent);
 - タイマーカウントダウン
 - スピード倍率
 - スポーン率
+
+---
+
+## Double
+
+高精度計算のための倍精度変数。
+
+### 作成
+
+```text
+Create > Reactive SO > Variables > Double Variable
+```
+
+### 使用方法
+
+```csharp
+[SerializeField] private DoubleVariableSO preciseDistance;
+
+// 書き込み
+preciseDistance.Value = Vector3.Distance(a, b);
+
+// 読み取り
+double distance = preciseDistance.Value;
+```
+
+### 一般的なユースケース
+
+- 科学計算
+- 金融値（高精度）
+- 大規模座標システム
+- 統計計算
 
 ---
 
@@ -202,6 +265,78 @@ if (paused) { /* ポーズエフェクトを適用 */ }
 
 ---
 
+## String
+
+名前、メッセージ、識別子のためのテキスト変数。
+
+### 作成
+
+```text
+Create > Reactive SO > Variables > String Variable
+```
+
+### 使用方法
+
+```csharp
+[SerializeField] private StringVariableSO playerName;
+
+// 書き込み
+playerName.Value = "Hero";
+
+// 読み取り
+nameLabel.text = playerName.Value;
+```
+
+### 一般的なユースケース
+
+- プレイヤー名
+- 現在のレベル名
+- ステータスメッセージ
+- ローカライズキー
+- セーブスロット名
+
+---
+
+## Vector2
+
+2Dベクトル変数。位置と入力用。
+
+### 作成
+
+```text
+Create > Reactive SO > Variables > Vector2 Variable
+```
+
+### 使用方法
+
+```csharp
+[SerializeField] private Vector2VariableSO inputAxis;
+
+// 書き込み
+inputAxis.Value = new Vector2(Input.GetAxis("Horizontal"), Input.GetAxis("Vertical"));
+
+// 読み取り
+Vector2 input = inputAxis.Value;
+```
+
+### GPU Sync
+
+```hlsl
+// シェーダー内
+float4 input = _InputAxis;  // xyがVector2値を含む
+float2 axis = input.xy;
+```
+
+### 一般的なユースケース
+
+- 入力軸値
+- 2D位置
+- スクリーン位置
+- ミニマップ座標
+- ジョイスティック値
+
+---
+
 ## Vector3
 
 3D位置と方向のための変数。
@@ -240,6 +375,43 @@ float distance = length(worldPos - playerPos);
 - スポーンポイント
 - 風の方向
 - ライトの方向
+
+---
+
+## Quaternion
+
+3D方向のための回転変数。
+
+### 作成
+
+```text
+Create > Reactive SO > Variables > Quaternion Variable
+```
+
+### 使用方法
+
+```csharp
+[SerializeField] private QuaternionVariableSO cameraRotation;
+
+// 書き込み
+cameraRotation.Value = Camera.main.transform.rotation;
+
+// 読み取り
+Quaternion rot = cameraRotation.Value;
+```
+
+### GPU Sync
+
+```hlsl
+// シェーダー内
+float4 rot = _CameraRotation;  // xyzwがクォータニオンコンポーネントを含む
+```
+
+### 一般的なユースケース
+
+- カメラの方向
+- オブジェクトの回転
+- プロシージャル回転
 
 ---
 

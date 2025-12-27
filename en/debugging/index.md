@@ -17,7 +17,7 @@ This section explains how to debug event flow and diagnose issues in Reactive SO
 
 ## Available tools
 
-Reactive SO provides the following debugging tools:
+Reactive SO provides the following debugging tools.
 
 | Tool | Purpose |
 |------|---------|
@@ -187,7 +187,7 @@ Click to jump to each location and fix.
 
 ## Debug settings
 
-Each event channel has debug options in the Inspector:
+Each event channel has debug options in the Inspector.
 
 ### Show In Event Log
 

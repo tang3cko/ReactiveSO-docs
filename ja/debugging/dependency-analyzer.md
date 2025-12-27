@@ -1,6 +1,6 @@
 ---
 layout: default
-title: 依存関係分析（Dependency Analyzer）
+title: Dependency Analyzer
 parent: デバッグ
 nav_order: 3
 ---

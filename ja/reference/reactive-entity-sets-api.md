@@ -1,6 +1,6 @@
 ---
 layout: default
-title: リアクティブエンティティセット API
+title: Reactive Entity Sets API
 parent: リファレンス
 nav_order: 4
 ---
@@ -15,7 +15,7 @@ nav_order: 4
 
 ## 概要
 
-Reactive Entity Setsは2つのAPIを提供します。
+Reactive Entity Setsは3つのAPIスタイルを提供します。
 
 | APIスタイル | クラス | ユースケース |
 |-----------|-------|----------|
@@ -126,6 +126,18 @@ if (entitySet.TryGetData(123, out var state))
 }
 ```
 
+### SetData
+
+```csharp
+public void SetData(int id, TData data)
+```
+
+状態データを設定します。値が異なる場合にOnDataChangedを発火します。
+
+```csharp
+entitySet.SetData(123, new EnemyState { Health = 50 });
+```
+
 ### UpdateData
 
 ```csharp
@@ -155,6 +167,29 @@ state.Health -= damage;
 entitySet.NotifyDataChanged(123);  // 手動で呼び出す必要あり
 ```
 
+### Contains
+
+```csharp
+public bool Contains(int id)
+```
+
+IDが登録されているかを確認します。
+
+```csharp
+if (entitySet.Contains(123))
+{
+    // エンティティが存在
+}
+```
+
+### NotifyDataChanged
+
+```csharp
+public void NotifyDataChanged(int id)
+```
+
+手動でデータ変更イベントをトリガーします。GetDataRefでの変更後に使用します。
+
 ---
 
 ## MonoBehaviourベースAPI
@@ -171,6 +206,34 @@ MonoBehaviourのインスタンスIDを使用して登録します。
 
 ```csharp
 entitySet.Register(this, new EnemyState { Health = 100 });
+```
+
+### Unregister
+
+```csharp
+public void Unregister(MonoBehaviour owner)
+```
+
+MonoBehaviour参照を使用して登録解除します。
+
+```csharp
+entitySet.Unregister(this);
+```
+
+### インデクサー
+
+```csharp
+public TData this[MonoBehaviour owner] { get; set; }
+```
+
+オーナー参照で状態を取得または設定します。
+
+```csharp
+// 取得
+EnemyState state = entitySet[this];
+
+// 設定
+entitySet[this] = new EnemyState { Health = 50 };
 ```
 
 ### その他のメソッド
@@ -206,6 +269,18 @@ entitySet.ForEach((id, state) => {
 });
 ```
 
+### Dataプロパティ
+
+パフォーマンスクリティカルなコードでは、基となる配列に直接アクセスできます。
+
+```csharp
+var data = entitySet.Data;
+for (int i = 0; i < data.Count; i++)
+{
+    ProcessState(data.Array[data.Offset + i]);
+}
+```
+
 ---
 
 ## エンティティごとの購読
@@ -239,6 +314,31 @@ public void UnsubscribeFromEntity(int id, Action<TData, TData> callback)
 
 ---
 
+## ユーティリティメソッド
+
+### Clear
+
+```csharp
+public void Clear()
+```
+
+セットからすべてのエンティティを削除します。
+
+### CleanupDestroyed
+
+```csharp
+public void CleanupDestroyed()
+```
+
+MonoBehaviourオーナーが破棄されたエンティティを削除します。MonoBehaviourオーナーで登録されたエンティティにのみ影響します。
+
+```csharp
+// Unregisterが確実に呼ばれない場合に定期的に呼び出す
+entitySet.CleanupDestroyed();
+```
+
+---
+
 ## ReactiveEntity\<TData\>
 
 ReactiveEntitySetSOに自動登録するエンティティの基底クラス。
@@ -263,6 +363,14 @@ ReactiveEntitySetSOに自動登録するエンティティの基底クラス。
 | イベント | タイプ | 説明 |
 |-------|------|-------------|
 | OnStateChanged | `Action<TData, TData>` | このエンティティの状態変更時に発火 |
+
+### 仮想メソッド
+
+| メソッド | 説明 |
+|--------|-------------|
+| OnEnable | セットに登録し、変更を購読 |
+| OnDisable | 購読解除して登録解除 |
+| OnBeforeUnregister | 登録解除前に呼ばれる（クリーンアップ用にオーバーライド） |
 
 ---
 
@@ -326,6 +434,18 @@ public class Enemy : ReactiveEntity<EnemyState>
         IsAggressive = false
     };
 
+    protected override void OnEnable()
+    {
+        base.OnEnable();
+        OnStateChanged += HandleStateChanged;
+    }
+
+    protected override void OnDisable()
+    {
+        OnStateChanged -= HandleStateChanged;
+        base.OnDisable();
+    }
+
     public void TakeDamage(int damage)
     {
         var state = State;
@@ -334,8 +454,26 @@ public class Enemy : ReactiveEntity<EnemyState>
 
         if (state.Health <= 0)
         {
-            Destroy(gameObject);
+            Die();
         }
+    }
+
+    private void HandleStateChanged(EnemyState oldState, EnemyState newState)
+    {
+        if (oldState.Health != newState.Health)
+        {
+            UpdateHealthBar(newState.HealthPercent);
+        }
+    }
+
+    protected override void OnBeforeUnregister()
+    {
+        Debug.Log($"Enemy dying with {State.Health} HP");
+    }
+
+    private void Die()
+    {
+        Destroy(gameObject);
     }
 }
 ```

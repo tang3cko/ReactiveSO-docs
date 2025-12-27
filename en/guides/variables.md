@@ -106,7 +106,7 @@ Name it descriptively, such as `PlayerHealth` or `CurrentScore`.
 
 ### Step 2: Configure the variable
 
-Select the asset and configure in the Inspector:
+Select the asset and configure in the Inspector.
 
 - **Initial Value** - The starting value (e.g., 100 for health)
 - **Description** - What this variable represents
@@ -194,7 +194,7 @@ public class HealthDisplay : MonoBehaviour
 
 ## Change detection
 
-Variables use `EqualityComparer<T>` to detect changes. Events only fire when the value actually changes:
+Variables use `EqualityComparer<T>` to detect changes. Events only fire when the value actually changes.
 
 ```csharp
 playerHealth.Value = 100;  // Event fires (initial set)
@@ -210,7 +210,7 @@ This prevents unnecessary updates when setting the same value.
 
 ### Initial value
 
-Set the **Initial Value** in the Inspector. This is the value used when:
+Set the **Initial Value** in the Inspector. This is the value used in the following cases.
 
 - Entering Play Mode
 - Clicking **Reset to Initial** in the Inspector
@@ -221,7 +221,7 @@ Use the **Reset to Initial** button in the Inspector during Play Mode to quickly
 
 ### Best practice
 
-Set meaningful initial values in the Inspector rather than in code:
+Set meaningful initial values in the Inspector rather than in code.
 
 ```csharp
 // ❌ Bad: Hardcoded initial value

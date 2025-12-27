@@ -17,7 +17,7 @@ has_children: true
 
 ## 利用可能なツール
 
-Reactive SOは以下のデバッグツールを提供しています:
+Reactive SOは以下のデバッグツールを提供しています。
 
 | ツール | 目的 |
 |------|---------|
@@ -187,7 +187,7 @@ Unassigned Event Channel Fields:
 
 ## デバッグ設定
 
-各イベントチャンネルのInspectorにはデバッグオプションがあります:
+各イベントチャンネルのInspectorにはデバッグオプションがあります。
 
 ### Show In Event Log
 

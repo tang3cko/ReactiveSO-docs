@@ -1,6 +1,6 @@
 ---
 layout: default
-title: ランタイムセット（Runtime Sets）
+title: Runtime Sets
 parent: ガイド
 nav_order: 3
 ---
@@ -300,7 +300,7 @@ public class EnemyCounter : MonoBehaviour
 
 ## Inspectorの機能
 
-Play Mode中にRuntime Setアセットを選択すると表示：
+Play Mode中にRuntime Setアセットを選択すると以下が表示されます。
 
 - **ライブアイテムリスト** - 現在登録されている全オブジェクト
 - **クリックでピング** - アイテムをクリックしてHierarchyでハイライト

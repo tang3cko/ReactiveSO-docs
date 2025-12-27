@@ -98,8 +98,9 @@ playerScore.Value += 100;
 // Read
 int score = playerScore.Value;
 
-// Listen to changes (via linked event channel)
-onScoreChanged.OnEventRaised += UpdateScoreUI;
+// Listen to changes (requires IntEventChannelSO assigned to OnValueChanged)
+[SerializeField] private IntEventChannelSO onScoreChanged;
+// Then subscribe: onScoreChanged.OnEventRaised += UpdateScoreUI;
 ```
 
 ### GPU Sync

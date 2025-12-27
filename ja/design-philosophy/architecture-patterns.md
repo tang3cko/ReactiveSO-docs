@@ -1,6 +1,6 @@
 ---
 layout: default
-title: アーキテクチャパターン
+title: Architecture Patterns
 parent: 設計思想
 nav_order: 2
 ---

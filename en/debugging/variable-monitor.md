@@ -28,10 +28,10 @@ Navigate to **Window > Reactive SO > Variable Monitor**.
 
 | Column | Description |
 |--------|-------------|
-| Name | Name of the variable asset |
+| Variable | Name of the variable asset |
 | Type | Variable type (Int, Float, Bool, etc.) |
 | Value | Current value during Play Mode |
-| Path | Asset path in the Project |
+| -> | Button to ping and select asset in Project window |
 
 ---
 
@@ -47,7 +47,7 @@ Type in the search box to filter variables by name. Partial matches work, so typ
 
 ### Ping asset
 
-Click any variable row to ping (highlight) the asset in the Project window. This helps you quickly locate and select the asset for inspection.
+Click the -> button or double-click any row to ping the asset in the Project window. The asset is also selected, so you can immediately view its properties in the Inspector.
 
 ### Formatted display
 
@@ -85,9 +85,13 @@ Since variables persist across scenes, use the Variable Monitor to verify that v
 
 ## Real-time updates
 
-Values update automatically during Play Mode. The window refreshes when any variable's value changes, so you see current state without manual refresh.
+Values refresh automatically every 100ms during Play Mode. The [LIVE] indicator appears in the footer when auto-refresh is active.
 
 Outside Play Mode, values reflect the serialized asset state (typically the Initial Value).
+
+### Refresh button
+
+Click the Refresh button in the toolbar to manually reload all variables from the project. Use this after creating new variable assets to update the list without reopening the window.
 
 ---
 

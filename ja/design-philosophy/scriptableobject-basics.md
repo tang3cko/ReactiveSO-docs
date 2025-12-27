@@ -1,6 +1,6 @@
 ---
 layout: default
-title: ScriptableObjectの基礎
+title: ScriptableObject Basics
 parent: 設計思想
 nav_order: 1
 ---

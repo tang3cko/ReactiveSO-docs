@@ -1,6 +1,6 @@
 ---
 layout: default
-title: 変数（Variables）
+title: Variables
 parent: ガイド
 nav_order: 2
 ---
@@ -210,7 +210,7 @@ playerHealth.Value = 80;   // イベントなし（80 == 80）
 
 ### 初期値
 
-Inspectorで**Initial Value**を設定します。この値は以下の場合に使用されます：
+Inspectorで**Initial Value**を設定します。この値は以下の場合に使用されます。
 
 - Play Mode開始時
 - Inspectorで**Reset to Initial**をクリックしたとき
@@ -288,7 +288,7 @@ float healthFactor = saturate(health / 100.0);
 
 ### パターン1：複数のリーダー
 
-複数のシステムが同じVariableを読み取り可能：
+複数のシステムが同じVariableを読み取ることができます。
 
 ```csharp
 // ScoreManagerが書き込み

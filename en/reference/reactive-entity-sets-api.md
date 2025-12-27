@@ -15,7 +15,7 @@ This reference documents the complete API for ReactiveEntitySetSO and ReactiveEn
 
 ## Overview
 
-Reactive Entity Sets provide two APIs.
+Reactive Entity Sets provide three API styles.
 
 | API Style | Class | Use Case |
 |-----------|-------|----------|

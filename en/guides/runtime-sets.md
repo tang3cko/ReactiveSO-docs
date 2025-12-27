@@ -96,7 +96,7 @@ Assign it to the runtime set's **On Items Changed** field.
 
 ### Step 3: Objects register themselves
 
-Use the OnEnable/OnDisable pattern:
+Use the OnEnable/OnDisable pattern.
 
 ```csharp
 using Tang3cko.ReactiveSO;
@@ -120,7 +120,7 @@ public class Enemy : MonoBehaviour
 
 ### Step 4: Query the collection
 
-Access active objects from anywhere:
+Access active objects from anywhere.
 
 ```csharp
 public class WaveManager : MonoBehaviour
@@ -165,7 +165,7 @@ public class WaveManager : MonoBehaviour
 
 ### Pattern 1: Wave-based spawning
 
-Track enemies to detect when wave is complete:
+Track enemies to detect when wave is complete.
 
 ```csharp
 public class WaveSpawner : MonoBehaviour
@@ -195,7 +195,7 @@ public class WaveSpawner : MonoBehaviour
 
 ### Pattern 2: Find nearest object
 
-Query without `FindObjectsOfType`:
+Query without `FindObjectsOfType`.
 
 ```csharp
 public GameObject GetNearestEnemy(Vector3 position)
@@ -221,7 +221,7 @@ public GameObject GetNearestEnemy(Vector3 position)
 
 ### Pattern 3: Pickup collection
 
-Track collectible items:
+Track collectible items.
 
 ```csharp
 public class Pickup : MonoBehaviour
@@ -248,7 +248,7 @@ public class Pickup : MonoBehaviour
 
 ### Pattern 4: Level cleanup
 
-Destroy all spawned objects at once:
+Destroy all spawned objects at once.
 
 ```csharp
 public class LevelManager : MonoBehaviour
@@ -269,7 +269,7 @@ public class LevelManager : MonoBehaviour
 
 ## Subscribing to changes
 
-React when items are added or removed:
+React when items are added or removed.
 
 ```csharp
 public class EnemyCounter : MonoBehaviour
@@ -300,7 +300,7 @@ public class EnemyCounter : MonoBehaviour
 
 ## Inspector features
 
-During Play Mode, select a Runtime Set asset to see:
+During Play Mode, select a Runtime Set asset to see the following.
 
 - **Live item list** - All currently registered objects
 - **Click to ping** - Click any item to highlight in Hierarchy
@@ -316,7 +316,7 @@ Items are automatically cleared when exiting Play Mode.
 
 ### Always use OnEnable/OnDisable
 
-This ensures automatic registration and cleanup:
+This ensures automatic registration and cleanup.
 
 ```csharp
 // ✅ Good: Balanced registration
@@ -341,7 +341,7 @@ private void Start()
 
 ### Null-check when iterating
 
-Items may be destroyed between checks:
+Items may be destroyed between checks.
 
 ```csharp
 foreach (var enemy in activeEnemies.Items)
@@ -353,7 +353,7 @@ foreach (var enemy in activeEnemies.Items)
 
 ### Clear on scene transitions
 
-Call `Clear()` or `DestroyItems()` when changing scenes:
+Call `Clear()` or `DestroyItems()` when changing scenes.
 
 ```csharp
 public void LoadNextLevel()

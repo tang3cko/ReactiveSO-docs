@@ -1,6 +1,6 @@
 ---
 layout: default
-title: イベントモニター（Event Monitor）
+title: Event Monitor
 parent: デバッグ
 nav_order: 2
 ---
