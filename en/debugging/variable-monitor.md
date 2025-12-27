@@ -1,8 +1,8 @@
 ---
 layout: default
-title: Variable monitor
+title: Variable Monitor
 parent: Debugging
-nav_order: 3
+nav_order: 4
 ---
 
 # Variable monitor

@@ -1,8 +1,8 @@
 ---
 layout: default
-title: Runtime set monitor
+title: Runtime Set Monitor
 parent: Debugging
-nav_order: 4
+nav_order: 5
 ---
 
 # Runtime set monitor

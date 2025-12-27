@@ -335,3 +335,4 @@ Reactive SOにはイベントフローを理解するためのデバッグツー
 - [Event Typesリファレンス]({{ '/ja/reference/event-types' | relative_url }})
 - [Variablesガイド](variables) - 永続的な共有状態用
 - [デバッグ概要]({{ '/ja/debugging/' | relative_url }})
+- [アーキテクチャパターン]({{ '/ja/design-philosophy/architecture-patterns' | relative_url }}) - 適切なパターンの選択

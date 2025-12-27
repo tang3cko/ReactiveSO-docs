@@ -163,14 +163,11 @@ public class SaveSystem : MonoBehaviour
 
     public void SaveGame()
     {
-        foreach (var entityId in playerSet.EntityIds)
-        {
-            if (playerSet.TryGetData(entityId, out var state))
-            {
-                PlayerPrefs.SetInt($"Player_{entityId}_Health", state.Health);
-                PlayerPrefs.SetInt($"Player_{entityId}_Level", state.Level);
-            }
-        }
+        // ForEach provides both ID and state directly - no extra lookup needed
+        playerSet.ForEach((entityId, state) => {
+            PlayerPrefs.SetInt($"Player_{entityId}_Health", state.Health);
+            PlayerPrefs.SetInt($"Player_{entityId}_Level", state.Level);
+        });
         PlayerPrefs.Save();
     }
 
@@ -191,8 +188,8 @@ public class SaveSystem : MonoBehaviour
 
 ### Key points
 
-- Iterate EntityIds to get all registered entities
-- Use TryGetData for safe access
+- Use ForEach to iterate all entities efficiently
+- ForEach provides both ID and state without extra lookup
 - SetData to restore loaded state
 
 ---

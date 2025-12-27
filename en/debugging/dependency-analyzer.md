@@ -21,6 +21,19 @@ Navigate to **Window > Reactive SO > Dependency Analyzer**.
 
 ---
 
+## Tabs
+
+The Dependency Analyzer has two tabs.
+
+| Tab | Description |
+|-----|-------------|
+| Event Channels | Analyze event channel usage and unassigned fields |
+| Variables | Analyze variable usage and unassigned fields |
+
+Both tabs provide the same functionality for their respective asset types.
+
+---
+
 ## Use cases
 
 ### Detecting unassigned fields

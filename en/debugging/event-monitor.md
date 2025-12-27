@@ -1,6 +1,6 @@
 ---
 layout: default
-title: Event monitor
+title: Event Monitor
 parent: Debugging
 nav_order: 2
 ---
@@ -54,7 +54,6 @@ This reduces noise from high-frequency events you are not debugging.
 |---------|-------------|
 | Search | Filter events by name or type |
 | Pause/Resume | Pause logging to examine events |
-| Auto-scroll | Scroll to new events automatically |
 | Export CSV | Save logs for external analysis |
 | Clear | Remove all logged events |
 | Max | Maximum log entries (100-10K) |

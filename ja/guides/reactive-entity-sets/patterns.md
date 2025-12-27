@@ -163,14 +163,11 @@ public class SaveSystem : MonoBehaviour
 
     public void SaveGame()
     {
-        foreach (var entityId in playerSet.EntityIds)
-        {
-            if (playerSet.TryGetData(entityId, out var state))
-            {
-                PlayerPrefs.SetInt($"Player_{entityId}_Health", state.Health);
-                PlayerPrefs.SetInt($"Player_{entityId}_Level", state.Level);
-            }
-        }
+        // ForEachはIDと状態を直接提供 - 追加のルックアップ不要
+        playerSet.ForEach((entityId, state) => {
+            PlayerPrefs.SetInt($"Player_{entityId}_Health", state.Health);
+            PlayerPrefs.SetInt($"Player_{entityId}_Level", state.Level);
+        });
         PlayerPrefs.Save();
     }
 
@@ -191,8 +188,8 @@ public class SaveSystem : MonoBehaviour
 
 ### ポイント
 
-- EntityIdsを反復してすべての登録エンティティを取得
-- 安全なアクセスにはTryGetDataを使用
+- ForEachを使用してすべてのエンティティを効率的に反復
+- ForEachはIDと状態を追加のルックアップなしで提供
 - ロードした状態を復元するにはSetDataを使用
 
 ---
