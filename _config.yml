@@ -1,7 +1,7 @@
 title: Reactive SO
 description: ScriptableObject-based reactive architecture for Unity
-baseurl: ""
-url: "https://tang3cko.github.io/ReactiveSO-docs"
+baseurl: "/ReactiveSO-docs"
+url: "https://tang3cko.github.io"
 
 remote_theme: just-the-docs/just-the-docs
 
