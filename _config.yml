@@ -21,6 +21,11 @@ defaults:
 # Just the Docs settings
 search_enabled: true
 color_scheme: light
+heading_anchors: true
+
+# Mermaid diagrams
+mermaid:
+  version: "11"
 
 # Exclude files
 exclude:

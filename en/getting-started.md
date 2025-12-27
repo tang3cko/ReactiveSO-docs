@@ -46,6 +46,8 @@ Right-click in the Project window:
 Create > Reactive SO > Channels > Void Event
 ```
 
+<!-- TODO: Add screenshot of Create menu showing Reactive SO > Channels submenu -->
+
 Name it `OnPlayerDeath`.
 
 ### Step 2: Raise the Event (Publisher)
@@ -98,6 +100,8 @@ public class GameManager : MonoBehaviour
 2. Drag the `OnPlayerDeath` asset to the serialized field
 3. Do the same for GameManager
 
+<!-- TODO: Add screenshot showing Inspector with Event Channel field assignment -->
+
 That's it! The Player and GameManager are now decoupled.
 
 ---
@@ -119,7 +123,7 @@ That's it! The Player and GameManager are now decoupled.
 | Long | Large integers | OnTimestamp |
 | Double | Precise decimals | OnPreciseValue |
 
-See [Event Types Reference](reference/event-types) for details.
+See [Event Types Reference]({{ '/en/reference/event-types' | relative_url }}) for details.
 
 ---
 
@@ -163,9 +167,9 @@ Keep event flow visible by assigning channels in the Inspector rather than findi
 
 | If you want to... | Read... |
 |-------------------|---------|
-| Learn about all event types | [Event Types Reference](reference/event-types) |
-| Share state between systems | [Variables Guide](guides/variables) |
-| Track object collections | [Runtime Sets Guide](guides/runtime-sets) |
-| Manage entity state | [Reactive Entity Sets Guide](guides/reactive-entity-sets) |
-| Debug event flow | [Debugging Overview](debugging/overview) |
-| Understand architecture | [Event Channels Guide](guides/event-channels) |
+| Learn about all event types | [Event Types Reference]({{ '/en/reference/event-types' | relative_url }}) |
+| Share state between systems | [Variables Guide]({{ '/en/guides/variables' | relative_url }}) |
+| Track object collections | [Runtime Sets Guide]({{ '/en/guides/runtime-sets' | relative_url }}) |
+| Manage entity state | [Reactive Entity Sets Guide]({{ '/en/guides/reactive-entity-sets' | relative_url }}) |
+| Debug event flow | [Debugging]({{ '/en/debugging/' | relative_url }}) |
+| Understand architecture | [Event Channels Guide]({{ '/en/guides/event-channels' | relative_url }}) |

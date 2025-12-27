@@ -35,7 +35,7 @@ onPlayerDeath?.RaiseEvent();
 onPlayerDeath.OnEventRaised += HandlePlayerDeath;
 ```
 
-[Learn more about Event Channels](guides/event-channels)
+[Learn more about Event Channels]({{ '/en/guides/event-channels' | relative_url }})
 
 ### Variables
 
@@ -47,7 +47,7 @@ playerHealth.Value = 100;
 playerHealth.OnValueChanged += UpdateHealthUI;
 ```
 
-[Learn more about Variables](guides/variables)
+[Learn more about Variables]({{ '/en/guides/variables' | relative_url }})
 
 ### Runtime Sets
 
@@ -59,7 +59,7 @@ enemySet.Add(this.gameObject);
 foreach (var enemy in enemySet.Items) { ... }
 ```
 
-[Learn more about Runtime Sets](guides/runtime-sets)
+[Learn more about Runtime Sets]({{ '/en/guides/runtime-sets' | relative_url }})
 
 ### Reactive Entity Sets
 
@@ -70,7 +70,7 @@ Centralized, scene-independent entity state management.
 entitySet.AddOrUpdate(entityId, new EntityData { ... });
 ```
 
-[Learn more about Reactive Entity Sets](guides/reactive-entity-sets)
+[Learn more about Reactive Entity Sets]({{ '/en/guides/reactive-entity-sets' | relative_url }})
 
 ---
 
@@ -78,7 +78,7 @@ entitySet.AddOrUpdate(entityId, new EntityData { ... });
 
 Ready to use Reactive SO in your project?
 
-[Get Started](getting-started){: .btn .btn-primary }
+[Get Started]({{ '/en/getting-started' | relative_url }}){: .btn .btn-primary }
 
 ---
 
