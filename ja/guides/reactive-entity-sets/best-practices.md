@@ -226,11 +226,11 @@ public struct EntityState
 
 ```csharp
 // 間違い
-var state = entitySet.GetData(id);
+var state = entitySet.GetData(entityId);
 state.Health = 50;  // セットは更新されない！
 
 // 正しい
-entitySet.SetData(id, new EnemyState { Health = 50 });
+entitySet.SetData(entityId, new EnemyState { Health = 50 });
 ```
 
 ### イベントが発火しない

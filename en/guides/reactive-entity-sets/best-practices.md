@@ -226,11 +226,11 @@ Ensure you use `SetData` or `UpdateData`. Direct struct mutation does not update
 
 ```csharp
 // Wrong
-var state = entitySet.GetData(id);
+var state = entitySet.GetData(entityId);
 state.Health = 50;  // Set not updated!
 
 // Correct
-entitySet.SetData(id, new EnemyState { Health = 50 });
+entitySet.SetData(entityId, new EnemyState { Health = 50 });
 ```
 
 ### Events not firing

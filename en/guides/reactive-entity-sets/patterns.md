@@ -243,7 +243,8 @@ public class DamagePopupSpawner : MonoBehaviour
 
     private void SpawnDamagePopup(int entityId, int damage)
     {
-        // Find entity position and spawn popup
+        // Position lookup requires a separate reference (e.g., a dictionary mapping entity IDs to transforms)
+        // This example assumes you have such a mapping or can find the entity another way
         var popup = Instantiate(damagePopupPrefab);
         popup.GetComponent<DamagePopup>().SetDamage(damage);
     }
@@ -392,6 +393,8 @@ public class BattleSceneInitializer : MonoBehaviour
     {
         var player = Instantiate(playerPrefab);
         var playerComponent = player.GetComponent<Player>();
+        // BindToExistingEntity is a custom method you implement to associate
+        // the new GameObject with existing entity data in the set
         playerComponent.BindToExistingEntity(entityId);
     }
 }

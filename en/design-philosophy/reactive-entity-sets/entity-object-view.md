@@ -173,7 +173,7 @@ Systems in any scene can query entity data.
 
 ### Important caveat
 
-ScriptableObject data persists during a play session but resets when.
+ScriptableObject data persists during a play session but resets in the following cases.
 
 - Exiting Play Mode (in Editor)
 - Restarting the application (in builds)

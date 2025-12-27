@@ -243,7 +243,8 @@ public class DamagePopupSpawner : MonoBehaviour
 
     private void SpawnDamagePopup(int entityId, int damage)
     {
-        // エンティティの位置を見つけてポップアップをスポーン
+        // 位置の取得には別途参照が必要（例：エンティティIDとTransformのマッピング辞書）
+        // この例では、そのようなマッピングがあるか、別の方法でエンティティを見つけられることを前提としています
         var popup = Instantiate(damagePopupPrefab);
         popup.GetComponent<DamagePopup>().SetDamage(damage);
     }
@@ -392,6 +393,8 @@ public class BattleSceneInitializer : MonoBehaviour
     {
         var player = Instantiate(playerPrefab);
         var playerComponent = player.GetComponent<Player>();
+        // BindToExistingEntityは、新しいGameObjectをセット内の既存エンティティデータに
+        // 関連付けるために実装するカスタムメソッドです
         playerComponent.BindToExistingEntity(entityId);
     }
 }

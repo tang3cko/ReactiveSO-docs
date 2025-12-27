@@ -180,26 +180,6 @@ Entity state change
 Cost: O(v) per change, where v = number of views
 ```
 
-### When Reactive Views win
-
-Reactive Views are more efficient when:
-
-```
-Change rate × View count < Entity count × Query frequency
-```
-
-**Good fit**
-
-- Read frequency >> write frequency
-- Same filter condition used repeatedly
-- Real-time UI monitoring
-
-**Poor fit**
-
-- Write frequency >> read frequency
-- Filter condition changes every time
-- Very large number of views
-
 ---
 
 ## Formal definitions

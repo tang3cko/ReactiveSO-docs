@@ -55,7 +55,7 @@ public class EnemyEntitySetSO : ReactiveEntitySetSO<EnemyState>
 }
 ```
 
-Then create an asset in the Project window by selecting the following menu path.
+Then create an asset in the Project window. Select the following menu path.
 
 ```text
 Create > Reactive SO > Entity Sets > Enemy
