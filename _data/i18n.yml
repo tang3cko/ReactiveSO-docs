@@ -4,10 +4,15 @@ en:
   # Navigation
   home: "Home"
   getting_started: "Getting Started"
+  design_philosophy: "Design Philosophy"
   guides: "Guides"
   reference: "Reference"
   debugging: "Debugging"
   troubleshooting: "Troubleshooting"
+
+  # Design Philosophy titles
+  scriptableobject_basics: "ScriptableObject Basics"
+  architecture_patterns: "Architecture Patterns"
 
   # Guide titles
   event_channels: "Event Channels"
@@ -34,10 +39,15 @@ ja:
   # Navigation
   home: "ホーム"
   getting_started: "はじめに"
+  design_philosophy: "設計思想"
   guides: "ガイド"
   reference: "リファレンス"
   debugging: "デバッグ"
   troubleshooting: "トラブルシューティング"
+
+  # Design Philosophy titles
+  scriptableobject_basics: "ScriptableObjectの基礎"
+  architecture_patterns: "アーキテクチャパターン"
 
   # Guide titles
   event_channels: "イベントチャンネル"
