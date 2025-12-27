@@ -22,8 +22,8 @@ Reactive SOは以下のデバッグツールを提供しています:
 | ツール | 目的 |
 |------|---------|
 | [Event Monitor](event-monitor) | 呼び出し元情報を含むリアルタイムイベント追跡 |
-| [Variable Monitor](#variable-monitor) | リアルタイム変数状態監視 |
-| [Runtime Set Monitor](#runtime-set-monitor) | リアルタイムランタイムセット監視 |
+| [Variable Monitor](variable-monitor) | リアルタイム変数状態監視 |
+| [Runtime Set Monitor](runtime-set-monitor) | リアルタイムランタイムセット監視 |
 | [Dependency Analyzer](dependency-analyzer) | シーンとプレハブの静的解析 |
 | Manual Trigger | コードなしでInspectorからイベントをテスト |
 | Subscribers List | Play Mode中のアクティブなサブスクライバーを表示 |
@@ -182,54 +182,6 @@ Unassigned Event Channel Fields:
 ```
 
 クリックして各場所にジャンプして修正します。
-
----
-
-## Variable Monitor
-
-{: .note }
-> v1.1.0以降で利用可能。
-
-Variable Monitorは、プロジェクト内のすべてのVariableSOの値をリアルタイムで追跡します。
-
-**開く**: Window > Reactive SO > Variable Monitor
-
-### 機能
-
-| 機能 | 説明 |
-|---------|-------------|
-| すべての変数 | プロジェクト内のすべてのVariableSOアセットを表示 |
-| リアルタイム値 | Play Mode中に値が変更されると更新 |
-| 型フィルタリング | Int、Float、Bool、Stringなどで絞り込み |
-| 検索 | 名前で変数を検索 |
-| アセットをPing | クリックしてProjectウィンドウでハイライト |
-| フォーマット表示 | Vector3、Color、Quaternionの特別なフォーマット |
-
-<!-- TODO: Add screenshot of Variable Monitor Window showing list of variables with their current values -->
-
----
-
-## Runtime Set Monitor
-
-{: .note }
-> v1.1.0以降で利用可能。
-
-Runtime Set Monitorは、プロジェクト内のすべてのRuntimeSetSOコレクションをリアルタイムで追跡します。
-
-**開く**: Window > Reactive SO > Runtime Set Monitor
-
-### 機能
-
-| 機能 | 説明 |
-|---------|-------------|
-| すべてのランタイムセット | プロジェクト内のすべてのRuntimeSetSOアセットを表示 |
-| アイテム数 | 各セットの現在のアイテム数を表示 |
-| リアルタイム更新 | Play Mode中に更新 |
-| 型フィルタリング | GameObject、Transformなどで絞り込み |
-| 検索 | 名前でセットを検索 |
-| アセットをPing | クリックしてProjectウィンドウでハイライト |
-
-<!-- TODO: Add screenshot of Runtime Set Monitor Window showing list of runtime sets with their item counts -->
 
 ---
 

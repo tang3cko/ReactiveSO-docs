@@ -11,7 +11,7 @@ nav_order: 1
 
 ## Purpose
 
-This page explains the foundational concepts that make Reactive SO work. Understanding these concepts will help you avoid common pitfalls and design better systems.
+This page explains the foundational concepts of ScriptableObjects in Unity. Understanding these concepts will help you see why Reactive SO is built the way it is.
 
 ---
 
@@ -19,19 +19,48 @@ This page explains the foundational concepts that make Reactive SO work. Underst
 
 ScriptableObjects are Unity data containers that exist as assets in your project. Unlike MonoBehaviours attached to GameObjects, ScriptableObjects live independently of scenes.
 
-Key characteristics:
+```csharp
+[CreateAssetMenu(fileName = "PlayerStats", menuName = "Game/Player Stats")]
+public class PlayerStats : ScriptableObject
+{
+    public int maxHealth = 100;
+    public float moveSpeed = 5f;
+}
+```
 
-- **Asset-based**: Created in the Project window, saved as `.asset` files
-- **Persistent**: Exist outside of scenes, not destroyed on scene load
-- **Shared**: Multiple scripts can reference the same asset
+| Property | Description |
+|----------|-------------|
+| **Asset-based** | Created in the Project window, saved as `.asset` files |
+| **Persistent** | Exist outside of scenes, not destroyed on scene load |
+| **Shared** | Multiple scripts can reference the same asset |
+| **Serializable** | Data is saved and visible in the Inspector |
 
 ---
 
-## Global shared resources
+## Why use ScriptableObjects?
 
-This is the core principle of Reactive SO:
+### 1. Memory efficiency
 
-> All scripts referencing the same ScriptableObject asset share the same instance.
+When you use a ScriptableObject, all references point to the same instance. Compare this to MonoBehaviour data.
+
+```
+Traditional: 100 enemies × 10 KB data = 1 MB memory
+ScriptableObject: 100 enemies × 1 shared asset = 10 KB memory
+```
+
+### 2. Scene independence
+
+ScriptableObject data persists across scene loads.
+
+| Component | Scene load behavior |
+|-----------|---------------------|
+| GameObject | Destroyed (unless DontDestroyOnLoad) |
+| MonoBehaviour | Destroyed with GameObject |
+| **ScriptableObject data** | **Persists** |
+
+### 3. Decoupled architecture
+
+Systems communicate through ScriptableObject assets instead of direct references.
 
 ```mermaid
 flowchart LR
@@ -50,190 +79,80 @@ flowchart LR
     C -->|reads| SO
 ```
 
-When the Player script changes `PlayerHealth.Value`, the HealthBar UI and Enemy AI immediately see the new value. No events needed for simple reads.
-
-### Implications
-
-| Property | Benefit |
-|----------|---------|
-| Shared state | Multiple systems access the same data without direct references |
-| Scene persistence | Data survives scene transitions |
-| Inspector visibility | Current values visible in Editor during Play Mode |
-| Zero coupling | Systems communicate through assets, not direct references |
+When the Player script changes `PlayerHealth.Value`, the HealthBar UI and Enemy AI immediately see the new value without direct references to each other.
 
 ---
 
-## Entity vs Object
+## The origin: Unite Austin 2017
 
-When working with Reactive Entity Sets, understanding this distinction is critical.
+Reactive SO is inspired by Ryan Hipple's influential talk **"Game Architecture with Scriptable Objects"** at Unite Austin 2017.
 
-### Definitions
+### Core principles from the talk
 
-| Concept | Description | Lifecycle |
-|---------|-------------|-----------|
-| **Entity** | Logical unit with ID and state | Defined by registration in the set |
-| **Object** | Runtime representation (GameObject) | Defined by Unity instantiation |
+| Principle | Description |
+|-----------|-------------|
+| **Modular** | Systems don't directly depend on each other |
+| **Editable** | Designers can tweak values at runtime |
+| **Debuggable** | Each piece can be tested in isolation |
 
-### Key insight
+### Key patterns introduced
 
-An entity's existence is determined by its presence in the ReactiveEntitySet, **not** by the existence of a Unity object.
+The talk introduced several patterns that form the foundation of Reactive SO.
 
-```
-Entity exists in ReactiveEntitySet  →  Entity is "alive"
-GameObject exists in scene          →  Object is "visible"
-```
-
-These can be independent:
-
-- Entity without Object: Data persists, no visual representation
-- Object without Entity: Visual exists but not tracked in the set
-
-### Benefits
-
-This separation enables:
-
-- **Cross-scene persistence**: Entity state survives scene loads
-- **Network synchronization**: Entities exist before their visuals spawn
-- **Pooling**: Reuse Objects while maintaining Entity identity
-
----
-
-## GameObjects as "Views"
-
-Reactive SO inverts the traditional Unity pattern.
-
-### Traditional pattern
-
-```
-GameObject owns data
-  └── MonoBehaviour stores state
-      └── Destroyed with GameObject
-```
-
-### Reactive SO pattern
-
-```
-ScriptableObject owns data (persistent)
-  └── GameObject displays data (view)
-      └── Can be destroyed without losing state
-```
-
-```mermaid
-flowchart TB
-    subgraph Persistent["Persistent Layer (ScriptableObject)"]
-        RES[("ReactiveEntitySet\nID → State mapping")]
-    end
-
-    subgraph SceneA["Scene A"]
-        GO1[Enemy GameObject]
-        GO1 -->|"view of"| RES
-    end
-
-    subgraph SceneB["Scene B"]
-        GO2[Enemy GameObject]
-        GO2 -->|"view of"| RES
-    end
-
-    RES -.->|"data persists\nacross scenes"| RES
-```
-
-### Practical example
-
-```csharp
-// Traditional: State lost when GameObject destroyed
-public class Enemy : MonoBehaviour
-{
-    private int health = 100;  // Gone when Destroy(gameObject)
-}
-
-// Reactive SO: State persists in ScriptableObject
-public class Enemy : ReactiveEntity<EnemyState>
-{
-    // State lives in ReactiveEntitySet
-    // GameObject is just the "view"
-}
-```
-
----
-
-## Scene-independent data
-
-ScriptableObject data persists across scene loads.
-
-| Component | Scene load behavior |
-|-----------|---------------------|
-| GameObject | Destroyed (unless DontDestroyOnLoad) |
-| MonoBehaviour | Destroyed with GameObject |
-| **ScriptableObject data** | **Persists** |
-
-### Use cases
-
-- **Cross-scene state**: Player stats, inventory, progress
-- **Global events**: Notify systems in any scene
-- **Configuration**: Settings that apply everywhere
-
-### Important note
-
-ScriptableObject data persists during a play session but resets when you exit Play Mode (in Editor) or restart the application. For permanent persistence, serialize to PlayerPrefs or files.
-
----
-
-## Reactive Views (Future Feature)
+- **Variables** - Shared data as ScriptableObject assets (FloatVariable, IntVariable)
+- **Events** - Decoupled communication through GameEvent assets
+- **Runtime Sets** - Track objects without singletons
 
 {: .note }
-> Views are planned for a future release. This section explains the concept.
+> This talk is the most-watched Unite conference video on Unity's YouTube channel.
 
-Views are filtered subsets of a ReactiveEntitySet that automatically update when entity data changes.
+### Resources
 
-### Static View (context-free)
+- [Sample Project (GitHub)](https://github.com/roboryantron/Unite2017)
+- [Slides (SlideShare)](https://www.slideshare.net/RyanHipple/game-architecture-with-scriptable-objects)
 
-Filter based only on entity data:
+---
 
-```csharp
-// All enemies with health below 30%
-var lowHealthView = enemies.CreateView(state => state.HealthPercent < 0.3f);
-```
+## ScriptableObject lifecycle
 
-Properties:
+### In Editor
 
-- Predicate is fixed at creation time
-- View membership updates automatically when entity state changes
-- No external context required
+| Action | Saved to disk? |
+|--------|----------------|
+| Change via Inspector | Yes (automatic) |
+| Change via script | No (call `EditorUtility.SetDirty()`) |
+| Play Mode changes | Persisted until Editor restart |
 
-### Dynamic View (context-dependent)
+### In Build
 
-Filter based on entity data AND external context:
+ScriptableObject assets are **read-only** at runtime. Changes made during gameplay are lost when the application closes.
 
-```csharp
-// All enemies within range of a position
-var nearbyView = enemies.CreateView<Vector3>(
-    (state, position) => Vector3.Distance(state.Position, position) < 10f
-);
+{: .warning }
+> For permanent data persistence, serialize to PlayerPrefs, JSON files, or a database.
 
-// Evaluate with specific context
-var nearbyEnemies = nearbyView.Evaluate(playerPosition);
-```
+---
 
-Properties:
+## Official Unity resources
 
-- Predicate requires context to evaluate
-- Membership updates when entity data changes
-- Context changes require re-evaluation
+### Documentation
 
-### Performance consideration
+- [Unity Manual: ScriptableObject](https://docs.unity3d.com/6000.2/Documentation/Manual/class-ScriptableObject.html)
+- [Scripting API: ScriptableObject](https://docs.unity3d.com/6000.2/Documentation/ScriptReference/ScriptableObject.html)
 
-Views avoid per-frame iteration:
+### Tutorials
 
-| Approach | Cost |
-|----------|------|
-| Every-frame `FindObjectsOfType` + filter | O(n) per frame |
-| Reactive View | O(v) per state change |
+- [Unity Learn: Introduction to Scriptable Objects](https://learn.unity.com/tutorial/introduction-to-scriptable-objects) (65 min)
+- [Three ways to architect your game with ScriptableObjects](https://unity.com/how-to/architect-game-code-scriptable-objects)
+- [Separate Game Data and Logic with ScriptableObjects](https://unity.com/how-to/separate-game-data-logic-scriptable-objects)
 
-Views are more efficient when:
+---
 
-```
-Change rate × View count < Entity count × Query frequency
-```
+## Related open-source projects
+
+| Project | Description |
+|---------|-------------|
+| [Unity Atoms](https://github.com/unity-atoms/unity-atoms) | Full implementation of ScriptableObject architecture with Variables, Events, and more |
+| [ScriptableObject-Architecture](https://github.com/DanielEverland/ScriptableObject-Architecture) | Another implementation based on Ryan Hipple's patterns |
 
 ---
 
@@ -241,16 +160,15 @@ Change rate × View count < Entity count × Query frequency
 
 | Concept | Key Point |
 |---------|-----------|
-| Global shared resources | All references share the same instance |
-| Entity vs Object | Entity = data identity, Object = visual representation |
-| GameObjects as Views | Data owns state, GameObjects display it |
-| Scene independence | ScriptableObject data persists across scenes |
-| Reactive Views | Filtered subsets that auto-update (future feature) |
+| ScriptableObject | Data container that exists as a project asset |
+| Shared instance | All references point to the same object |
+| Scene persistence | Data survives scene loads |
+| Decoupling | Systems communicate through assets, not direct references |
 
 ---
 
 ## Next steps
 
-- [Architecture Patterns](architecture-patterns) - Learn when to use each tool
+- [Architecture Patterns](architecture-patterns) - Learn when to use each Reactive SO tool
 - [Event Channels Guide]({{ '/en/guides/event-channels' | relative_url }}) - Start using events
-- [Reactive Entity Sets Guide]({{ '/en/guides/reactive-entity-sets' | relative_url }}) - Apply Entity vs Object concepts
+- [Variables Guide]({{ '/en/guides/variables' | relative_url }}) - Share state between systems

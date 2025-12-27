@@ -22,11 +22,16 @@ en:
 
   # Reference titles
   event_types: "Event Types"
+  variable_types: "Variable Types"
+  runtime_set_types: "Runtime Set Types"
+  reactive_entity_sets_api: "Reactive Entity Sets API"
   api: "API Reference"
 
   # Debugging titles
   overview: "Overview"
   event_monitor: "Event Monitor"
+  variable_monitor: "Variable Monitor"
+  runtime_set_monitor: "Runtime Set Monitor"
   dependency_analyzer: "Dependency Analyzer"
 
   # UI
@@ -57,11 +62,16 @@ ja:
 
   # Reference titles
   event_types: "イベントタイプ"
+  variable_types: "変数タイプ"
+  runtime_set_types: "ランタイムセットタイプ"
+  reactive_entity_sets_api: "リアクティブエンティティセット API"
   api: "API リファレンス"
 
   # Debugging titles
   overview: "概要"
   event_monitor: "イベントモニター"
+  variable_monitor: "変数モニター"
+  runtime_set_monitor: "ランタイムセットモニター"
   dependency_analyzer: "依存関係分析"
 
   # UI

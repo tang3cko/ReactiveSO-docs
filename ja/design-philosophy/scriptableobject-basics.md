@@ -11,27 +11,56 @@ nav_order: 1
 
 ## 目的
 
-このページでは、Reactive SOを支える基盤となる概念を説明します。これらの概念を理解することで、よくある落とし穴を避け、より良いシステムを設計できるようになります。
+このページでは、UnityにおけるScriptableObjectの基礎概念を説明します。これらの概念を理解することで、Reactive SOがなぜこのように設計されているかがわかります。
 
 ---
 
-## ScriptableObjectとは？
+## ScriptableObjectとは
 
 ScriptableObjectは、プロジェクト内のアセットとして存在するUnityのデータコンテナです。GameObjectにアタッチされるMonoBehaviourとは異なり、ScriptableObjectはシーンから独立して存在します。
 
-主な特徴：
+```csharp
+[CreateAssetMenu(fileName = "PlayerStats", menuName = "Game/Player Stats")]
+public class PlayerStats : ScriptableObject
+{
+    public int maxHealth = 100;
+    public float moveSpeed = 5f;
+}
+```
 
-- **アセットベース**：Projectウィンドウで作成、`.asset`ファイルとして保存
-- **永続的**：シーンの外に存在し、シーンロードで破棄されない
-- **共有**：複数のスクリプトが同じアセットを参照可能
+| 特性 | 説明 |
+|------|------|
+| **アセットベース** | Projectウィンドウで作成、`.asset`ファイルとして保存 |
+| **永続的** | シーンの外に存在し、シーンロードで破棄されない |
+| **共有** | 複数のスクリプトが同じアセットを参照可能 |
+| **シリアライズ可能** | データがInspectorで保存・表示される |
 
 ---
 
-## グローバル共有リソース
+## なぜScriptableObjectを使うのか
 
-これがReactive SOの核心原則です：
+### 1. メモリ効率
 
-> 同じScriptableObjectアセットを参照するすべてのスクリプトは、同じインスタンスを共有する。
+ScriptableObjectを使用すると、すべての参照が同じインスタンスを指します。MonoBehaviourのデータと比較してみましょう。
+
+```
+従来方式: 100体の敵 × 10 KBのデータ = 1 MBのメモリ
+ScriptableObject: 100体の敵 × 1つの共有アセット = 10 KBのメモリ
+```
+
+### 2. シーン非依存
+
+ScriptableObjectのデータはシーンロードを跨いで永続します。
+
+| コンポーネント | シーンロード時の動作 |
+|----------------|----------------------|
+| GameObject | 破棄（DontDestroyOnLoad以外） |
+| MonoBehaviour | GameObjectと共に破棄 |
+| **ScriptableObjectデータ** | **永続** |
+
+### 3. 疎結合アーキテクチャ
+
+システムは直接参照ではなく、ScriptableObjectアセットを通じて通信します。
 
 ```mermaid
 flowchart LR
@@ -50,190 +79,80 @@ flowchart LR
     C -->|読み取り| SO
 ```
 
-Playerスクリプトが`PlayerHealth.Value`を変更すると、HealthBar UIとEnemy AIは即座に新しい値を参照できます。単純な読み取りにはイベントは不要です。
-
-### 意味するもの
-
-| 特性 | メリット |
-|------|----------|
-| 共有状態 | 複数のシステムが直接参照なしで同じデータにアクセス |
-| シーン永続性 | データがシーン遷移を跨いで残る |
-| Inspector可視性 | Play Mode中にエディタで現在の値を確認可能 |
-| ゼロ結合 | システムがアセットを通じて通信、直接参照不要 |
+Playerスクリプトが`PlayerHealth.Value`を変更すると、HealthBar UIとEnemy AIは即座に新しい値を参照できます。互いへの直接参照は不要です。
 
 ---
 
-## Entity vs Object
+## 原点：Unite Austin 2017
 
-Reactive Entity Setsを使用する際、この区別を理解することが重要です。
+Reactive SOは、Ryan Hippleが**Unite Austin 2017**で発表した講演「**Game Architecture with Scriptable Objects**」に着想を得ています。
 
-### 定義
+### 講演で示された核心原則
 
-| 概念 | 説明 | ライフサイクル |
-|------|------|----------------|
-| **Entity** | IDと状態を持つ論理的な単位 | セットへの登録で定義 |
-| **Object** | ランタイム表現（GameObject） | Unityのインスタンス化で定義 |
+| 原則 | 説明 |
+|------|------|
+| **モジュール性** | システムが互いに直接依存しない |
+| **編集容易性** | デザイナーがランタイムで値を調整可能 |
+| **デバッグ容易性** | 各部品を独立してテスト可能 |
 
-### 重要な洞察
+### 導入されたパターン
 
-エンティティの存在はReactiveEntitySet内の存在によって決定され、Unityオブジェクトの存在には**依存しません**。
+この講演では、Reactive SOの基盤となるいくつかのパターンが紹介されました。
 
-```
-ReactiveEntitySetにエンティティが存在  →  エンティティは「生存」
-シーンにGameObjectが存在            →  オブジェクトは「可視」
-```
-
-これらは独立できます：
-
-- Objectなしのエンティティ：データは永続、視覚的表現なし
-- エンティティなしのObject：視覚は存在するがセットで追跡されない
-
-### メリット
-
-この分離により以下が可能になります：
-
-- **クロスシーン永続性**：エンティティ状態がシーンロードを跨いで残る
-- **ネットワーク同期**：視覚がスポーンする前にエンティティが存在
-- **プーリング**：エンティティのアイデンティティを維持しながらObjectを再利用
-
----
-
-## ViewsとしてのGameObjects
-
-Reactive SOは従来のUnityパターンを逆転させます。
-
-### 従来のパターン
-
-```
-GameObjectがデータを所有
-  └── MonoBehaviourが状態を保持
-      └── GameObjectと共に破棄
-```
-
-### Reactive SOパターン
-
-```
-ScriptableObjectがデータを所有（永続的）
-  └── GameObjectがデータを表示（view）
-      └── 状態を失わずに破棄可能
-```
-
-```mermaid
-flowchart TB
-    subgraph Persistent["永続層（ScriptableObject）"]
-        RES[("ReactiveEntitySet\nID → State マッピング")]
-    end
-
-    subgraph SceneA["シーン A"]
-        GO1[Enemy GameObject]
-        GO1 -->|"のview"| RES
-    end
-
-    subgraph SceneB["シーン B"]
-        GO2[Enemy GameObject]
-        GO2 -->|"のview"| RES
-    end
-
-    RES -.->|"データはシーンを\n跨いで永続"| RES
-```
-
-### 実践例
-
-```csharp
-// 従来：GameObjectが破棄されると状態が失われる
-public class Enemy : MonoBehaviour
-{
-    private int health = 100;  // Destroy(gameObject)で消失
-}
-
-// Reactive SO：状態はScriptableObjectに永続
-public class Enemy : ReactiveEntity<EnemyState>
-{
-    // 状態はReactiveEntitySetに存在
-    // GameObjectは単なる「view」
-}
-```
-
----
-
-## シーン非依存データ
-
-ScriptableObjectのデータはシーンロードを跨いで永続します。
-
-| コンポーネント | シーンロード時の動作 |
-|----------------|----------------------|
-| GameObject | 破棄（DontDestroyOnLoad以外） |
-| MonoBehaviour | GameObjectと共に破棄 |
-| **ScriptableObjectデータ** | **永続** |
-
-### ユースケース
-
-- **クロスシーン状態**：プレイヤーステータス、インベントリ、進行状況
-- **グローバルイベント**：どのシーンにいるシステムにも通知
-- **設定**：どこでも適用される設定
-
-### 重要な注意
-
-ScriptableObjectデータはプレイセッション中は永続しますが、Play Modeを終了（エディタ内）またはアプリケーションを再起動するとリセットされます。永続的な保存にはPlayerPrefsやファイルへのシリアライズを使用してください。
-
----
-
-## リアクティブビュー（将来機能）
+- **Variables** - ScriptableObjectアセットとしての共有データ（FloatVariable、IntVariableなど）
+- **Events** - GameEventアセットによる疎結合通信
+- **Runtime Sets** - シングルトンを使わないオブジェクト追跡
 
 {: .note }
-> ビューは将来のリリースで予定されています。このセクションでは概念を説明します。
+> この講演は、UnityのYouTubeチャンネルで最も視聴されたUniteカンファレンス動画です。
 
-ビューは、エンティティデータが変更されると自動的に更新されるReactiveEntitySetのフィルタリングされたサブセットです。
+### リソース
 
-### 静的ビュー（コンテキスト不要）
+- [サンプルプロジェクト（GitHub）](https://github.com/roboryantron/Unite2017)
+- [スライド（SlideShare）](https://www.slideshare.net/RyanHipple/game-architecture-with-scriptable-objects)
 
-エンティティデータのみに基づいてフィルタ：
+---
 
-```csharp
-// 体力が30%未満のすべての敵
-var lowHealthView = enemies.CreateView(state => state.HealthPercent < 0.3f);
-```
+## ScriptableObjectのライフサイクル
 
-特性：
+### エディタ内
 
-- 作成時に述語が固定
-- エンティティ状態が変更されるとビューのメンバーシップが自動更新
-- 外部コンテキスト不要
+| 操作 | ディスクに保存されるか |
+|------|------------------------|
+| Inspectorでの変更 | はい（自動） |
+| スクリプトでの変更 | いいえ（`EditorUtility.SetDirty()`の呼び出しが必要） |
+| Play Mode中の変更 | エディタ再起動まで永続 |
 
-### 動的ビュー（コンテキスト依存）
+### ビルド内
 
-エンティティデータと外部コンテキストに基づいてフィルタ：
+ScriptableObjectアセットはランタイムでは**読み取り専用**です。ゲームプレイ中の変更はアプリケーション終了時に失われます。
 
-```csharp
-// 位置から一定範囲内のすべての敵
-var nearbyView = enemies.CreateView<Vector3>(
-    (state, position) => Vector3.Distance(state.Position, position) < 10f
-);
+{: .warning }
+> 永続的なデータ保存には、PlayerPrefs、JSONファイル、またはデータベースへのシリアライズを使用してください。
 
-// 特定のコンテキストで評価
-var nearbyEnemies = nearbyView.Evaluate(playerPosition);
-```
+---
 
-特性：
+## Unity公式リソース
 
-- 述語の評価にコンテキストが必要
-- エンティティデータが変更されるとメンバーシップが更新
-- コンテキスト変更時は再評価が必要
+### ドキュメント
 
-### パフォーマンスの考慮
+- [Unityマニュアル：ScriptableObject](https://docs.unity3d.com/6000.2/Documentation/Manual/class-ScriptableObject.html)
+- [スクリプトリファレンス：ScriptableObject](https://docs.unity3d.com/6000.2/Documentation/ScriptReference/ScriptableObject.html)
 
-ビューは毎フレームのイテレーションを回避します：
+### チュートリアル
 
-| アプローチ | コスト |
-|------------|--------|
-| 毎フレーム `FindObjectsOfType` + フィルタ | O(n) / フレーム |
-| リアクティブビュー | O(v) / 状態変更 |
+- [Unity Learn：Introduction to Scriptable Objects](https://learn.unity.com/tutorial/introduction-to-scriptable-objects)（65分）
+- [Three ways to architect your game with ScriptableObjects](https://unity.com/how-to/architect-game-code-scriptable-objects)
+- [Separate Game Data and Logic with ScriptableObjects](https://unity.com/how-to/separate-game-data-logic-scriptable-objects)
 
-ビューがより効率的なのは：
+---
 
-```
-変更頻度 × ビュー数 < エンティティ数 × クエリ頻度
-```
+## 関連オープンソースプロジェクト
+
+| プロジェクト | 説明 |
+|--------------|------|
+| [Unity Atoms](https://github.com/unity-atoms/unity-atoms) | Variables、Eventsなどを含むScriptableObjectアーキテクチャのフル実装 |
+| [ScriptableObject-Architecture](https://github.com/DanielEverland/ScriptableObject-Architecture) | Ryan Hippleのパターンに基づく別の実装 |
 
 ---
 
@@ -241,16 +160,15 @@ var nearbyEnemies = nearbyView.Evaluate(playerPosition);
 
 | 概念 | ポイント |
 |------|----------|
-| グローバル共有リソース | すべての参照が同じインスタンスを共有 |
-| Entity vs Object | Entity = データID、Object = 視覚的表現 |
-| ViewsとしてのGameObjects | データが状態を所有、GameObjectsが表示 |
-| シーン非依存 | ScriptableObjectデータはシーンを跨いで永続 |
-| リアクティブビュー | 自動更新されるフィルタサブセット（将来機能） |
+| ScriptableObject | プロジェクトアセットとして存在するデータコンテナ |
+| 共有インスタンス | すべての参照が同じオブジェクトを指す |
+| シーン永続性 | データがシーンロードを跨いで残る |
+| 疎結合 | システムがアセットを通じて通信、直接参照不要 |
 
 ---
 
 ## 次のステップ
 
-- [アーキテクチャパターン](architecture-patterns) - 各ツールの使い分けを学ぶ
+- [アーキテクチャパターン](architecture-patterns) - 各Reactive SOツールの使い分けを学ぶ
 - [Event Channelsガイド]({{ '/ja/guides/event-channels' | relative_url }}) - イベントの使用を開始
-- [Reactive Entity Setsガイド]({{ '/ja/guides/reactive-entity-sets' | relative_url }}) - Entity vs Objectの概念を適用
+- [Variablesガイド]({{ '/ja/guides/variables' | relative_url }}) - システム間で状態を共有

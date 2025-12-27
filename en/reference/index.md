@@ -20,6 +20,9 @@ This section provides API reference documentation for all Reactive SO types. Use
 | Reference | Description |
 |-----------|-------------|
 | [Event Types](event-types) | All 12 built-in event channel types |
+| [Variable Types](variable-types) | All 11 built-in variable types with GPU Sync |
+| [Runtime Set Types](runtime-set-types) | Built-in runtime set types for object tracking |
+| [Reactive Entity Sets API](reactive-entity-sets-api) | Complete API for per-entity state management |
 
 ---
 
