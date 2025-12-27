@@ -93,4 +93,4 @@ Ready to use Reactive SO in your project?
 
 - [GitHub Repository](https://github.com/tang3cko/EventChannels)
 - [Asset Store](https://assetstore.unity.com/) (coming soon)
-- [日本語ドキュメント](/ja/)
+- [日本語ドキュメント]({{ '/ja/' | relative_url }})

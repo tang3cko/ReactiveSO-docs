@@ -2,12 +2,16 @@
 layout: default
 title: Reactive SO
 nav_exclude: true
-redirect_to: /en/
 ---
 
 # Reactive SO Documentation
 
-Redirecting to English documentation...
+Choose your language:
 
-- [English Documentation](/en/)
-- [日本語ドキュメント](/ja/)
+- [English Documentation]({{ '/en/' | relative_url }})
+- [日本語ドキュメント]({{ '/ja/' | relative_url }})
+
+<script>
+  // Auto-redirect to English
+  window.location.href = "{{ '/en/' | relative_url }}";
+</script>
