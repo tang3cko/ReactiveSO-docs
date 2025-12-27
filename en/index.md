@@ -84,13 +84,11 @@ Ready to use Reactive SO in your project?
 
 ## Requirements
 
-- Unity 2022.3 or newer
-- .NET Standard 2.1
+- Unity 6000.2 or newer
 
 ---
 
 ## Links
 
-- [GitHub Repository](https://github.com/tang3cko/EventChannels)
-- [Asset Store](https://assetstore.unity.com/) (coming soon)
+- [Asset Store](https://assetstore.unity.com/packages/tools/game-toolkits/reactive-so-339926)
 - [日本語ドキュメント]({{ '/ja/' | relative_url }})

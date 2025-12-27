@@ -257,6 +257,6 @@ A progress bar shows scan status. You can cancel if needed.
 
 ## References
 
-- [Debugging Overview](overview) - All debugging tools
+- [Debugging Overview]({{ '/en/debugging/' | relative_url }}) - All debugging tools
 - [Event Monitor](event-monitor) - Runtime event tracking
 - [Troubleshooting]({{ '/en/troubleshooting' | relative_url }}) - Common issues

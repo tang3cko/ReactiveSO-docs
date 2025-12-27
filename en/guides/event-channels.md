@@ -7,6 +7,11 @@ nav_order: 1
 
 # Event channels
 
+{: .note }
+> Event Channels are available since v1.0.0 (stable release). Long, Double, Quaternion, and Color event types were added in v1.1.0.
+
+---
+
 ## Purpose
 
 This guide explains how to use Event Channels to decouple communication between game systems. You will learn when to use them, how to set them up, and best practices for common scenarios.

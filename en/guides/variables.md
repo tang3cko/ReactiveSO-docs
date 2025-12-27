@@ -7,6 +7,11 @@ nav_order: 2
 
 # Variables
 
+{: .note }
+> Variables are available since v1.1.0. GPU Sync was added in v2.0.0.
+
+---
+
 ## Purpose
 
 This guide explains how to use Variables to create reactive shared state in your game. You will learn when to choose Variables over Event Channels, how to set them up, and how to use GPU Sync to drive shaders.
@@ -243,6 +248,7 @@ GPU Sync automatically synchronizes Variable values to shader global properties.
 | Float | `SetGlobalFloat` | `float` |
 | Vector2 | `SetGlobalVector` | `float4` (xy) |
 | Vector3 | `SetGlobalVector` | `float4` (xyz) |
+| Quaternion | `SetGlobalVector` | `float4` (xyzw) |
 | Color | `SetGlobalColor` | `float4` |
 | Bool | `SetGlobalInteger` | `int` (0 or 1) |
 

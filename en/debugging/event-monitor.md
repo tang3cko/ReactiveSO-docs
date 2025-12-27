@@ -262,6 +262,6 @@ The Event Monitor has negligible performance impact:
 
 ## References
 
-- [Debugging Overview](overview) - All debugging tools
+- [Debugging Overview]({{ '/en/debugging/' | relative_url }}) - All debugging tools
 - [Dependency Analyzer](dependency-analyzer) - Static analysis
 - [Troubleshooting]({{ '/en/troubleshooting' | relative_url }}) - Common issues

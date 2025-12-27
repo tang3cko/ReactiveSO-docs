@@ -318,7 +318,11 @@ When reporting issues, include:
 - Event Monitor output
 - Subscribers List screenshot
 
-Report issues at [GitHub](https://github.com/tang3cko/EventChannels/issues).
+For support:
+
+- [Report issues on GitHub](https://github.com/tang3cko/ReactiveSO-docs/issues)
+- [Asset Store page](https://assetstore.unity.com/packages/tools/game-toolkits/reactive-so-339926)
+- [X (@tang3cko)](https://x.com/tang3cko)
 
 ---
 

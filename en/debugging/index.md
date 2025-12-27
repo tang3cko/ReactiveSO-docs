@@ -13,11 +13,13 @@ Tools for debugging and analyzing event flow in Reactive SO.
 
 ## Available tools
 
-Reactive SO provides four debugging tools:
+Reactive SO provides the following debugging tools:
 
 | Tool | Purpose |
 |------|---------|
 | [Event Monitor](event-monitor) | Real-time event tracking with caller information |
+| [Variable Monitor](#variable-monitor) | Real-time variable state monitoring |
+| [Runtime Set Monitor](#runtime-set-monitor) | Real-time runtime set monitoring |
 | [Dependency Analyzer](dependency-analyzer) | Static analysis for scenes and prefabs |
 | Manual Trigger | Test events from Inspector without code |
 | Subscribers List | View active subscribers during Play Mode |
@@ -29,6 +31,8 @@ Reactive SO provides four debugging tools:
 | Question | Tool |
 |----------|------|
 | Is my event firing? | Event Monitor |
+| What's the current variable value? | Variable Monitor |
+| What objects are in my runtime set? | Runtime Set Monitor |
 | Who's subscribed to this event? | Subscribers List |
 | Where is this event channel used? | Dependency Analyzer |
 | Can I test without playing? | Manual Trigger |
@@ -174,6 +178,54 @@ Unassigned Event Channel Fields:
 ```
 
 Click to jump to each location and fix.
+
+---
+
+## Variable Monitor
+
+{: .note }
+> Available since v1.1.0.
+
+The Variable Monitor provides real-time tracking of all VariableSO values in your project.
+
+**Open**: Window > Reactive SO > Variable Monitor
+
+### Features
+
+| Feature | Description |
+|---------|-------------|
+| All Variables | Displays every VariableSO asset in the project |
+| Real-time Values | Updates during Play Mode as values change |
+| Type Filtering | Filter by Int, Float, Bool, String, etc. |
+| Search | Find variables by name |
+| Ping Asset | Click to highlight in Project window |
+| Formatted Display | Special formatting for Vector3, Color, Quaternion |
+
+<!-- TODO: Add screenshot of Variable Monitor Window showing list of variables with their current values -->
+
+---
+
+## Runtime Set Monitor
+
+{: .note }
+> Available since v1.1.0.
+
+The Runtime Set Monitor provides real-time tracking of all RuntimeSetSO collections in your project.
+
+**Open**: Window > Reactive SO > Runtime Set Monitor
+
+### Features
+
+| Feature | Description |
+|---------|-------------|
+| All Runtime Sets | Displays every RuntimeSetSO asset in the project |
+| Item Count | Shows current item count in each set |
+| Real-time Updates | Updates during Play Mode |
+| Type Filtering | Filter by GameObject, Transform, etc. |
+| Search | Find sets by name |
+| Ping Asset | Click to highlight in Project window |
+
+<!-- TODO: Add screenshot of Runtime Set Monitor Window showing list of runtime sets with their item counts -->
 
 ---
 

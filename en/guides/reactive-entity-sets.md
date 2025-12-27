@@ -7,6 +7,11 @@ nav_order: 4
 
 # Reactive entity sets
 
+{: .warning }
+> **Experimental Feature** - Reactive Entity Sets are available in v2.1.0 (unreleased). The API may change in future versions. Use in production at your own discretion.
+
+---
+
 ## Purpose
 
 This guide explains how to use Reactive Entity Sets for centralized entity state management. You will learn the difference from Runtime Sets, how to define entity data, and how to subscribe to per-entity state changes.
@@ -240,7 +245,8 @@ public class EnemyManager : MonoBehaviour
 | Property | Type | Description |
 |----------|------|-------------|
 | `Count` | `int` | Number of registered entities |
-| `EntityIds` | `IEnumerable<int>` | All registered entity IDs |
+| `EntityIds` | `ArraySegment<int>` | All registered entity IDs |
+| `Data` | `ArraySegment<TData>` | All entity data |
 
 ### Methods
 
@@ -252,6 +258,8 @@ public class EnemyManager : MonoBehaviour
 | `TryGetData(owner, out data)` | Safely get entity's state |
 | `SetData(owner, data)` | Update entity's state |
 | `UpdateData(owner, func)` | Update state with function |
+| `GetDataRef(id)` | Get reference to state for direct modification |
+| `NotifyDataChanged(owner)` | Manually notify after GetDataRef modification |
 | `Contains(owner)` | Check if entity exists |
 | `Clear()` | Remove all entities |
 | `ForEach(action)` | Iterate all entities |

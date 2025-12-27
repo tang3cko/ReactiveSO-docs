@@ -7,6 +7,11 @@ nav_order: 3
 
 # Runtime sets
 
+{: .note }
+> Runtime Sets are available since v1.1.0.
+
+---
+
 ## Purpose
 
 This guide explains how to use Runtime Sets to track collections of objects without singleton managers. You will learn the registration pattern, how to query active objects, and when to choose Runtime Sets over alternatives.

@@ -12,27 +12,13 @@ This guide walks you through installing and using Reactive SO in your Unity proj
 
 ## Installation
 
-### Via Git URL (Recommended)
+Reactive SO is installed via Unity Package Manager.
 
 1. Open **Window > Package Manager**
-2. Click **+** > **Add package from git URL...**
-3. Enter:
-   ```
-   https://github.com/tang3cko/EventChannels.git?path=/Assets/Event%20Channels
-   ```
-4. Click **Add**
+2. Find **Reactive SO** in the package list
+3. Click **Install**
 
-### Via package.json
-
-Add to your `Packages/manifest.json`:
-
-```json
-{
-  "dependencies": {
-    "com.tang3cko.reactiveso": "https://github.com/tang3cko/EventChannels.git?path=/Assets/Event%20Channels"
-  }
-}
-```
+If you purchased from the [Asset Store](https://assetstore.unity.com/packages/tools/game-toolkits/reactive-so-339926), use **My Assets** tab to import the package.
 
 ---
 
