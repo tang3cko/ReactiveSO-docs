@@ -1,0 +1,29 @@
+title: Reactive SO
+description: ScriptableObject-based reactive architecture for Unity
+baseurl: ""
+url: "https://tang3cko.github.io/ReactiveSO-docs"
+
+remote_theme: just-the-docs/just-the-docs
+
+# Multi-language support via defaults
+defaults:
+  - scope:
+      path: "en"
+    values:
+      lang: "en"
+      layout: "default"
+  - scope:
+      path: "ja"
+    values:
+      lang: "ja"
+      layout: "default"
+
+# Just the Docs settings
+search_enabled: true
+color_scheme: light
+
+# Exclude files
+exclude:
+  - README.md
+  - Gemfile
+  - Gemfile.lock

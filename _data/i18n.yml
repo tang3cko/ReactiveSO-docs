@@ -1,0 +1,61 @@
+# Shared translation strings for navigation and UI elements
+
+en:
+  # Navigation
+  home: "Home"
+  getting_started: "Getting Started"
+  guides: "Guides"
+  reference: "Reference"
+  debugging: "Debugging"
+  troubleshooting: "Troubleshooting"
+
+  # Guide titles
+  event_channels: "Event Channels"
+  variables: "Variables"
+  runtime_sets: "Runtime Sets"
+  reactive_entity_sets: "Reactive Entity Sets"
+
+  # Reference titles
+  event_types: "Event Types"
+  api: "API Reference"
+
+  # Debugging titles
+  overview: "Overview"
+  event_monitor: "Event Monitor"
+  dependency_analyzer: "Dependency Analyzer"
+
+  # UI
+  switch_lang: "日本語"
+  switch_url: "/ja/"
+  edit_page: "Edit this page"
+  last_updated: "Last updated"
+
+ja:
+  # Navigation
+  home: "ホーム"
+  getting_started: "はじめに"
+  guides: "ガイド"
+  reference: "リファレンス"
+  debugging: "デバッグ"
+  troubleshooting: "トラブルシューティング"
+
+  # Guide titles
+  event_channels: "イベントチャンネル"
+  variables: "変数"
+  runtime_sets: "ランタイムセット"
+  reactive_entity_sets: "リアクティブエンティティセット"
+
+  # Reference titles
+  event_types: "イベントタイプ"
+  api: "API リファレンス"
+
+  # Debugging titles
+  overview: "概要"
+  event_monitor: "イベントモニター"
+  dependency_analyzer: "依存関係分析"
+
+  # UI
+  switch_lang: "English"
+  switch_url: "/en/"
+  edit_page: "このページを編集"
+  last_updated: "最終更新"
