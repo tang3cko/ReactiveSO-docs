@@ -75,9 +75,9 @@ For per-instance state, consider [Reactive Entity Sets](reactive-entity-sets) in
 
 ### Step 1: Create an event channel asset
 
-Right-click in the Project window:
+Right-click in the Project window and select the following menu path.
 
-```
+```text
 Create > Reactive SO > Channels > Void Event
 ```
 

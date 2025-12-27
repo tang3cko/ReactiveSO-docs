@@ -44,7 +44,7 @@ flowchart LR
     EC -->|OnEventRaised| S3
 ```
 
-この疎結合には複数のメリットがあります：
+この疎結合には複数のメリットがあります。
 
 - システムを独立して開発・テスト可能
 - イベントフローがUnity Inspectorで可視化
@@ -55,13 +55,13 @@ flowchart LR
 
 ## Event Channelsを使うタイミング
 
-Event Channelsを使う場合：
+Event Channelsは以下のような場合に使用します。
 
 - **ゲーム全体の通知** - プレイヤー死亡、レベル完了、ゲーム一時停止
 - **システム間通信** - ゲームプレイイベントに応答するUI
 - **ファイア・アンド・フォーゲットメッセージ** - 戻り値が不要なイベント
 
-Event Channelsを使わない場合：
+以下の場合にはEvent Channelsは適していません。
 
 - **インスタンス単位の状態** - 個々の敵の体力、特定オブジェクトのプロパティ
 - **リクエスト-レスポンスパターン** - 即座に戻り値が必要な場合
@@ -75,9 +75,9 @@ Event Channelsを使わない場合：
 
 ### ステップ1：Event Channelアセットを作成
 
-Projectウィンドウで右クリック：
+Projectウィンドウで右クリックし、以下のメニューパスを選択します。
 
-```
+```text
 Create > Reactive SO > Channels > Void Event
 ```
 
@@ -85,7 +85,7 @@ Create > Reactive SO > Channels > Void Event
 
 ### ステップ2：パブリッシャーを作成
 
-パブリッシャーは何かが起きたときにイベントを発火します：
+パブリッシャーは何かが起きたときにイベントを発火します。
 
 ```csharp
 using Tang3cko.ReactiveSO;
@@ -105,7 +105,7 @@ public class Player : MonoBehaviour
 
 ### ステップ3：サブスクライバーを作成
 
-サブスクライバーはイベントをリッスンして応答します：
+サブスクライバーはイベントをリッスンして応答します。
 
 ```csharp
 using Tang3cko.ReactiveSO;
@@ -145,7 +145,7 @@ public class GameOverUI : MonoBehaviour
 
 ## イベントタイプ
 
-Reactive SOは12種類の組み込みイベントタイプを提供：
+Reactive SOは12種類の組み込みイベントタイプを提供しています。
 
 | タイプ | パラメータ | 使用例 |
 |--------|-----------|--------|
@@ -168,7 +168,7 @@ Reactive SOは12種類の組み込みイベントタイプを提供：
 
 ## イベントでデータを渡す
 
-パラメータ付きイベントでは、発火時にデータを渡します：
+パラメータ付きイベントでは、発火時にデータを渡します。
 
 ```csharp
 // Publisher
@@ -205,10 +205,10 @@ private void UpdateScoreUI(int newScore)
 
 ## 複数のサブスクライバー
 
-1つのEvent Channelに複数のサブスクライバーを持たせることができます。全サブスクライバーがイベントを受信します：
+1つのEvent Channelに複数のサブスクライバーを持たせることができます。全サブスクライバーがイベントを受信します。
 
 ```csharp
-// これらすべてが同じOnPlayerDeathイベントに応答：
+// これらすべてが同じOnPlayerDeathイベントに応答
 // - GameOverUI：ゲームオーバー画面を表示
 // - AudioManager：死亡サウンドを再生
 // - AnalyticsManager：死亡をログ
@@ -223,7 +223,7 @@ private void UpdateScoreUI(int newScore)
 
 ### 必ず購読解除する
 
-購読解除を忘れるとメモリリークとエラーの原因になります：
+購読解除を忘れるとメモリリークとエラーの原因になります。
 
 ```csharp
 // ✅ 良い例：購読と解除のバランス
@@ -249,7 +249,7 @@ private void Start()
 
 ### null条件演算子を使用
 
-Event Channelが割り当てられていない場合のエラーを防止：
+Event Channelが割り当てられていない場合のエラーを防止しましょう。
 
 ```csharp
 // ✅ 良い例：未割り当てでも安全
@@ -261,7 +261,7 @@ onPlayerDeath.RaiseEvent();
 
 ### イベントに明確な名前を付ける
 
-何が起きたかを示す説明的な名前を使用：
+何が起きたかを示す説明的な名前を使用しましょう。
 
 ```csharp
 // ✅ 良い例：何が起きたか明確
@@ -277,9 +277,9 @@ UpdateScore
 
 ### イベントアセットを整理
 
-Event Channel用のフォルダ構造を作成：
+Event Channel用のフォルダ構造を作成しましょう。
 
-```
+```text
 Assets/
 └── ScriptableObjects/
     └── Events/
@@ -297,7 +297,7 @@ Assets/
 
 ## デバッグ
 
-Reactive SOにはイベントフローを理解するためのデバッグツールが含まれています：
+Reactive SOにはイベントフローを理解するためのデバッグツールが含まれています。
 
 - **Event Monitor Window** - Play Mode中にリアルタイムでイベントを確認
 - **Subscribers List** - Inspector上で現在のサブスクライバーを全て表示

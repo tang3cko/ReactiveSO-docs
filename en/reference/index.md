@@ -7,7 +7,11 @@ has_children: true
 
 # Reference
 
-API reference and detailed documentation.
+---
+
+## Purpose
+
+This section provides API reference documentation for all Reactive SO types. Use these pages when you need specific details about method signatures, properties, and configuration options.
 
 ---
 

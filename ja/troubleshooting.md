@@ -18,7 +18,7 @@ nav_order: 6
 
 **症状**: `RaiseEvent()`を呼び出しても何も起きない。
 
-**チェックリスト**:
+**チェックリスト**
 
 1. **イベントチャンネルは割り当てられていますか？**
    - Inspectorで`None`になっていないか確認
@@ -49,7 +49,7 @@ nav_order: 6
 
 **原因**: `OnDisable`での購読解除を忘れている。
 
-**修正**:
+**修正**
 
 ```csharp
 private void OnEnable()
@@ -71,7 +71,7 @@ private void OnDisable()
 
 **解決策**:
 
-**オプション1**: イベントを遅延させる:
+**オプション1** - イベントを遅延させる
 ```csharp
 private IEnumerator Start()
 {
@@ -80,7 +80,7 @@ private IEnumerator Start()
 }
 ```
 
-**オプション2**: より早く購読する:
+**オプション2** - より早く購読する
 ```csharp
 private void Awake()
 {
@@ -97,9 +97,9 @@ private void OnDisable()
 
 **症状**: 複数のイベントチャンネルが似た名前を持っており、間違ったものを参照している。
 
-**修正**: 明確な名前を使用し、フォルダで整理する:
+**修正** 明確な名前を使用し、フォルダで整理しましょう。
 
-```
+```text
 ScriptableObjects/Events/
 ├── Player/
 │   ├── OnPlayerDeath.asset
@@ -114,7 +114,7 @@ ScriptableObjects/Events/
 
 **症状**: イベントは発火するが購読者が反応しない。
 
-**チェックリスト**:
+**チェックリスト**
 
 1. GameObjectはアクティブですか？
 2. MonoBehaviourは有効ですか？
@@ -142,7 +142,7 @@ ScriptableObjects/Events/
 
 呼び出し元情報は、直接コードから呼び出す場合にのみ機能します。UnityEvent経由でイベントを発生させた場合（例：InspectorのButton.OnClick）は機能しません。
 
-**機能する**:
+**機能する**
 ```csharp
 public void OnButtonClick()
 {
@@ -150,8 +150,8 @@ public void OnButtonClick()
 }
 ```
 
-**機能しない**:
-```
+**機能しない**
+```text
 Inspector: Button.OnClick → EventChannel.RaiseEvent
 Caller shows: "-"
 ```
@@ -180,7 +180,7 @@ Subscribers ListにはMonoBehaviourの購読者のみが表示されます。そ
 
 ### イベントチャンネルをコルーチンと一緒に使用できますか？
 
-はい:
+はい、使用できます。
 
 ```csharp
 private void OnEnable()
@@ -203,7 +203,7 @@ private IEnumerator HandleEventCoroutine()
 
 直接的には不可能です。以下のアプローチのいずれかを使用してください:
 
-**オプション1**: 構造体を使用する:
+**オプション1** - 構造体を使用する
 ```csharp
 [System.Serializable]
 public struct PlayerDeathData
@@ -216,7 +216,7 @@ public struct PlayerDeathData
 public class PlayerDeathEventChannelSO : EventChannelSO<PlayerDeathData> { }
 ```
 
-**オプション2**: 複数のイベントを使用する:
+**オプション2** - 複数のイベントを使用する
 ```csharp
 onPlayerDeath?.RaiseEvent();
 onDeathPosition?.RaiseEvent(position);
@@ -225,7 +225,7 @@ onFinalScore?.RaiseEvent(score);
 
 ### ScriptableObjectから購読できますか？
 
-はい:
+はい、購読できます。
 
 ```csharp
 public class GameSettings : ScriptableObject
@@ -278,13 +278,14 @@ public class EventChannelTests
 
 ### イベントチャンネルをネットワーキングに使用できますか？
 
-イベントチャンネルは単一のUnityインスタンス内でローカルに動作します。ネットワークゲームの場合:
+イベントチャンネルは単一のUnityインスタンス内でローカルに動作します。ネットワークゲームの場合は、以下のアプローチを検討してください。
 
 - ローカルゲームロジックにはイベントチャンネルを使用
 - ネットワーク通信にはネットワーキングソリューションを使用
 - ネットワークイベントに応答してイベントチャンネルを発火
 
-例:
+以下は、ネットワークコールバックからローカルイベントを発火する例です。
+
 ```csharp
 [ClientRpc]
 void RpcPlayerDeath()
@@ -298,7 +299,7 @@ void RpcPlayerDeath()
 
 ## まだ問題がありますか？
 
-ここで説明されていない問題が発生している場合:
+ここで説明されていない問題が発生している場合は、以下の手順をお試しください。
 
 1. Event Monitorを確認してイベントフローを検証
 2. Subscribers Listを使用して購読を検証
@@ -310,7 +311,7 @@ void RpcPlayerDeath()
 
 ## 問題の報告
 
-問題を報告する際は、以下を含めてください:
+問題を報告する際は、以下の情報を含めてください。
 
 - Unityバージョン
 - Reactive SOバージョン
@@ -318,7 +319,7 @@ void RpcPlayerDeath()
 - Event Monitorの出力
 - Subscribers Listのスクリーンショット
 
-サポート:
+サポートについては、以下のチャンネルをご利用ください。
 
 - [Report issues on GitHub](https://github.com/tang3cko/ReactiveSO-docs/issues)
 - [Asset Store page](https://assetstore.unity.com/packages/tools/game-toolkits/reactive-so-339926)

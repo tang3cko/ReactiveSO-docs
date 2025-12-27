@@ -6,7 +6,11 @@ nav_order: 2
 
 # Getting Started
 
-This guide walks you through installing and using Reactive SO in your Unity project.
+---
+
+## Purpose
+
+This guide walks you through installing Reactive SO and creating your first Event Channel. You will learn the basic workflow for decoupling game systems.
 
 ---
 
@@ -22,13 +26,13 @@ If you purchased from the [Asset Store](https://assetstore.unity.com/packages/to
 
 ---
 
-## Quick Start: Your First Event Channel
+## Quick start: your first event channel
 
-### Step 1: Create an Event Channel Asset
+### Step 1: Create an event channel asset
 
-Right-click in the Project window:
+Right-click in the Project window.
 
-```
+```text
 Create > Reactive SO > Channels > Void Event
 ```
 
@@ -36,7 +40,7 @@ Create > Reactive SO > Channels > Void Event
 
 Name it `OnPlayerDeath`.
 
-### Step 2: Raise the Event (Publisher)
+### Step 2: Raise the event (publisher)
 
 ```csharp
 using Tang3cko.ReactiveSO;
@@ -53,7 +57,7 @@ public class Player : MonoBehaviour
 }
 ```
 
-### Step 3: Subscribe to the Event (Subscriber)
+### Step 3: Subscribe to the event (subscriber)
 
 ```csharp
 using Tang3cko.ReactiveSO;
@@ -80,7 +84,7 @@ public class GameManager : MonoBehaviour
 }
 ```
 
-### Step 4: Connect in Inspector
+### Step 4: Connect in the Inspector
 
 1. Select the Player GameObject
 2. Drag the `OnPlayerDeath` asset to the serialized field
@@ -92,7 +96,7 @@ That's it! The Player and GameManager are now decoupled.
 
 ---
 
-## Available Event Types
+## Available event types
 
 | Type | Use Case | Example |
 |------|----------|---------|
@@ -113,11 +117,11 @@ See [Event Types Reference]({{ '/en/reference/event-types' | relative_url }}) fo
 
 ---
 
-## Best Practices
+## Best practices
 
-### Always Unsubscribe
+### Always unsubscribe
 
-Prevent memory leaks by unsubscribing in `OnDisable`:
+Prevent memory leaks by unsubscribing in `OnDisable`.
 
 ```csharp
 private void OnEnable()
@@ -131,9 +135,9 @@ private void OnDisable()
 }
 ```
 
-### Use Null-Conditional Operator
+### Use null-conditional operator
 
-Avoid null reference exceptions:
+Avoid null reference exceptions.
 
 ```csharp
 // Good
@@ -143,13 +147,13 @@ onPlayerDeath?.RaiseEvent();
 onPlayerDeath.RaiseEvent();
 ```
 
-### Assign in Inspector
+### Assign in the Inspector
 
 Keep event flow visible by assigning channels in the Inspector rather than finding them in code.
 
 ---
 
-## What's Next?
+## What's next?
 
 | If you want to... | Read... |
 |-------------------|---------|

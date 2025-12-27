@@ -7,7 +7,11 @@ has_children: true
 
 # Debugging
 
-Tools for debugging and analyzing event flow in Reactive SO.
+---
+
+## Purpose
+
+This section explains how to debug event flow and diagnose issues in Reactive SO. You will learn to use the built-in debugging tools and troubleshoot common problems.
 
 ---
 
@@ -91,7 +95,7 @@ Reactive SO provides the following debugging tools:
 
 **Diagnosis**:
 
-```
+```text
 Time | Event Name    | Caller
 0.5s | OnPlayerDeath | EnemyAI.cs:Attack:142
 0.5s | OnPlayerDeath | FallDetector.cs:OnTriggerEnter:28
@@ -113,7 +117,7 @@ Two scripts raising the same event. Review game logic.
 
 **Diagnosis**:
 
-```
+```text
 Expected:
   UIManager.HandleEvent
   PlayerController.HandleEvent
@@ -147,7 +151,7 @@ private void OnDisable()
 
 **Result**:
 
-```
+```text
 OnPlayerDeath (VoidEventChannelSO) - 5 usage(s)
   MainScene.unity > Player.PlayerController
   MainScene.unity > UICanvas.UIManager
@@ -169,7 +173,7 @@ OnPlayerDeath (VoidEventChannelSO) - 5 usage(s)
 
 **Result**:
 
-```
+```text
 Summary: 20 Event Channels, 1 unused, 3 unassigned fields
 
 Unassigned Event Channel Fields:

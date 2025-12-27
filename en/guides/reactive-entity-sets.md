@@ -108,7 +108,7 @@ flowchart TB
     E3 -->|notifies| AI[AI System]
 ```
 
-The data flow:
+The data flows through the system in three stages.
 
 1. **Entity spawns** → `ReactiveEntity.OnEnable()` → Registers with EntitySet
 2. **State updates** → `UpdateData()` → Per-entity callbacks fire
@@ -155,21 +155,21 @@ public class EnemyEntitySetSO : ReactiveEntitySetSO<EnemyState>
 }
 ```
 
-Then create an asset in the Project window:
+Then create an asset in the Project window by selecting the following menu path.
 
-```
+```text
 Create > Reactive SO > Entity Sets > Enemy
 ```
 
 ### Step 3: Create event channels (optional)
 
-If you need notifications for set-level changes, create event channels:
+If you need notifications for set-level changes, create event channels.
 
-```
+```text
 Create > Reactive SO > Channels > Int Event
 ```
 
-Assign them to the entity set's fields:
+Assign them to the entity set's fields. The available event fields are described below.
 
 - **On Item Added** - Fires when entity registers
 - **On Item Removed** - Fires when entity unregisters

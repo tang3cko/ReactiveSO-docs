@@ -65,13 +65,13 @@ nav_order: 2
 
 Caller列は、各イベントを発生させたコードを表示します:
 
-```
- FileName.cs:MethodName:LineNumber
+```text
+FileName.cs:MethodName:LineNumber
 ```
 
 例:
 
-```
+```text
 PlayerController.cs:TakeDamage:142
 ```
 
@@ -125,7 +125,7 @@ public void OnButtonClick()
 3. ログのエントリー数をカウント
 4. Caller列を確認:
 
-```
+```text
 Time | Event Name    | Caller
 0.5s | OnPlayerDeath | EnemyAI.cs:Attack:142
 0.5s | OnPlayerDeath | FallDetector.cs:OnTriggerEnter:28
@@ -141,7 +141,7 @@ OnPlayerDeath -> OnGameOver -> OnHighScoreSavedのような複雑なチェーン
 2. プレイヤーの死亡をトリガー
 3. 完全なシーケンスを確認:
 
-```
+```text
 Time | Event Name       | Caller
 0.5s | OnPlayerDeath    | Player.cs:TakeDamage:89
 0.6s | OnGameOver       | GameManager.cs:HandlePlayerDeath:45

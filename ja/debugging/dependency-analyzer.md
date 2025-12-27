@@ -37,7 +37,7 @@ nav_order: 3
 
 **例**:
 
-```
+```text
 Summary: 20 Event Channels, 1 unused, 3 unassigned fields
 
 Unassigned Event Channel Fields:
@@ -73,7 +73,7 @@ Unassigned Event Channel Fields:
 
 **例**:
 
-```
+```text
 OnPlayerDeath (VoidEventChannelSO) - 5 usage(s)
   MainScene.unity
     Path: Assets/Scenes/MainScene.unity
@@ -102,7 +102,7 @@ OnPlayerDeath (VoidEventChannelSO) - 5 usage(s)
 
 ### Summary行
 
-```
+```text
 Summary: 15 Event Channels, 2 unused, 3 unassigned fields
 ```
 
@@ -116,7 +116,7 @@ Summary: 15 Event Channels, 2 unused, 3 unassigned fields
 
 イベントチャンネルはツリー構造で表示されます:
 
-```
+```text
 OnPlayerDeath (VoidEventChannelSO) - 3 usage(s)
   MainScene.unity
     Path: Assets/Scenes/MainScene.unity
@@ -131,7 +131,7 @@ OnPlayerDeath (VoidEventChannelSO) - 3 usage(s)
 
 ### 未割り当てフィールドセクション
 
-```
+```text
 Unassigned Event Channel Fields:
 
   MainScene.unity > Player.PlayerController.onPlayerDeath

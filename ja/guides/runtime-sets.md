@@ -76,9 +76,9 @@ foreach (var enemy in activeEnemies.Items) { ... }
 
 ### ステップ1：Runtime Setアセットを作成
 
-Projectウィンドウで右クリック：
+Projectウィンドウで右クリックし、以下のメニューパスを選択します。
 
-```
+```text
 Create > Reactive SO > Runtime Sets > GameObject Runtime Set
 ```
 
@@ -86,9 +86,9 @@ Create > Reactive SO > Runtime Sets > GameObject Runtime Set
 
 ### ステップ2：Event Channelを作成（オプション）
 
-コレクション変更時の通知が必要な場合：
+コレクション変更時の通知が必要な場合は、Event Channelを作成します。
 
-```
+```text
 Create > Reactive SO > Channels > Void Event
 ```
 
@@ -96,7 +96,7 @@ Runtime Setの**On Items Changed**フィールドに割り当てます。
 
 ### ステップ3：オブジェクトが自身を登録
 
-OnEnable/OnDisableパターンを使用：
+OnEnable/OnDisableパターンを使用します。
 
 ```csharp
 using Tang3cko.ReactiveSO;
@@ -120,7 +120,7 @@ public class Enemy : MonoBehaviour
 
 ### ステップ4：コレクションをクエリ
 
-どこからでもアクティブオブジェクトにアクセス：
+どこからでもアクティブオブジェクトにアクセスできます。
 
 ```csharp
 public class WaveManager : MonoBehaviour
@@ -165,7 +165,7 @@ public class WaveManager : MonoBehaviour
 
 ### パターン1：ウェーブベースのスポーン
 
-敵を追跡してウェーブ完了を検出：
+敵を追跡してウェーブ完了を検出します。
 
 ```csharp
 public class WaveSpawner : MonoBehaviour
@@ -195,7 +195,7 @@ public class WaveSpawner : MonoBehaviour
 
 ### パターン2：最も近いオブジェクトを検索
 
-`FindObjectsOfType`なしでクエリ：
+`FindObjectsOfType`なしでクエリできます。
 
 ```csharp
 public GameObject GetNearestEnemy(Vector3 position)
@@ -221,7 +221,7 @@ public GameObject GetNearestEnemy(Vector3 position)
 
 ### パターン3：ピックアップコレクション
 
-収集可能アイテムを追跡：
+収集可能アイテムを追跡します。
 
 ```csharp
 public class Pickup : MonoBehaviour
@@ -248,7 +248,7 @@ public class Pickup : MonoBehaviour
 
 ### パターン4：レベルクリーンアップ
 
-スポーンされた全オブジェクトを一度に破棄：
+スポーンされた全オブジェクトを一度に破棄できます。
 
 ```csharp
 public class LevelManager : MonoBehaviour
@@ -269,7 +269,7 @@ public class LevelManager : MonoBehaviour
 
 ## 変更を購読
 
-アイテムの追加・削除時に反応：
+アイテムの追加・削除時に反応できます。
 
 ```csharp
 public class EnemyCounter : MonoBehaviour
@@ -316,7 +316,7 @@ Play Mode終了時にアイテムは自動的にクリアされます。
 
 ### 常にOnEnable/OnDisableを使用
 
-これにより自動的な登録とクリーンアップが保証されます：
+これにより自動的な登録とクリーンアップが保証されます。
 
 ```csharp
 // ✅ 良い例：バランスの取れた登録
@@ -353,7 +353,7 @@ foreach (var enemy in activeEnemies.Items)
 
 ### シーン遷移時にクリア
 
-シーン変更前に`Clear()`または`DestroyItems()`を呼び出し：
+シーン変更前に`Clear()`または`DestroyItems()`を呼び出しましょう。
 
 ```csharp
 public void LoadNextLevel()

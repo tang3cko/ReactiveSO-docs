@@ -6,7 +6,11 @@ nav_order: 2
 
 # はじめに
 
-このガイドでは、UnityプロジェクトへのReactive SOのインストールと使用方法を説明します。
+---
+
+## 目的
+
+このガイドでは、Reactive SOをインストールし、最初のEvent Channelを作成する方法を説明します。ゲームシステムを疎結合化するための基本的なワークフローを学びます。
 
 ---
 
@@ -26,9 +30,9 @@ Reactive SOはUnity Package Manager経由でインストールします。
 
 ### ステップ1：Event Channelアセットを作成
 
-Projectウィンドウで右クリック：
+Projectウィンドウで右クリックし、以下のメニューパスを選択します。
 
-```
+```text
 Create > Reactive SO > Channels > Void Event
 ```
 
@@ -117,7 +121,7 @@ public class GameManager : MonoBehaviour
 
 ### 必ず購読解除する
 
-`OnDisable`で購読解除してメモリリークを防止：
+`OnDisable`で購読解除してメモリリークを防止しましょう。
 
 ```csharp
 private void OnEnable()
@@ -133,7 +137,7 @@ private void OnDisable()
 
 ### null条件演算子を使用
 
-null参照例外を回避：
+null参照例外を回避しましょう。
 
 ```csharp
 // 良い例

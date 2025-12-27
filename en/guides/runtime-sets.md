@@ -76,9 +76,9 @@ This eliminates the need for singleton managers like `EnemyManager.Instance`.
 
 ### Step 1: Create a runtime set asset
 
-Right-click in the Project window:
+Right-click in the Project window and select the following menu path.
 
-```
+```text
 Create > Reactive SO > Runtime Sets > GameObject Runtime Set
 ```
 
@@ -86,9 +86,9 @@ Name it descriptively, such as `ActiveEnemies` or `SpawnedPickups`.
 
 ### Step 2: Create event channels (optional)
 
-If you need notifications when the collection changes:
+If you need notifications when the collection changes, create an event channel.
 
-```
+```text
 Create > Reactive SO > Channels > Void Event
 ```
 

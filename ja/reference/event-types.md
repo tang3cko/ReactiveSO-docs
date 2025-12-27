@@ -34,7 +34,7 @@ nav_order: 1
 
 ## 適切なタイプの選択
 
-この判断ガイドを使用してください：
+適切なタイプを選択するために、以下の判断ガイドを使用してください。
 
 1. **データが不要？** Voidを使用
 2. **整数？**
@@ -60,7 +60,7 @@ nav_order: 1
 
 ### 作成
 
-```
+```text
 Create > Reactive SO > Channels > Void Event
 ```
 
@@ -109,7 +109,7 @@ private void HandlePlayerDeath()
 
 ### 作成
 
-```
+```text
 Create > Reactive SO > Channels > Int Event
 ```
 
@@ -160,7 +160,7 @@ private void UpdateScoreDisplay(int newScore)
 
 ### 作成
 
-```
+```text
 Create > Reactive SO > Channels > Long Event
 ```
 
@@ -210,7 +210,7 @@ private void HandleTimestamp(long timestamp)
 
 ### 作成
 
-```
+```text
 Create > Reactive SO > Channels > Float Event
 ```
 
@@ -261,7 +261,7 @@ private void UpdateHealthBar(float healthPercent)
 
 ### 作成
 
-```
+```text
 Create > Reactive SO > Channels > Double Event
 ```
 
@@ -310,7 +310,7 @@ private void HandleValue(double value)
 
 ### 作成
 
-```
+```text
 Create > Reactive SO > Channels > Bool Event
 ```
 
@@ -360,7 +360,7 @@ private void HandlePause(bool isPaused)
 
 ### 作成
 
-```
+```text
 Create > Reactive SO > Channels > String Event
 ```
 
@@ -411,7 +411,7 @@ private void ShowDialogue(string dialogueKey)
 
 ### 作成
 
-```
+```text
 Create > Reactive SO > Channels > Vector2 Event
 ```
 
@@ -462,7 +462,7 @@ private void HandleMovement(Vector2 input)
 
 ### 作成
 
-```
+```text
 Create > Reactive SO > Channels > Vector3 Event
 ```
 
@@ -513,7 +513,7 @@ private void SpawnEnemy(Vector3 position)
 
 ### 作成
 
-```
+```text
 Create > Reactive SO > Channels > Quaternion Event
 ```
 
@@ -562,7 +562,7 @@ UIテーマとビジュアルエフェクトのための色値を運ぶイベン
 
 ### 作成
 
-```
+```text
 Create > Reactive SO > Channels > Color Event
 ```
 
@@ -611,7 +611,7 @@ private void HandleColorChange(Color color)
 
 ### 作成
 
-```
+```text
 Create > Reactive SO > Channels > GameObject Event
 ```
 
@@ -667,7 +667,7 @@ private void TrackEnemy(GameObject enemy)
 
 ## カスタムタイプの作成
 
-ビルトインタイプがニーズに合わない場合は、カスタムイベントタイプを作成してください：
+ビルトインタイプがニーズに合わない場合は、カスタムイベントタイプを作成できます。
 
 ```csharp
 using Tang3cko.ReactiveSO;

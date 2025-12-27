@@ -37,7 +37,7 @@ Navigate to **Window > Reactive SO > Dependency Analyzer**.
 
 **Example**:
 
-```
+```text
 Summary: 20 Event Channels, 1 unused, 3 unassigned fields
 
 Unassigned Event Channel Fields:
@@ -73,7 +73,7 @@ You can safely delete event channels with zero usages.
 
 **Example**:
 
-```
+```text
 OnPlayerDeath (VoidEventChannelSO) - 5 usage(s)
   MainScene.unity
     Path: Assets/Scenes/MainScene.unity
@@ -102,7 +102,7 @@ OnPlayerDeath (VoidEventChannelSO) - 5 usage(s)
 
 ### Summary line
 
-```
+```text
 Summary: 15 Event Channels, 2 unused, 3 unassigned fields
 ```
 
@@ -116,7 +116,7 @@ Summary: 15 Event Channels, 2 unused, 3 unassigned fields
 
 Event channels display in a tree structure:
 
-```
+```text
 OnPlayerDeath (VoidEventChannelSO) - 3 usage(s)
   MainScene.unity
     Path: Assets/Scenes/MainScene.unity
@@ -131,7 +131,7 @@ Click the arrow to jump to assets.
 
 ### Unassigned fields section
 
-```
+```text
 Unassigned Event Channel Fields:
 
   MainScene.unity > Player.PlayerController.onPlayerDeath

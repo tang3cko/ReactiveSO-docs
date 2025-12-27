@@ -96,9 +96,9 @@ int currentHealth = playerHealth.Value;
 
 ### Step 1: Create a variable asset
 
-Right-click in the Project window:
+Right-click in the Project window and select the following menu path.
 
-```
+```text
 Create > Reactive SO > Variables > Int Variable
 ```
 
@@ -113,9 +113,9 @@ Select the asset and configure in the Inspector:
 
 ### Step 3: Create an event channel (optional)
 
-If you need to be notified of changes:
+If you need to be notified of changes, create a matching event channel.
 
-```
+```text
 Create > Reactive SO > Channels > Int Event
 ```
 

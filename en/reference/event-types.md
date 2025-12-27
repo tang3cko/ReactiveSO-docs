@@ -34,7 +34,7 @@ This reference documents all 12 built-in event channel types. You will find the 
 
 ## Choosing the right type
 
-Use this decision guide:
+Use the following decision guide to select the appropriate type.
 
 1. **No data needed?** Use Void
 2. **Whole numbers?**
@@ -60,7 +60,7 @@ Events with no parameters. Use when the event itself carries all necessary infor
 
 ### Create
 
-```
+```text
 Create > Reactive SO > Channels > Void Event
 ```
 
@@ -109,7 +109,7 @@ Events carrying integer values for counts, scores, and indices.
 
 ### Create
 
-```
+```text
 Create > Reactive SO > Channels > Int Event
 ```
 
@@ -160,7 +160,7 @@ Events carrying 64-bit integer values for large numbers and timestamps.
 
 ### Create
 
-```
+```text
 Create > Reactive SO > Channels > Long Event
 ```
 
@@ -210,7 +210,7 @@ Events carrying floating-point values for percentages, health, and time.
 
 ### Create
 
-```
+```text
 Create > Reactive SO > Channels > Float Event
 ```
 
@@ -261,7 +261,7 @@ Events carrying double-precision values for high-precision calculations.
 
 ### Create
 
-```
+```text
 Create > Reactive SO > Channels > Double Event
 ```
 
@@ -310,7 +310,7 @@ Events carrying boolean values for state toggles and flags.
 
 ### Create
 
-```
+```text
 Create > Reactive SO > Channels > Bool Event
 ```
 
@@ -360,7 +360,7 @@ Events carrying text data for messages, names, and identifiers.
 
 ### Create
 
-```
+```text
 Create > Reactive SO > Channels > String Event
 ```
 
@@ -411,7 +411,7 @@ Events carrying 2D vector data for positions, input, and screen coordinates.
 
 ### Create
 
-```
+```text
 Create > Reactive SO > Channels > Vector2 Event
 ```
 
@@ -462,7 +462,7 @@ Events carrying 3D vector data for positions, directions, and velocities.
 
 ### Create
 
-```
+```text
 Create > Reactive SO > Channels > Vector3 Event
 ```
 
@@ -513,7 +513,7 @@ Events carrying rotation values for 3D orientations.
 
 ### Create
 
-```
+```text
 Create > Reactive SO > Channels > Quaternion Event
 ```
 
@@ -562,7 +562,7 @@ Events carrying color values for UI theming and visual effects.
 
 ### Create
 
-```
+```text
 Create > Reactive SO > Channels > Color Event
 ```
 
@@ -611,7 +611,7 @@ Events carrying object references for spawned entities and targets.
 
 ### Create
 
-```
+```text
 Create > Reactive SO > Channels > GameObject Event
 ```
 

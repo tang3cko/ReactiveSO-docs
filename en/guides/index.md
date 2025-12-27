@@ -7,7 +7,11 @@ has_children: true
 
 # Guides
 
-Learn how to use Reactive SO features effectively.
+---
+
+## Purpose
+
+These guides explain how to use each Reactive SO feature in detail. Each guide includes step-by-step instructions, code examples, and best practices.
 
 ---
 

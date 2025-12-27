@@ -18,7 +18,7 @@ This page covers common issues, known limitations, and frequently asked question
 
 **Symptom**: You call `RaiseEvent()` but nothing happens.
 
-**Checklist**:
+**Checklist**
 
 1. **Is the event channel assigned?**
    - Check for `None` in the Inspector
@@ -49,7 +49,7 @@ This page covers common issues, known limitations, and frequently asked question
 
 **Cause**: Forgot to unsubscribe in `OnDisable`.
 
-**Fix**:
+**Fix**
 
 ```csharp
 private void OnEnable()
@@ -69,9 +69,9 @@ private void OnDisable()
 
 **Symptom**: Subscriber's `Start()` has not run when the event fires.
 
-**Solutions**:
+**Solutions**
 
-**Option 1**: Delay the event:
+**Option 1** - Delay the event
 ```csharp
 private IEnumerator Start()
 {
@@ -80,7 +80,7 @@ private IEnumerator Start()
 }
 ```
 
-**Option 2**: Subscribe earlier:
+**Option 2** - Subscribe earlier
 ```csharp
 private void Awake()
 {
@@ -97,9 +97,9 @@ private void OnDisable()
 
 **Symptom**: Multiple event channels have similar names and you reference the wrong one.
 
-**Fix**: Use clear names and organize in folders:
+**Fix** Use clear names and organize in folders:
 
-```
+```text
 ScriptableObjects/Events/
 ├── Player/
 │   ├── OnPlayerDeath.asset
@@ -114,7 +114,7 @@ ScriptableObjects/Events/
 
 **Symptom**: Event fires but subscriber does not react.
 
-**Checklist**:
+**Checklist**
 
 1. Is the GameObject active?
 2. Is the MonoBehaviour enabled?
@@ -142,7 +142,7 @@ ScriptableObjects/Events/
 
 Caller information only works for direct code calls. It does not work when events are raised via UnityEvent (e.g., Button.OnClick in Inspector).
 
-**Works**:
+**Works**
 ```csharp
 public void OnButtonClick()
 {
@@ -150,7 +150,7 @@ public void OnButtonClick()
 }
 ```
 
-**Does not work**:
+**Does not work**
 ```
 Inspector: Button.OnClick → EventChannel.RaiseEvent
 Caller shows: "-"
@@ -180,7 +180,7 @@ Nearly zero. Event channels use standard C# events internally. Debugging feature
 
 ### Can I use event channels with coroutines?
 
-Yes:
+Yes.
 
 ```csharp
 private void OnEnable()
@@ -201,9 +201,9 @@ private IEnumerator HandleEventCoroutine()
 
 ### Can I pass multiple values in one event?
 
-Not directly. Use one of these approaches:
+Not directly. Use one of these approaches.
 
-**Option 1**: Use a struct:
+**Option 1** - Use a struct
 ```csharp
 [System.Serializable]
 public struct PlayerDeathData
@@ -216,7 +216,7 @@ public struct PlayerDeathData
 public class PlayerDeathEventChannelSO : EventChannelSO<PlayerDeathData> { }
 ```
 
-**Option 2**: Use multiple events:
+**Option 2** - Use multiple events
 ```csharp
 onPlayerDeath?.RaiseEvent();
 onDeathPosition?.RaiseEvent(position);
@@ -225,7 +225,7 @@ onFinalScore?.RaiseEvent(score);
 
 ### Can I subscribe from ScriptableObjects?
 
-Yes:
+Yes.
 
 ```csharp
 public class GameSettings : ScriptableObject
@@ -278,13 +278,14 @@ public class EventChannelTests
 
 ### Can I use event channels for networking?
 
-Event channels work locally within a single Unity instance. For networked games:
+Event channels work locally within a single Unity instance. For networked games, consider the following approach.
 
 - Use event channels for local game logic
 - Use your networking solution for network communication
 - Raise event channels in response to network events
 
-Example:
+Here is an example of raising local events from network callbacks.
+
 ```csharp
 [ClientRpc]
 void RpcPlayerDeath()
@@ -298,7 +299,7 @@ void RpcPlayerDeath()
 
 ## Still having issues?
 
-If you are experiencing issues not covered here:
+If you are experiencing issues not covered here, try the following steps.
 
 1. Check Event Monitor to verify event flow
 2. Use Subscribers List to verify subscriptions
@@ -310,7 +311,7 @@ If you are experiencing issues not covered here:
 
 ## Reporting issues
 
-When reporting issues, include:
+When reporting issues, include the following information.
 
 - Unity version
 - Reactive SO version
@@ -318,7 +319,7 @@ When reporting issues, include:
 - Event Monitor output
 - Subscribers List screenshot
 
-For support:
+For support, use the following channels.
 
 - [Report issues on GitHub](https://github.com/tang3cko/ReactiveSO-docs/issues)
 - [Asset Store page](https://assetstore.unity.com/packages/tools/game-toolkits/reactive-so-339926)

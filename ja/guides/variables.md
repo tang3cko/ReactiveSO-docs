@@ -96,9 +96,9 @@ int currentHealth = playerHealth.Value;
 
 ### ステップ1：Variableアセットを作成
 
-Projectウィンドウで右クリック：
+Projectウィンドウで右クリックし、以下のメニューパスを選択します。
 
-```
+```text
 Create > Reactive SO > Variables > Int Variable
 ```
 
@@ -106,16 +106,16 @@ Create > Reactive SO > Variables > Int Variable
 
 ### ステップ2：Variableを設定
 
-アセットを選択し、Inspectorで設定：
+アセットを選択し、Inspectorで以下を設定します。
 
 - **Initial Value** - 開始値（例：体力なら100）
 - **Description** - このVariableが表すもの
 
 ### ステップ3：Event Channelを作成（オプション）
 
-変更の通知が必要な場合：
+変更の通知が必要な場合は、対応するEvent Channelを作成します。
 
-```
+```text
 Create > Reactive SO > Channels > Int Event
 ```
 
@@ -162,7 +162,7 @@ public class HealthBar : MonoBehaviour
 
 ## 変更を購読
 
-イベント駆動の更新には、Event Channelを購読：
+イベント駆動の更新には、Event Channelを購読します。
 
 ```csharp
 public class HealthDisplay : MonoBehaviour
@@ -194,7 +194,7 @@ public class HealthDisplay : MonoBehaviour
 
 ## 変更検出
 
-Variablesは`EqualityComparer<T>`を使用して変更を検出します。イベントは値が実際に変更されたときのみ発火：
+Variablesは`EqualityComparer<T>`を使用して変更を検出します。イベントは値が実際に変更されたときのみ発火します。
 
 ```csharp
 playerHealth.Value = 100;  // イベント発火（初期設定）
@@ -221,7 +221,7 @@ Play Mode中にInspectorの**Reset to Initial**ボタンを使用して、テス
 
 ### ベストプラクティス
 
-コードではなくInspectorで意味のある初期値を設定：
+コードではなくInspectorで意味のある初期値を設定しましょう。
 
 ```csharp
 // ❌ 悪い例：ハードコードされた初期値
@@ -264,7 +264,7 @@ String、GameObject、Long、DoubleはGPU Syncをサポートしていません�
 
 ### シェーダーでの使用
 
-値はグローバルプロパティとして自動的に利用可能：
+値はグローバルプロパティとして自動的に利用可能になります。
 
 ```hlsl
 // C#のブリッジコード不要

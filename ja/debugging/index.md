@@ -7,7 +7,11 @@ has_children: true
 
 # デバッグ
 
-Reactive SOにおけるイベントフローをデバッグおよび分析するためのツールです。
+---
+
+## 目的
+
+このセクションでは、Reactive SOのイベントフローをデバッグし、問題を診断する方法を説明します。組み込みのデバッグツールの使い方と、一般的な問題のトラブルシューティング方法を学びます。
 
 ---
 
@@ -91,7 +95,7 @@ Reactive SOは以下のデバッグツールを提供しています:
 
 **診断**:
 
-```
+```text
 Time | Event Name    | Caller
 0.5s | OnPlayerDeath | EnemyAI.cs:Attack:142
 0.5s | OnPlayerDeath | FallDetector.cs:OnTriggerEnter:28
@@ -113,7 +117,7 @@ Time | Event Name    | Caller
 
 **診断**:
 
-```
+```text
 期待される状態:
   UIManager.HandleEvent
   PlayerController.HandleEvent
@@ -147,7 +151,7 @@ private void OnDisable()
 
 **結果**:
 
-```
+```text
 OnPlayerDeath (VoidEventChannelSO) - 5 usage(s)
   MainScene.unity > Player.PlayerController
   MainScene.unity > UICanvas.UIManager
@@ -169,7 +173,7 @@ OnPlayerDeath (VoidEventChannelSO) - 5 usage(s)
 
 **結果**:
 
-```
+```text
 Summary: 20 Event Channels, 1 unused, 3 unassigned fields
 
 Unassigned Event Channel Fields:

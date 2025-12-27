@@ -65,13 +65,13 @@ This reduces noise from high-frequency events you are not debugging.
 
 The Caller column shows which code raised each event:
 
-```
+```text
 FileName.cs:MethodName:LineNumber
 ```
 
 Example:
 
-```
+```text
 PlayerController.cs:TakeDamage:142
 ```
 
@@ -125,7 +125,7 @@ When a sound plays twice:
 3. Count entries in the log
 4. Check Caller column:
 
-```
+```text
 Time | Event Name    | Caller
 0.5s | OnPlayerDeath | EnemyAI.cs:Attack:142
 0.5s | OnPlayerDeath | FallDetector.cs:OnTriggerEnter:28
@@ -141,7 +141,7 @@ Complex chains like OnPlayerDeath -> OnGameOver -> OnHighScoreSaved:
 2. Trigger player death
 3. See the complete sequence:
 
-```
+```text
 Time | Event Name       | Caller
 0.5s | OnPlayerDeath    | Player.cs:TakeDamage:89
 0.6s | OnGameOver       | GameManager.cs:HandlePlayerDeath:45

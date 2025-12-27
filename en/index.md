@@ -10,9 +10,15 @@ ScriptableObject-based reactive architecture for Unity with Event Channels, Vari
 
 ---
 
+## Purpose
+
+This documentation covers everything you need to use Reactive SO in your Unity projects. You will learn how to install, configure, and use each feature effectively.
+
+---
+
 ## Why Reactive SO?
 
-Traditional Unity development often leads to tightly coupled components that are hard to test and maintain. Reactive SO solves this by providing:
+Traditional Unity development often leads to tightly coupled components that are hard to test and maintain. Reactive SO addresses these challenges through its core design principles.
 
 - **Complete Decoupling** - Publishers and subscribers communicate through ScriptableObject assets without direct references
 - **Visual Event Flow** - See event dependencies directly in the Unity Inspector

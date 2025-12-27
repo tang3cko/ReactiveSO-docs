@@ -36,7 +36,7 @@ entitySet.UpdateData(this, state => {
 });
 ```
 
-このアーキテクチャにより以下が実現されます:
+このアーキテクチャにより以下が実現されます。
 
 - **シーン永続化** - エンティティの状態はシーン読み込みを超えて存続
 - **グローバルアクセス** - IDによる任意のエンティティ状態へのアクセス
@@ -108,7 +108,7 @@ flowchart TB
     E3 -->|notifies| AI[AI System]
 ```
 
-データフロー:
+データフローは3つの段階で構成されています。
 
 1. **エンティティ生成** → `ReactiveEntity.OnEnable()` → EntitySetに登録
 2. **状態更新** → `UpdateData()` → エンティティごとのコールバックが発火
@@ -120,7 +120,7 @@ flowchart TB
 
 ### ステップ1: 状態構造体の定義
 
-エンティティデータを保持する構造体を作成します。`[System.Serializable]`である必要があります:
+エンティティデータを保持する構造体を作成します。`[System.Serializable]`である必要があります。
 
 ```csharp
 using System;
@@ -157,19 +157,19 @@ public class EnemyEntitySetSO : ReactiveEntitySetSO<EnemyState>
 
 次に、Projectウィンドウでアセットを作成します:
 
-```
+```text
 Create > Reactive SO > Entity Sets > Enemy
 ```
 
 ### ステップ3: Event Channelの作成（オプション）
 
-セットレベルの変更通知が必要な場合は、Event Channelを作成します:
+セットレベルの変更通知が必要な場合は、Event Channelを作成します。
 
-```
+```text
 Create > Reactive SO > Channels > Int Event
 ```
 
-Entity Setのフィールドに割り当てます:
+Entity Setのフィールドに割り当てます。利用可能なイベントフィールドを以下に説明します。
 
 - **On Item Added** - エンティティ登録時に発火
 - **On Item Removed** - エンティティ登録解除時に発火
@@ -272,7 +272,7 @@ public class EnemyManager : MonoBehaviour
 
 ### エンティティごとの購読
 
-特定のエンティティの変更を追跡します:
+特定のエンティティの変更を追跡します。
 
 ```csharp
 public class EnemyHealthBar : MonoBehaviour
@@ -361,7 +361,7 @@ public class EnemyStatusUI : MonoBehaviour
 
 ### セットレベルのEvent Channel
 
-Event Channelを介してセットレベルの変更を購読します:
+Event Channelを介してセットレベルの変更を購読します。
 
 ```csharp
 public class EnemyCounter : MonoBehaviour
@@ -409,7 +409,7 @@ public class EnemyCounter : MonoBehaviour
 
 ### パターン1: ボスの体力バー
 
-特定のボスエンティティの体力を追跡します:
+特定のボスエンティティの体力を追跡します。
 
 ```csharp
 public class BossHealthBar : MonoBehaviour
@@ -451,7 +451,7 @@ public class BossHealthBar : MonoBehaviour
 
 ### パターン2: 状態異常システム
 
-状態異常を適用して追跡します:
+状態異常を適用して追跡します。
 
 ```csharp
 [Serializable]
@@ -494,7 +494,7 @@ public class StatusEffectManager : MonoBehaviour
 
 ### パターン3: 保存と読み込み
 
-セッションをまたいでエンティティの状態を永続化します:
+セッションをまたいでエンティティの状態を永続化します。
 
 ```csharp
 public class SaveSystem : MonoBehaviour
@@ -534,7 +534,7 @@ public class SaveSystem : MonoBehaviour
 
 ### 状態構造体をシンプルに保つ
 
-最高のパフォーマンスのためにプリミティブ型を使用します:
+最高のパフォーマンスのためにプリミティブ型を使用しましょう。
 
 ```csharp
 // Good: Simple value types
@@ -641,7 +641,7 @@ Sparse Setはページ単位でメモリを割り当て、使用されているI
 
 ### 状態はシーン変更を超えて存続
 
-エンティティデータはScriptableObjectに保存され、シーン読み込みをまたいで永続化されます:
+エンティティデータはScriptableObjectに保存され、シーン読み込みをまたいで永続化されます。
 
 ```csharp
 // Scene A: Enemy registers
@@ -657,7 +657,7 @@ if (entitySet.TryGetData(enemyId, out var state))
 
 ### シーンアンロード時のクリア
 
-シーン変更時にクリーンアップします:
+シーン変更時にクリーンアップしましょう。
 
 ```csharp
 public class SceneCleanup : MonoBehaviour
@@ -677,7 +677,7 @@ public class SceneCleanup : MonoBehaviour
 
 ### 状態が更新されない
 
-`SetData`または`UpdateData`を使用していることを確認してください。構造体の直接変更はセットを更新しません:
+`SetData`または`UpdateData`を使用していることを確認してください。構造体の直接変更はセットを更新しません。
 
 ```csharp
 // Wrong
