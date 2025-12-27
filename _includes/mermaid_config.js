@@ -1,3 +1,0 @@
-{
-  startOnLoad: false
-}

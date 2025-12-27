@@ -1,6 +1,6 @@
 ---
 layout: default
-title: Variables
+title: 変数（Variables）
 parent: ガイド
 nav_order: 2
 ---

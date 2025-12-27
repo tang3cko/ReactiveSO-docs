@@ -1,6 +1,6 @@
 ---
 layout: default
-title: Reactive Entity Set
+title: リアクティブエンティティセット（Reactive Entity Sets）
 parent: ガイド
 nav_order: 4
 ---

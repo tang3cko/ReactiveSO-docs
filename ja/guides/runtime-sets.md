@@ -1,6 +1,6 @@
 ---
 layout: default
-title: Runtime Sets
+title: ランタイムセット（Runtime Sets）
 parent: ガイド
 nav_order: 3
 ---
