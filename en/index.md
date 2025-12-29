@@ -97,4 +97,5 @@ Ready to use Reactive SO in your project?
 ## Links
 
 - [Asset Store](https://assetstore.unity.com/packages/tools/game-toolkits/reactive-so-339926)
+- [Blog Series](https://tang3cko.hashnode.dev/series/reactive-so)
 - [日本語ドキュメント]({{ '/ja/' | relative_url }})
