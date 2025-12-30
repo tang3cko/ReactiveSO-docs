@@ -154,7 +154,7 @@ private void OnEnable()
 エンティティデータはScriptableObjectに格納され、シーンロード間で永続化されます。
 
 {: .warning }
-> **重要**: ScriptableObjectはシーン遷移時にアクティブなオブジェクトから参照されていない場合、メモリからアンロードされる可能性があります。データ損失を防ぐには、RESアセットが永続的なオブジェクト（例：`DontDestroyOnLoad`マネージャー）から参照されていることを確認してください。
+> **重要**: ScriptableObjectはシーン遷移時にアクティブなオブジェクトから参照されていない場合、メモリからアンロードされる可能性があります。データ損失を防ぐには、Manager Sceneで`ReactiveEntitySetHolder`を使用してください。詳細は[永続化](persistence)を参照してください。
 
 ```csharp
 // シーンA: 敵を登録

@@ -436,7 +436,7 @@ public class BattleSceneInitializer : MonoBehaviour
 - 既存のエンティティ用に視覚的表現を作成
 
 {: .warning }
-> シーン遷移時にUnityがアンロードしないよう、RESアセットが永続的なオブジェクト（例：`DontDestroyOnLoad`マネージャー）から参照されていることを確認してください。
+> シーン遷移時のデータ損失を防ぐには、Manager Sceneで`ReactiveEntitySetHolder`を使用してください。詳細は[永続化](persistence)を参照してください。
 
 ---
 
