@@ -70,15 +70,15 @@ public class Enemy : MonoBehaviour
 Use this flowchart to choose the right tool for your situation:
 
 ```mermaid
-graph LR
+flowchart LR
     A["What type of data?"] --> B{Instance-specific?}
-    B -->|YES| C["C# fields<br/>Independent per object"]
+    B -->|YES| C["C# fields<br>Independent per object"]
     B -->|NO| D{How is it shared?}
-    D -->|Notifications only| E["Event Channels<br/>Decoupled communication"]
+    D -->|Notifications only| E["Event Channels<br>Decoupled communication"]
     D -->|State sharing| F{Multiple objects?}
-    D -->|Object tracking| I["Runtime Sets<br/>Dynamic collections"]
-    F -->|Same value shared| G["Variables<br/>Global state"]
-    F -->|Per-entity| H["Reactive Entity Sets<br/>ID-based management"]
+    D -->|Object tracking| I["Runtime Sets<br>Dynamic collections"]
+    F -->|Same value shared| G["Variables<br>Global state"]
+    F -->|Per-entity| H["Reactive Entity Sets<br>ID-based management"]
 ```
 
 ---

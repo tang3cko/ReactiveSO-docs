@@ -29,7 +29,7 @@ flowchart LR
         P2[Enemy]
     end
 
-    EC[("OnPlayerDeath\n(ScriptableObject)")]
+    EC[("OnPlayerDeath<br>(ScriptableObject)")]
 
     subgraph Subscribers
         S1[GameOverUI]

@@ -153,6 +153,9 @@ private void OnEnable()
 
 Entity data is stored in ScriptableObjects and persists across scene loads.
 
+{: .warning }
+> **Important**: ScriptableObjects may be unloaded from memory if not referenced by any active object during a scene transition. To prevent data loss, ensure your RES assets are referenced by a persistent object (e.g., a `DontDestroyOnLoad` manager).
+
 ```csharp
 // Scene A: Enemy registers
 entitySet.Register(enemyId, initialState);

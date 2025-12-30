@@ -50,7 +50,8 @@ sequenceDiagram
     E->>RS: Add(gameObject)
     RS->>RS: items.Add()
     RS->>M: OnItemsChanged
-    Note over M: Count updated
+    RS->>M: OnCountChanged(count)
+    Note over M: Update UI
     end
 
     rect rgb(230, 200, 200)
@@ -59,7 +60,8 @@ sequenceDiagram
     E->>RS: Remove(gameObject)
     RS->>RS: items.Remove()
     RS->>M: OnItemsChanged
-    Note over M: Count updated
+    RS->>M: OnCountChanged(count)
+    Note over M: Update UI
     end
 ```
 

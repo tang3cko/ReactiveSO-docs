@@ -84,7 +84,7 @@ ReactiveEntitySetがデータを所有（ScriptableObject）
 ```mermaid
 flowchart TB
     subgraph Persistent["永続層（ScriptableObject）"]
-        RES[("ReactiveEntitySet\nID → State マッピング")]
+        RES[("ReactiveEntitySet<br>ID → State マッピング")]
     end
 
     subgraph SceneA["シーンA"]
@@ -97,7 +97,7 @@ flowchart TB
         GO2 -->|"ビュー"| RES
     end
 
-    RES -.->|"データはシーン間で\n永続化"| RES
+    RES -.->|"データはシーン間で<br>永続化"| RES
 ```
 
 ### 実践的な意味

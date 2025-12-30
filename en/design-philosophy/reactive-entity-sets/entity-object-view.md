@@ -84,7 +84,7 @@ ReactiveEntitySet owns the data (ScriptableObject)
 ```mermaid
 flowchart TB
     subgraph Persistent["Persistent Layer (ScriptableObject)"]
-        RES[("ReactiveEntitySet\nID → State mapping")]
+        RES[("ReactiveEntitySet<br>ID → State mapping")]
     end
 
     subgraph SceneA["Scene A"]
@@ -97,7 +97,7 @@ flowchart TB
         GO2 -->|"view of"| RES
     end
 
-    RES -.->|"Data persists\nacross scenes"| RES
+    RES -.->|"Data persists<br>across scenes"| RES
 ```
 
 ### Practical implications

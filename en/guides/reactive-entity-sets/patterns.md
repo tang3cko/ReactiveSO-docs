@@ -435,6 +435,9 @@ public class BattleSceneInitializer : MonoBehaviour
 - Check for existing data when entering new scenes
 - Create visual representations for existing entities
 
+{: .warning }
+> Ensure your RES assets are referenced by a persistent object (e.g., a `DontDestroyOnLoad` manager) to prevent Unity from unloading them during scene transitions.
+
 ---
 
 ## Next steps

@@ -56,7 +56,11 @@ ScriptableObjectのデータはシーンロードを跨いで永続します。
 |----------------|----------------------|
 | GameObject | 破棄（DontDestroyOnLoad以外） |
 | MonoBehaviour | GameObjectと共に破棄 |
-| **ScriptableObjectデータ** | **永続** |
+| **ScriptableObjectデータ** | **永続**（条件付き、下記注意参照） |
+
+{: .warning }
+> **重要な注意: SOのアンロードについて**
+> ScriptableObjectはシーン遷移時にアクティブなオブジェクトから参照されていない場合、Unityによってメモリからアンロードされる可能性があります。アンロードされると、すべてのランタイムデータが失われます。これを防ぐには、`DontDestroyOnLoad`マネージャーなどの永続オブジェクトからSOアセットを参照するようにしてください。
 
 ```mermaid
 sequenceDiagram
@@ -88,7 +92,7 @@ sequenceDiagram
 ```mermaid
 flowchart LR
     subgraph Project["プロジェクトアセット"]
-        SO[("PlayerHealth\n(ScriptableObject)")]
+        SO[("PlayerHealth<br>(ScriptableObject)")]
     end
 
     subgraph Scene["シーンオブジェクト"]
@@ -144,7 +148,7 @@ Reactive SOは、Ryan Hippleが**Unite Austin 2017**で発表した講演「**Ga
 |------|------------------------|
 | Inspectorでの変更 | はい（自動） |
 | スクリプトでの変更 | いいえ（`EditorUtility.SetDirty()`の呼び出しが必要） |
-| Play Mode中の変更 | エディタ再起動まで永続 |
+| Play Mode中の変更 | いいえ（メモリ内のみ、Play Mode終了時に失われる） |
 
 ### ビルド内
 

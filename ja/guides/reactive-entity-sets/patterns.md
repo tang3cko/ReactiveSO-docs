@@ -435,6 +435,9 @@ public class BattleSceneInitializer : MonoBehaviour
 - 新しいシーンに入るときに既存のデータを確認
 - 既存のエンティティ用に視覚的表現を作成
 
+{: .warning }
+> シーン遷移時にUnityがアンロードしないよう、RESアセットが永続的なオブジェクト（例：`DontDestroyOnLoad`マネージャー）から参照されていることを確認してください。
+
 ---
 
 ## 次のステップ

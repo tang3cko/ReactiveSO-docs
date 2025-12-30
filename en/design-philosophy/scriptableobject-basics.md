@@ -56,7 +56,11 @@ ScriptableObject data persists across scene loads.
 |-----------|---------------------|
 | GameObject | Destroyed (unless DontDestroyOnLoad) |
 | MonoBehaviour | Destroyed with GameObject |
-| **ScriptableObject data** | **Persists** |
+| **ScriptableObject data** | **Persists** (conditional, see note below) |
+
+{: .warning }
+> **Important: SO Unloading**
+> ScriptableObjects may be unloaded from memory by Unity if they are not referenced by any active object during a scene transition. If unloaded, all runtime data will be lost. To prevent this, ensure your SO assets are referenced by a persistent object like a `DontDestroyOnLoad` manager.
 
 ```mermaid
 sequenceDiagram
@@ -88,7 +92,7 @@ Systems communicate through ScriptableObject assets instead of direct references
 ```mermaid
 flowchart LR
     subgraph Project["Project Assets"]
-        SO[("PlayerHealth\n(ScriptableObject)")]
+        SO[("PlayerHealth<br>(ScriptableObject)")]
     end
 
     subgraph Scene["Scene Objects"]
@@ -144,7 +148,7 @@ The talk introduced several patterns that form the foundation of Reactive SO.
 |--------|----------------|
 | Change via Inspector | Yes (automatic) |
 | Change via script | No (call `EditorUtility.SetDirty()`) |
-| Play Mode changes | Persisted until Editor restart |
+| Play Mode changes | No (in-memory only, lost when exiting Play Mode) |
 
 ### In Build
 
