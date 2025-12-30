@@ -35,6 +35,7 @@ Reactive SOは一つの基本的なアイデアに基づいています：**Scri
 |--------|----------|
 | [ScriptableObjectの基礎](scriptableobject-basics) | グローバル共有リソース、Entity vs Object、Views としての GameObject、シーン永続性 |
 | [アーキテクチャパターン](architecture-patterns) | 4つのツールの比較、Instance vs Global ルール、共通パターン、決定ガイド |
+| [テスト容易性](testability) | Reactive SOがテスト可能な理由、DI比較、モックライブラリなしのテスト |
 
 ---
 

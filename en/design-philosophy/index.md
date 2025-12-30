@@ -35,6 +35,7 @@ Understanding this principle is critical for choosing the right tool for each si
 |------|--------|
 | [ScriptableObject Basics](scriptableobject-basics) | Global shared resources, Entity vs Object, GameObjects as Views, scene persistence |
 | [Architecture Patterns](architecture-patterns) | Four tools comparison, Instance vs Global rule, common patterns, decision guides |
+| [Testability](testability) | Why Reactive SO is testable, DI comparison, testing without mock libraries |
 
 ---
 
