@@ -11,6 +11,10 @@ has_children: true
 {: .warning }
 > **Experimental Feature** - Reactive Entity Sets are available in v2.1.0 (unreleased). The API may change in future versions. Use in production at your own discretion.
 
+{: .warning }
+> **Critical Note: Runtime Data Persistence**
+> While ScriptableObjects can store data across scenes, Unity may unload them from memory if they are not referenced by any active object during a scene transition. If unloaded, all runtime data (e.g., entity state) will be lost. To prevent this, ensure your ScriptableObject assets are referenced by a persistent object like a `DontDestroyOnLoad` manager. See [Troubleshooting: ScriptableObject data loss]({{ '/en/troubleshooting' | relative_url }}#data-loss) for details.
+
 ---
 
 ## Purpose

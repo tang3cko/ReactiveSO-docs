@@ -205,7 +205,7 @@ public struct GameProgress
 }
 ```
 
-### ScriptableObject data loss on scene transition
+### ScriptableObject data loss on scene transition {#data-loss}
 
 Runtime data in ScriptableObjects may be lost if the SO is unloaded from memory. This can happen in the following cases.
 

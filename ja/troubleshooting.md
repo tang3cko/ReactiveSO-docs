@@ -205,7 +205,7 @@ public struct GameProgress
 }
 ```
 
-### シーン遷移時のScriptableObjectデータ消失
+### シーン遷移時のScriptableObjectデータ消失 {#data-loss}
 
 ScriptableObjectがメモリからアンロードされると、ランタイムデータが失われる可能性があります。以下の場合に発生します。
 
