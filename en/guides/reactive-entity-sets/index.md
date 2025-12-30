@@ -13,7 +13,7 @@ has_children: true
 
 {: .warning }
 > **Critical Note: Runtime Data Persistence**
-> While ScriptableObjects can store data across scenes, Unity may unload them from memory if they are not referenced by any active object during a scene transition. If unloaded, all runtime data (e.g., entity state) will be lost. To prevent this, ensure your ScriptableObject assets are referenced by a persistent object like a `DontDestroyOnLoad` manager. See [Troubleshooting: ScriptableObject data loss]({{ '/en/troubleshooting' | relative_url }}#data-loss) for details.
+> While ScriptableObjects can store data across scenes, Unity may unload them from memory if they are not referenced by any active object during a scene transition. If unloaded, all runtime data (e.g., entity state) will be lost. To prevent this, use the Manager Scene pattern with `ReactiveEntitySetHolder`. See [Persistence](persistence) for details.
 
 ---
 
@@ -132,6 +132,7 @@ The data flows through the system in three stages.
 | [Events](events) | Per-entity subscriptions, set-level notifications |
 | [Patterns](patterns) | Boss health bars, status effects, save/load |
 | [Best Practices](best-practices) | Performance tips, troubleshooting |
+| [Persistence](persistence) | Prevent data loss across scene transitions |
 
 ---
 
