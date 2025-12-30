@@ -1,6 +1,6 @@
 ---
 layout: default
-title: テスト
+title: Testing
 parent: ガイド
 nav_order: 5
 ---
@@ -22,7 +22,7 @@ nav_order: 5
 
 ### Unity Test Framework
 
-Unity Test FrameworkはUnityに同梱されています。Test Runnerへのアクセス：
+Unity Test FrameworkはUnityに同梱されています。Test Runnerは以下のメニューからアクセスします。
 
 ```text
 Window > General > Test Runner
@@ -43,7 +43,7 @@ ScriptableObjectはシーンなしでインスタンス化できるため、ほ�
 
 ### 基本パターン
 
-テストでScriptableObjectインスタンスを直接作成します：
+テストでScriptableObjectインスタンスを直接作成します。
 
 ```csharp
 using NUnit.Framework;
@@ -167,7 +167,7 @@ public class IntVariableSOTests
 
 ### 変更検出のテスト
 
-Variablesは値が実際に変更されたときのみイベントを発火します：
+Variablesは値が実際に変更されたときのみイベントを発火します。
 
 ```csharp
 [Test]
@@ -240,7 +240,7 @@ public class GameObjectRuntimeSetSOTests
 
 ### テスト専用サブクラスパターン
 
-ジェネリッククラスをテストするために具象実装を作成します：
+ジェネリッククラスをテストするために具象実装を作成します。
 
 ```csharp
 public class ReactiveEntitySetSOTests
@@ -410,7 +410,7 @@ public class ExporterTests
 
 ### AAAパターンに従う
 
-テストを明確なセクションで構造化します：
+テストを明確なセクションで構造化します。
 
 ```csharp
 [Test]
@@ -426,7 +426,7 @@ public void MethodName_Scenario_ExpectedBehavior()
 
 ### 常にクリーンアップ
 
-Edit ModeテストではDestroyImmediateを使用します：
+Edit ModeテストではDestroyImmediateを使用します。
 
 ```csharp
 [TearDown]
@@ -460,7 +460,7 @@ public void RaiseEvent_WithMinValue_TransmitsMinValue()
 
 ### テストの独立性を保つ
 
-各テストは単独で実行可能であるべきです：
+各テストは単独で実行可能であるべきです。
 
 ```csharp
 // 悪い例：テスト間で状態を共有

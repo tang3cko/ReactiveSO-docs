@@ -1,6 +1,6 @@
 ---
 layout: default
-title: テスト容易性
+title: Testability
 parent: 設計思想
 nav_order: 3
 ---
@@ -17,7 +17,7 @@ nav_order: 3
 
 ## テスト容易性の優位点
 
-従来のUnityコードは密結合になりがちで、テストが困難です：
+従来のUnityコードは密結合になりがちで、テストが困難です。
 
 ```csharp
 // テスト困難：シングルトンへの直接依存
@@ -31,7 +31,7 @@ public class Enemy : MonoBehaviour
 }
 ```
 
-Reactive SOでは、依存関係がInspector経由で注入可能です：
+Reactive SOでは、依存関係がInspector経由で注入可能です。
 
 ```csharp
 // テスト容易：注入可能な依存関係
@@ -52,11 +52,11 @@ public class Enemy : MonoBehaviour
 
 ## テスト可能なコードの3つの柱
 
-Reactive SOはRyan Hippleの[Unite 2017](https://www.youtube.com/watch?v=raQ3iHhE_Kk)の原則に従っています：
+Reactive SOはRyan Hippleの[Unite 2017](https://www.youtube.com/watch?v=raQ3iHhE_Kk)の原則に従っています。
 
 ### Modular（モジュラー）
 
-システムが互いに直接依存しません。ScriptableObjectが仲介者として機能します：
+システムが互いに直接依存しません。ScriptableObjectが仲介者として機能します。
 
 ```mermaid
 flowchart LR
@@ -69,7 +69,7 @@ flowchart LR
 
 ### Editable（編集可能）
 
-データはスクリプトにハードコードされず、ScriptableObjectアセットに存在します：
+データはスクリプトにハードコードされず、ScriptableObjectアセットに存在します。
 
 - デザイナーがコード変更なしで値を調整可能
 - テスト用の設定を別のアセットとして作成可能
@@ -83,7 +83,7 @@ flowchart LR
 
 ## Reactive SOによるテストの実現
 
-依存関係はUnityのシリアライゼーションシステム経由で注入されます：
+依存関係はUnityのシリアライゼーションシステム経由で注入されます。
 
 ```csharp
 public class Enemy : MonoBehaviour
@@ -93,7 +93,7 @@ public class Enemy : MonoBehaviour
 }
 ```
 
-テストでは、アセットファイルなしでScriptableObjectを直接作成できます：
+テストでは、アセットファイルなしでScriptableObjectを直接作成できます。
 
 ```csharp
 [SetUp]
@@ -103,7 +103,7 @@ public void Setup()
 }
 ```
 
-このアプローチの特徴：
+このアプローチには以下の特徴があります。
 
 - **追加セットアップ不要** - Unityの組み込みシリアライゼーションを使用
 - **Inspectorベースの設定** - デザイナーフレンドリーな依存関係の割り当て
@@ -123,7 +123,7 @@ Moq、NSubstitute、その他のモッキングフレームワークは不要で
 
 ### インターフェースベースのモッキング（必要な場合）
 
-外部依存（ファイルI/O、ダイアログ）には、シンプルなインターフェースを使用します：
+外部依存（ファイルI/O、ダイアログ）には、シンプルなインターフェースを使用します。
 
 ```csharp
 // インターフェース
@@ -171,7 +171,7 @@ public class MockFileService : IFileService
 
 ## まとめ
 
-Reactive SOは以下によりテスト可能なアーキテクチャを実現します：
+Reactive SOは以下によりテスト可能なアーキテクチャを実現します。
 
 1. **疎結合システム** - ScriptableObjectが仲介者として機能
 2. **Inspector注入** - Unityのシリアライゼーション経由で依存関係を割り当て
