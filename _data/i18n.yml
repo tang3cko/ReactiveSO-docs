@@ -34,6 +34,10 @@ en:
   runtime_set_monitor: "Runtime Set Monitor"
   dependency_analyzer: "Dependency Analyzer"
 
+  # Integrations titles
+  integrations: "Integrations"
+  r3: "R3"
+
   # UI
   switch_lang: "日本語"
   switch_url: "/ja/"
@@ -73,6 +77,10 @@ ja:
   variable_monitor: "Variable Monitor"
   runtime_set_monitor: "Runtime Set Monitor"
   dependency_analyzer: "Dependency Analyzer"
+
+  # Integrations titles
+  integrations: "外部連携"
+  r3: "R3"
 
   # UI
   switch_lang: "English"
