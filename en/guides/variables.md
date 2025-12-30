@@ -196,6 +196,18 @@ public class HealthDisplay : MonoBehaviour
 
 Variables use `EqualityComparer<T>` to detect changes. Events only fire when the value actually changes.
 
+```mermaid
+graph LR
+    A["Value = newValue"] --> B{"oldValue == newValue?"}
+    B -->|YES| C["Do nothing"]
+    B -->|NO| D["Update value"]
+    D --> E["Fire OnValueChanged"]
+    E --> F["Notify subscribers"]
+
+    style C fill:#ffcccc
+    style F fill:#ccffcc
+```
+
 ```csharp
 playerHealth.Value = 100;  // Event fires (initial set)
 playerHealth.Value = 80;   // Event fires (100 != 80)

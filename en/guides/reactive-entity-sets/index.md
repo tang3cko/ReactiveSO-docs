@@ -90,12 +90,12 @@ This architecture enables:
 
 ```mermaid
 flowchart TB
-    subgraph EntitySet["ReactiveEntitySetSO&lt;EnemyState&gt;"]
+    subgraph EntitySet["ReactiveEntitySetSO<EnemyState>"]
         SS[Sparse Set]
         subgraph Data["Per-Entity State"]
-            D1["ID: 101 → {Health: 80}"]
-            D2["ID: 102 → {Health: 100}"]
-            D3["ID: 103 → {Health: 45}"]
+            D1["ID: 101 → Health: 80"]
+            D2["ID: 102 → Health: 100"]
+            D3["ID: 103 → Health: 45"]
         end
         subgraph Events["Event Channels"]
             E1[OnItemAdded]
@@ -112,6 +112,9 @@ flowchart TB
     E3 -->|notifies| UI[Health Bar UI]
     E3 -->|notifies| AI[AI System]
 ```
+
+{: .note }
+> **Sparse Set**: A data structure that achieves O(1) registration, lookup, and removal. It provides fast mapping from entity IDs to state data.
 
 The data flows through the system in three stages.
 

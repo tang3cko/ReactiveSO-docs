@@ -34,6 +34,35 @@ foreach (var enemy in activeEnemies.Items) { ... }
 
 これにより`EnemyManager.Instance`のようなシングルトンマネージャーが不要になります。
 
+### ライフサイクル
+
+オブジェクトの登録/解除は以下のように行われます：
+
+```mermaid
+sequenceDiagram
+    participant E as Enemy
+    participant RS as RuntimeSet
+    participant M as Manager
+
+    rect rgb(200, 230, 200)
+    Note over E,M: 登録フロー
+    E->>E: OnEnable()
+    E->>RS: Add(gameObject)
+    RS->>RS: items.Add()
+    RS->>M: OnItemsChanged
+    Note over M: Count更新
+    end
+
+    rect rgb(230, 200, 200)
+    Note over E,M: 解除フロー
+    E->>E: OnDisable()
+    E->>RS: Remove(gameObject)
+    RS->>RS: items.Remove()
+    RS->>M: OnItemsChanged
+    Note over M: Count更新
+    end
+```
+
 ---
 
 ## Runtime Setsを使うタイミング

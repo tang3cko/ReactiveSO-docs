@@ -18,6 +18,22 @@ nav_order: 8
 
 **症状**: `RaiseEvent()`を呼び出しても何も起きない。
 
+**診断フローチャート**
+
+```mermaid
+graph TB
+    A["イベントが発火しない"] --> B{"Event Channel<br/>割り当て済み？"}
+    B -->|NO| C["Inspectorで<br/>アセットを設定"]
+    B -->|YES| D{"?.RaiseEvent()<br/>を使用？"}
+    D -->|NO| E["null条件演算子<br/>を追加"]
+    D -->|YES| F["Event Monitorを開く"]
+    F --> G{"イベントが<br/>表示される？"}
+    G -->|NO| H["Publisher側の問題<br/>RaiseEvent呼び出しを確認"]
+    G -->|YES| I{"#L列に<br/>購読者がいる？"}
+    I -->|NO| J["購読者が未登録<br/>OnEnableを確認"]
+    I -->|YES| K["Subscriber側の問題<br/>ハンドラを確認"]
+```
+
 **チェックリスト**
 
 1. **イベントチャンネルは割り当てられていますか？**

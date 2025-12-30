@@ -18,6 +18,22 @@ This page covers common issues, known limitations, and frequently asked question
 
 **Symptom**: You call `RaiseEvent()` but nothing happens.
 
+**Diagnostic flowchart**
+
+```mermaid
+graph TB
+    A["Events not firing"] --> B{"Event Channel<br/>assigned?"}
+    B -->|NO| C["Set asset<br/>in Inspector"]
+    B -->|YES| D{"Using<br/>?.RaiseEvent()?"}
+    D -->|NO| E["Add null-conditional<br/>operator"]
+    D -->|YES| F["Open Event Monitor"]
+    F --> G{"Event<br/>appearing?"}
+    G -->|NO| H["Publisher issue<br/>Check RaiseEvent call"]
+    G -->|YES| I{"Subscribers<br/>in #L column?"}
+    I -->|NO| J["No subscribers<br/>Check OnEnable"]
+    I -->|YES| K["Subscriber issue<br/>Check handler"]
+```
+
 **Checklist**
 
 1. **Is the event channel assigned?**

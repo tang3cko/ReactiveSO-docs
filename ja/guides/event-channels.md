@@ -225,6 +225,35 @@ private void UpdateScoreUI(int newScore)
 
 購読解除を忘れるとメモリリークとエラーの原因になります。
 
+```mermaid
+sequenceDiagram
+    participant GO as GameObject
+    participant Sub as Subscriber
+    participant EC as EventChannel
+    participant Pub as Publisher
+
+    rect rgb(200, 230, 200)
+    Note over GO,EC: オブジェクト有効化
+    GO->>Sub: OnEnable()
+    Sub->>EC: += HandleEvent
+    Note over EC: サブスクライバーリストに追加
+    end
+
+    rect rgb(230, 230, 200)
+    Note over Pub,EC: イベント発火
+    Pub->>EC: RaiseEvent()
+    EC->>Sub: HandleEvent()
+    Sub->>Sub: ロジック実行
+    end
+
+    rect rgb(230, 200, 200)
+    Note over GO,EC: オブジェクト無効化
+    GO->>Sub: OnDisable()
+    Sub->>EC: -= HandleEvent
+    Note over EC: サブスクライバーリストから削除
+    end
+```
+
 ```csharp
 // ✅ 良い例：購読と解除のバランス
 private void OnEnable()

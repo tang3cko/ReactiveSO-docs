@@ -196,6 +196,18 @@ public class HealthDisplay : MonoBehaviour
 
 Variablesは`EqualityComparer<T>`を使用して変更を検出します。イベントは値が実際に変更されたときのみ発火します。
 
+```mermaid
+graph LR
+    A["Value = newValue"] --> B{"oldValue == newValue?"}
+    B -->|YES| C["何もしない"]
+    B -->|NO| D["値を更新"]
+    D --> E["OnValueChanged発火"]
+    E --> F["購読者に通知"]
+
+    style C fill:#ffcccc
+    style F fill:#ccffcc
+```
+
 ```csharp
 playerHealth.Value = 100;  // イベント発火（初期設定）
 playerHealth.Value = 80;   // イベント発火（100 != 80）

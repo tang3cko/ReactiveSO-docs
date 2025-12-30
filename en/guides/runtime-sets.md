@@ -34,6 +34,35 @@ foreach (var enemy in activeEnemies.Items) { ... }
 
 This eliminates the need for singleton managers like `EnemyManager.Instance`.
 
+### Lifecycle
+
+The registration and unregistration flow works as follows:
+
+```mermaid
+sequenceDiagram
+    participant E as Enemy
+    participant RS as RuntimeSet
+    participant M as Manager
+
+    rect rgb(200, 230, 200)
+    Note over E,M: Registration flow
+    E->>E: OnEnable()
+    E->>RS: Add(gameObject)
+    RS->>RS: items.Add()
+    RS->>M: OnItemsChanged
+    Note over M: Count updated
+    end
+
+    rect rgb(230, 200, 200)
+    Note over E,M: Unregistration flow
+    E->>E: OnDisable()
+    E->>RS: Remove(gameObject)
+    RS->>RS: items.Remove()
+    RS->>M: OnItemsChanged
+    Note over M: Count updated
+    end
+```
+
 ---
 
 ## When to use runtime sets

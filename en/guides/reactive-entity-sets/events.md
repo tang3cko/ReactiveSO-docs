@@ -206,6 +206,41 @@ public class EnemyCounter : MonoBehaviour
 
 Understanding when events fire helps you structure your code correctly.
 
+```mermaid
+sequenceDiagram
+    participant C as Component
+    participant RES as ReactiveEntitySet
+    participant SS as Sparse Set
+    participant CB as Callbacks
+    participant EC as Event Channels
+
+    rect rgb(200, 230, 200)
+    Note over C,EC: Registration flow
+    C->>RES: Register(id, data)
+    RES->>SS: Add(id, data)
+    RES->>EC: OnItemAdded(id)
+    RES->>EC: OnSetChanged
+    end
+
+    rect rgb(200, 200, 230)
+    Note over C,EC: State update flow
+    C->>RES: UpdateData(id, newState)
+    RES->>SS: Write(id, newState)
+    RES->>CB: Invoke(oldState, newState)
+    RES->>EC: OnDataChanged(id)
+    RES->>EC: OnSetChanged
+    end
+
+    rect rgb(230, 200, 200)
+    Note over C,EC: Unregistration flow
+    C->>RES: Unregister(id)
+    RES->>CB: Clear(id)
+    RES->>SS: Remove(id)
+    RES->>EC: OnItemRemoved(id)
+    RES->>EC: OnSetChanged
+    end
+```
+
 ### State update flow
 
 ```

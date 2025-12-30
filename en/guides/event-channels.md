@@ -225,6 +225,35 @@ Subscribers execute in the order they subscribed. Do not rely on execution order
 
 Failing to unsubscribe causes memory leaks and errors.
 
+```mermaid
+sequenceDiagram
+    participant GO as GameObject
+    participant Sub as Subscriber
+    participant EC as EventChannel
+    participant Pub as Publisher
+
+    rect rgb(200, 230, 200)
+    Note over GO,EC: Object Enabled
+    GO->>Sub: OnEnable()
+    Sub->>EC: += HandleEvent
+    Note over EC: Added to subscriber list
+    end
+
+    rect rgb(230, 230, 200)
+    Note over Pub,EC: Event Raised
+    Pub->>EC: RaiseEvent()
+    EC->>Sub: HandleEvent()
+    Sub->>Sub: Execute logic
+    end
+
+    rect rgb(230, 200, 200)
+    Note over GO,EC: Object Disabled
+    GO->>Sub: OnDisable()
+    Sub->>EC: -= HandleEvent
+    Note over EC: Removed from subscriber list
+    end
+```
+
 ```csharp
 // ✅ Good: Balanced subscribe/unsubscribe
 private void OnEnable()

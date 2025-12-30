@@ -90,12 +90,12 @@ entitySet.UpdateData(this, state => {
 
 ```mermaid
 flowchart TB
-    subgraph EntitySet["ReactiveEntitySetSO&lt;EnemyState&gt;"]
+    subgraph EntitySet["ReactiveEntitySetSO<EnemyState>"]
         SS[Sparse Set]
         subgraph Data["エンティティごとの状態"]
-            D1["ID: 101 → {Health: 80}"]
-            D2["ID: 102 → {Health: 100}"]
-            D3["ID: 103 → {Health: 45}"]
+            D1["ID: 101 → Health: 80"]
+            D2["ID: 102 → Health: 100"]
+            D3["ID: 103 → Health: 45"]
         end
         subgraph Events["イベントチャンネル"]
             E1[OnItemAdded]
@@ -112,6 +112,9 @@ flowchart TB
     E3 -->|通知| UI[ヘルスバーUI]
     E3 -->|通知| AI[AIシステム]
 ```
+
+{: .note }
+> **Sparse Set**: O(1)の登録・検索・削除を実現するデータ構造。エンティティIDから状態データへの高速なマッピングを提供します。
 
 データは3つのステージでシステムを流れます。
 

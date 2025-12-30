@@ -76,6 +76,22 @@ In this case, the GameObject's Transform is a **view** of the authoritative posi
 
 Before adding data to RES, ask these questions.
 
+```mermaid
+graph TB
+    A["Should this data<br/>go in RES?"] --> B{"Computed by<br/>external system?"}
+    B -->|NO| C["Keep as<br/>GameObject field"]
+    B -->|YES| D{"Change frequency<br/><10% per frame?"}
+    D -->|NO| E["Consider<br/>traditional approach"]
+    D -->|YES| F{"Multiple systems<br/>observe changes?"}
+    F -->|NO| G["May not<br/>need RES"]
+    F -->|YES| H["Add to RES"]
+
+    style C fill:#ffcccc
+    style E fill:#ffffcc
+    style G fill:#ffffcc
+    style H fill:#ccffcc
+```
+
 ### 1. Ownership
 
 **Is this data computed by EXTERNAL logic?**

@@ -58,6 +58,29 @@ ScriptableObjectのデータはシーンロードを跨いで永続します。
 | MonoBehaviour | GameObjectと共に破棄 |
 | **ScriptableObjectデータ** | **永続** |
 
+```mermaid
+sequenceDiagram
+    participant SO as ScriptableObject<br/>(プロジェクトアセット)
+    participant S1 as Scene 1
+    participant S2 as Scene 2
+
+    Note over SO: アプリ起動時にロード
+    rect rgb(200, 230, 200)
+    Note over S1: Scene 1 アクティブ
+    S1->>SO: 値を更新 (Health = 80)
+    SO-->>S1: 値を提供
+    end
+
+    S1->>S1: シーン破棄
+    Note over SO: データは永続 ✓<br/>Health = 80
+
+    rect rgb(200, 200, 230)
+    Note over S2: Scene 2 アクティブ
+    S2->>SO: 値を読み取り
+    SO-->>S2: Health = 80 (維持)
+    end
+```
+
 ### 3. 疎結合アーキテクチャ
 
 システムは直接参照ではなく、ScriptableObjectアセットを通じて通信します。

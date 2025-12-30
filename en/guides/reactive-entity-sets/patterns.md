@@ -79,6 +79,23 @@ public class BossHealthBar : MonoBehaviour
 
 Apply and track status effects across entities.
 
+```mermaid
+stateDiagram-v2
+    [*] --> Normal
+
+    Normal --> Poisoned: ApplyPoison()
+    Normal --> Slowed: ApplySlow()
+
+    Poisoned --> Normal: Timer expires
+    Poisoned --> PoisonedSlowed: ApplySlow()
+
+    Slowed --> Normal: Timer expires
+    Slowed --> PoisonedSlowed: ApplyPoison()
+
+    PoisonedSlowed --> Poisoned: Slow expires
+    PoisonedSlowed --> Slowed: Poison expires
+```
+
 ### State struct
 
 ```csharp
@@ -155,6 +172,21 @@ public class StatusEffectManager : MonoBehaviour
 ## Pattern 3: Save and load
 
 Persist entity state across game sessions.
+
+```mermaid
+graph LR
+    subgraph Save["Save flow"]
+        S1["ForEach(id, state)"] --> S2["PlayerPrefs.Set"]
+        S2 --> S3["Save()"]
+    end
+
+    subgraph Load["Load flow"]
+        L1["PlayerPrefs.Get"] --> L2["new State{}"]
+        L2 --> L3["SetData(id, state)"]
+    end
+
+    S3 -.->|Persisted| L1
+```
 
 ```csharp
 public class SaveSystem : MonoBehaviour

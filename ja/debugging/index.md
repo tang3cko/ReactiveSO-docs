@@ -32,6 +32,24 @@ Reactive SOは以下のデバッグツールを提供しています。
 
 ## ツール選択ガイド
 
+```mermaid
+graph TB
+    A["問題を診断したい"] --> B{"リアルタイム?"}
+    B -->|YES| C{"何を確認？"}
+    B -->|NO| D["Dependency Analyzer<br/>静的解析"]
+
+    C -->|イベント発火| E["Event Monitor"]
+    C -->|変数の値| F["Variable Monitor"]
+    C -->|セットの内容| G["Runtime Set Monitor"]
+    C -->|購読者| H["Subscribers List"]
+
+    E --> I{"イベント表示？"}
+    I -->|NO| J["Publisher側を確認"]
+    I -->|YES| K{"#L > 0?"}
+    K -->|NO| L["購読者がいない"]
+    K -->|YES| M["Subscriber側を確認"]
+```
+
 | 質問 | ツール |
 |----------|------|
 | イベントは発火していますか? | Event Monitor |

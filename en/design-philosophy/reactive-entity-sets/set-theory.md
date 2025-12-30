@@ -63,6 +63,35 @@ All operations maintain closure. The result is always a valid ReactiveEntitySet 
 
 Views are subsets of a ReactiveEntitySet defined by a predicate. There are two fundamental types.
 
+```mermaid
+flowchart TB
+    subgraph Parent["ReactiveEntitySet S"]
+        direction TB
+        E1["(id:1, HP:80)"]
+        E2["(id:2, HP:25)"]
+        E3["(id:3, HP:100)"]
+        E4["(id:4, HP:15)"]
+    end
+
+    subgraph Static["Static View R(c₀)"]
+        direction TB
+        S1["Fixed predicate: HP < 30"]
+        S2["id:2, id:4"]
+    end
+
+    subgraph Dynamic["Dynamic View R(c₁)"]
+        direction TB
+        D1["Context-aware predicate"]
+        D2["P(data, ctx)"]
+    end
+
+    Parent --> Static
+    Parent --> Dynamic
+
+    style Static fill:#e6f3ff
+    style Dynamic fill:#fff3e6
+```
+
 ### Static View R(c₀)
 
 A static view depends only on the entity data.

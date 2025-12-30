@@ -65,6 +65,22 @@ public class Enemy : MonoBehaviour
 }
 ```
 
+### 決定ツリー
+
+以下のフローチャートで、状況に応じた適切なツールを選択できます：
+
+```mermaid
+graph LR
+    A["データの種類は？"] --> B{インスタンス固有？}
+    B -->|YES| C["C#フィールド<br/>各オブジェクト独立"]
+    B -->|NO| D{共有方法は？}
+    D -->|通知のみ| E["Event Channels<br/>疎結合通信"]
+    D -->|状態共有| F{複数オブジェクト？}
+    D -->|オブジェクト追跡| I["Runtime Sets<br/>動的コレクション"]
+    F -->|同じ値を共有| G["Variables<br/>グローバル状態"]
+    F -->|エンティティごと| H["Reactive Entity Sets<br/>ID管理"]
+```
+
 ---
 
 ## 各ツールの使用タイミング

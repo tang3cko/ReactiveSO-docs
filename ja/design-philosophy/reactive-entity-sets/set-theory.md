@@ -63,6 +63,35 @@ S = { (id₁, data₁), (id₂, data₂), ..., (idₙ, dataₙ) }
 
 Viewは述語によって定義されるReactiveEntitySetのサブセットです。2つの基本的なタイプがあります。
 
+```mermaid
+flowchart TB
+    subgraph Parent["ReactiveEntitySet S"]
+        direction TB
+        E1["(id:1, HP:80)"]
+        E2["(id:2, HP:25)"]
+        E3["(id:3, HP:100)"]
+        E4["(id:4, HP:15)"]
+    end
+
+    subgraph Static["静的View R(c₀)"]
+        direction TB
+        S1["固定述語: HP < 30"]
+        S2["id:2, id:4"]
+    end
+
+    subgraph Dynamic["動的View R(c₁)"]
+        direction TB
+        D1["コンテキスト付き述語"]
+        D2["P(data, ctx)"]
+    end
+
+    Parent --> Static
+    Parent --> Dynamic
+
+    style Static fill:#e6f3ff
+    style Dynamic fill:#fff3e6
+```
+
 ### 静的View R(c₀)
 
 静的ビューはエンティティデータのみに依存します。

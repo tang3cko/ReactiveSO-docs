@@ -58,6 +58,29 @@ ScriptableObject data persists across scene loads.
 | MonoBehaviour | Destroyed with GameObject |
 | **ScriptableObject data** | **Persists** |
 
+```mermaid
+sequenceDiagram
+    participant SO as ScriptableObject<br/>(Project Asset)
+    participant S1 as Scene 1
+    participant S2 as Scene 2
+
+    Note over SO: Loaded at app start
+    rect rgb(200, 230, 200)
+    Note over S1: Scene 1 Active
+    S1->>SO: Update value (Health = 80)
+    SO-->>S1: Provide value
+    end
+
+    S1->>S1: Scene destroyed
+    Note over SO: Data persists ✓<br/>Health = 80
+
+    rect rgb(200, 200, 230)
+    Note over S2: Scene 2 Active
+    S2->>SO: Read value
+    SO-->>S2: Health = 80 (preserved)
+    end
+```
+
 ### 3. Decoupled architecture
 
 Systems communicate through ScriptableObject assets instead of direct references.

@@ -32,6 +32,24 @@ Reactive SO provides the following debugging tools.
 
 ## Tool selection guide
 
+```mermaid
+graph TB
+    A["Diagnose an issue"] --> B{"Real-time?"}
+    B -->|YES| C{"What to check?"}
+    B -->|NO| D["Dependency Analyzer<br/>Static analysis"]
+
+    C -->|Event firing| E["Event Monitor"]
+    C -->|Variable value| F["Variable Monitor"]
+    C -->|Set contents| G["Runtime Set Monitor"]
+    C -->|Subscribers| H["Subscribers List"]
+
+    E --> I{"Event appears?"}
+    I -->|NO| J["Check publisher"]
+    I -->|YES| K{"#L > 0?"}
+    K -->|NO| L["No subscribers"]
+    K -->|YES| M["Check subscriber"]
+```
+
 | Question | Tool |
 |----------|------|
 | Is my event firing? | Event Monitor |

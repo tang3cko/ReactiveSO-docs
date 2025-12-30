@@ -76,6 +76,22 @@ public struct NetworkEntityState
 
 RESにデータを追加する前に、これらの質問をしてください。
 
+```mermaid
+graph TB
+    A["このデータを<br/>RESに入れるべき？"] --> B{"外部システムが<br/>計算する？"}
+    B -->|NO| C["GameObjectの<br/>フィールドとして維持"]
+    B -->|YES| D{"変更頻度は<br/>10%未満/フレーム？"}
+    D -->|NO| E["従来の<br/>アプローチを検討"]
+    D -->|YES| F{"複数システムが<br/>変更を監視？"}
+    F -->|NO| G["RESは<br/>不要かも"]
+    F -->|YES| H["RESに追加"]
+
+    style C fill:#ffcccc
+    style E fill:#ffffcc
+    style G fill:#ffffcc
+    style H fill:#ccffcc
+```
+
 ### 1. 所有権
 
 **このデータは外部ロジックによって計算されるか？**

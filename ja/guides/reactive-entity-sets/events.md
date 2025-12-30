@@ -206,6 +206,41 @@ public class EnemyCounter : MonoBehaviour
 
 イベントがいつ発火するかを理解することで、コードを正しく構造化できます。
 
+```mermaid
+sequenceDiagram
+    participant C as Component
+    participant RES as ReactiveEntitySet
+    participant SS as Sparse Set
+    participant CB as Callbacks
+    participant EC as Event Channels
+
+    rect rgb(200, 230, 200)
+    Note over C,EC: 登録フロー
+    C->>RES: Register(id, data)
+    RES->>SS: Add(id, data)
+    RES->>EC: OnItemAdded(id)
+    RES->>EC: OnSetChanged
+    end
+
+    rect rgb(200, 200, 230)
+    Note over C,EC: 状態更新フロー
+    C->>RES: UpdateData(id, newState)
+    RES->>SS: Write(id, newState)
+    RES->>CB: Invoke(oldState, newState)
+    RES->>EC: OnDataChanged(id)
+    RES->>EC: OnSetChanged
+    end
+
+    rect rgb(230, 200, 200)
+    Note over C,EC: 登録解除フロー
+    C->>RES: Unregister(id)
+    RES->>CB: Clear(id)
+    RES->>SS: Remove(id)
+    RES->>EC: OnItemRemoved(id)
+    RES->>EC: OnSetChanged
+    end
+```
+
 ### 状態更新フロー
 
 ```

@@ -79,6 +79,23 @@ public class BossHealthBar : MonoBehaviour
 
 エンティティ全体にステータスエフェクトを適用して追跡します。
 
+```mermaid
+stateDiagram-v2
+    [*] --> Normal
+
+    Normal --> Poisoned: ApplyPoison()
+    Normal --> Slowed: ApplySlow()
+
+    Poisoned --> Normal: Timer expires
+    Poisoned --> PoisonedSlowed: ApplySlow()
+
+    Slowed --> Normal: Timer expires
+    Slowed --> PoisonedSlowed: ApplyPoison()
+
+    PoisonedSlowed --> Poisoned: Slow expires
+    PoisonedSlowed --> Slowed: Poison expires
+```
+
 ### State構造体
 
 ```csharp
@@ -155,6 +172,21 @@ public class StatusEffectManager : MonoBehaviour
 ## パターン3: セーブとロード
 
 ゲームセッション間でエンティティ状態を永続化します。
+
+```mermaid
+graph LR
+    subgraph Save["セーブフロー"]
+        S1["ForEach(id, state)"] --> S2["PlayerPrefs.Set"]
+        S2 --> S3["Save()"]
+    end
+
+    subgraph Load["ロードフロー"]
+        L1["PlayerPrefs.Get"] --> L2["new State{}"]
+        L2 --> L3["SetData(id, state)"]
+    end
+
+    S3 -.->|永続化| L1
+```
 
 ```csharp
 public class SaveSystem : MonoBehaviour
