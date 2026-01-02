@@ -77,7 +77,7 @@ Data lives in ScriptableObject assets, not hard-coded in scripts. This means:
 
 ### Debuggable
 
-Built-in monitoring tools ([Event Monitor]({{ '/en/debugging/event-monitor' | relative_url }}), [Variable Monitor]({{ '/en/debugging/variable-monitor' | relative_url }})) let you observe system behavior in real-time.
+Built-in monitoring tools ([Event Monitor]({{ '/en/debugging/monitor' | relative_url }}), [Variable Monitor]({{ '/en/debugging/monitor' | relative_url }})) let you observe system behavior in real-time.
 
 ---
 

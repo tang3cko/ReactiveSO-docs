@@ -77,7 +77,7 @@ flowchart LR
 
 ### Debuggable（デバッグ可能）
 
-組み込みのモニタリングツール（[Event Monitor]({{ '/ja/debugging/event-monitor' | relative_url }})、[Variable Monitor]({{ '/ja/debugging/variable-monitor' | relative_url }})）により、システムの動作をリアルタイムで観察できます。
+組み込みのモニタリングツール（[Event Monitor]({{ '/ja/debugging/monitor' | relative_url }})、[Variable Monitor]({{ '/ja/debugging/monitor' | relative_url }})）により、システムの動作をリアルタイムで観察できます。
 
 ---
 

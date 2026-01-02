@@ -21,9 +21,10 @@ Reactive SO provides the following debugging tools.
 
 | Tool | Purpose |
 |------|---------|
-| [Event Monitor](event-monitor) | Real-time event tracking with caller information |
-| [Variable Monitor](variable-monitor) | Real-time variable state monitoring |
-| [Runtime Set Monitor](runtime-set-monitor) | Real-time runtime set monitoring |
+| [Event Monitor](monitor) | Real-time event tracking with caller information |
+| [Variable Monitor](monitor) | Real-time variable state monitoring |
+| [Runtime Set Monitor](monitor) | Real-time runtime set monitoring |
+| [Asset Browser](asset-browser) | Browse, search, and manage all Reactive SO assets |
 | [Dependency Analyzer](dependency-analyzer) | Static analysis for scenes and prefabs |
 | Manual Trigger | Test events from Inspector without code |
 | Subscribers List | View active subscribers during Play Mode |
@@ -52,16 +53,16 @@ graph TB
 
 | Question | Tool |
 |----------|------|
-| Is my event firing? | Event Monitor |
-| What's the current variable value? | Variable Monitor |
-| What objects are in my runtime set? | Runtime Set Monitor |
+| Is my event firing? | Event Monitor (Monitor Window) |
+| What's the current variable value? | Variable Monitor (Monitor Window) |
+| What objects are in my runtime set? | Runtime Set Monitor (Monitor Window) |
 | Who's subscribed to this event? | Subscribers List |
 | Where is this event channel used? | Dependency Analyzer |
 | Can I test without playing? | Manual Trigger |
-| Which code raised this event? | Event Monitor (Caller column) |
+| Which code raised this event? | Event Monitor (Monitor Window - Caller column) |
 | Do I have memory leaks? | Subscribers List (scene transitions) |
 | Are all event channels assigned? | Dependency Analyzer |
-| What value was passed with event? | Event Monitor (Value column) |
+| What value was passed with event? | Event Monitor (Monitor Window - Value column) |
 
 ---
 
@@ -73,7 +74,7 @@ graph TB
 
 **Steps**:
 
-1. Open Event Monitor (Window > Reactive SO > Event Monitor)
+1. Open Event Monitor (Window > Reactive SO > Monitor)
 2. Ensure "Show In Event Log" is enabled on the event channel
 3. Click the button in your game
 4. Check if the event appears in the log

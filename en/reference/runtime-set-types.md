@@ -319,5 +319,5 @@ foreach (var item in runtimeSet.Items)
 ## References
 
 - [Runtime Sets Guide]({{ '/en/guides/runtime-sets' | relative_url }}) - How to use runtime sets
-- [Runtime Set Monitor]({{ '/en/debugging/runtime-set-monitor' | relative_url }}) - Debug set contents
+- [Runtime Set Monitor]({{ '/en/debugging/monitor' | relative_url }}) - Debug set contents
 - [Debugging Overview]({{ '/en/debugging/' | relative_url }}) - All debugging tools

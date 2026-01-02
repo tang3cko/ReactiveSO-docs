@@ -406,4 +406,4 @@ void RpcPlayerDeath()
 
 - [Event Channels Guide]({{ '/ja/guides/event-channels' | relative_url }}) - 基本的な使用方法
 - [Debugging]({{ '/ja/debugging/' | relative_url }}) - デバッグツール
-- [Event Monitor]({{ '/ja/debugging/event-monitor' | relative_url }}) - リアルタイムトラッキング
+- [Event Monitor]({{ '/ja/debugging/monitor' | relative_url }}) - リアルタイムトラッキング

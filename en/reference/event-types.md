@@ -156,6 +156,9 @@ private void UpdateScoreDisplay(int newScore)
 
 ## Long
 
+{: .note }
+> Manual Trigger in Inspector is not supported for this type.
+
 Events carrying 64-bit integer values for large numbers and timestamps.
 
 ### Create
@@ -256,6 +259,9 @@ private void UpdateHealthBar(float healthPercent)
 ---
 
 ## Double
+
+{: .note }
+> Manual Trigger in Inspector is not supported for this type.
 
 Events carrying double-precision values for high-precision calculations.
 
@@ -509,6 +515,9 @@ private void SpawnEnemy(Vector3 position)
 
 ## Quaternion
 
+{: .note }
+> Manual Trigger in Inspector is not supported for this type.
+
 Events carrying rotation values for 3D orientations.
 
 ### Create
@@ -557,6 +566,9 @@ private void HandleRotation(Quaternion rotation)
 ---
 
 ## Color
+
+{: .note }
+> Manual Trigger in Inspector is not supported for this type.
 
 Events carrying color values for UI theming and visual effects.
 

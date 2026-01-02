@@ -19,11 +19,12 @@ has_children: true
 
 Reactive SOは以下のデバッグツールを提供しています。
 
-| ツール | 目的 |
+| Tool | 目的 |
 |------|---------|
-| [Event Monitor](event-monitor) | 呼び出し元情報を含むリアルタイムイベント追跡 |
-| [Variable Monitor](variable-monitor) | リアルタイム変数状態監視 |
-| [Runtime Set Monitor](runtime-set-monitor) | リアルタイムランタイムセット監視 |
+| [Event Monitor](monitor) | 呼び出し元情報を含むリアルタイムイベント追跡 |
+| [Variable Monitor](monitor) | リアルタイム変数状態監視 |
+| [Runtime Set Monitor](monitor) | リアルタイムランタイムセット監視 |
+| [Asset Browser](asset-browser) | すべてのReactive SOアセットを閲覧・検索・管理 |
 | [Dependency Analyzer](dependency-analyzer) | シーンとプレハブの静的解析 |
 | Manual Trigger | コードなしでInspectorからイベントをテスト |
 | Subscribers List | Play Mode中のアクティブなサブスクライバーを表示 |
@@ -52,16 +53,16 @@ graph TB
 
 | 質問 | ツール |
 |----------|------|
-| イベントは発火していますか? | Event Monitor |
-| 現在の変数の値は何ですか? | Variable Monitor |
-| ランタイムセットにどのオブジェクトが含まれていますか? | Runtime Set Monitor |
+| イベントは発火していますか? | Event Monitor (Monitor Window) |
+| 現在の変数の値は何ですか? | Variable Monitor (Monitor Window) |
+| ランタイムセットにどのオブジェクトが含まれていますか? | Runtime Set Monitor (Monitor Window) |
 | このイベントには誰がサブスクライブしていますか? | Subscribers List |
 | このイベントチャンネルはどこで使用されていますか? | Dependency Analyzer |
 | プレイせずにテストできますか? | Manual Trigger |
-| このイベントを発生させたコードはどれですか? | Event Monitor (Caller列) |
+| このイベントを発生させたコードはどれですか? | Event Monitor (Monitor Window - Caller列) |
 | メモリリークはありますか? | Subscribers List (シーン遷移時) |
 | すべてのイベントチャンネルは割り当てられていますか? | Dependency Analyzer |
-| イベントと一緒に渡された値は何ですか? | Event Monitor (Value列) |
+| イベントと一緒に渡された値は何ですか? | Event Monitor (Monitor Window - Value列) |
 
 ---
 
@@ -73,7 +74,7 @@ graph TB
 
 **手順**:
 
-1. Event Monitorを開く (Window > Reactive SO > Event Monitor)
+1. Event Monitorを開く (Window > Reactive SO > Monitor)
 2. イベントチャンネルで"Show In Event Log"が有効になっていることを確認
 3. ゲーム内でボタンをクリック
 4. イベントがログに表示されるかチェック

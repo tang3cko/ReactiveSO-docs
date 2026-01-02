@@ -23,12 +23,13 @@ Navigate to **Window > Reactive SO > Dependency Analyzer**.
 
 ## Tabs
 
-The Dependency Analyzer has two tabs.
+The Dependency Analyzer has three tabs.
 
 | Tab | Description |
 |-----|-------------|
 | Event Channels | Analyze event channel usage and unassigned fields |
 | Variables | Analyze variable usage and unassigned fields |
+| Runtime Sets | Analyze runtime set usage and unassigned fields |
 
 Both tabs provide the same functionality for their respective asset types.
 
@@ -241,7 +242,7 @@ The Dependency Analyzer uses static analysis only. It does not detect:
 - String-based references
 - Runtime-created references
 
-Use [Event Monitor](event-monitor) during Play Mode to detect runtime references.
+Use [Event Monitor](monitor) during Play Mode to detect runtime references.
 
 ---
 
@@ -271,5 +272,5 @@ A progress bar shows scan status. You can cancel if needed.
 ## References
 
 - [Debugging Overview]({{ '/en/debugging/' | relative_url }}) - All debugging tools
-- [Event Monitor](event-monitor) - Runtime event tracking
+- [Event Monitor](monitor) - Runtime event tracking
 - [Troubleshooting]({{ '/en/troubleshooting' | relative_url }}) - Common issues

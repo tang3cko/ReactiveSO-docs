@@ -23,12 +23,13 @@ nav_order: 3
 
 ## タブ
 
-Dependency Analyzerには2つのタブがあります。
+Dependency Analyzerには3つのタブがあります。
 
 | タブ | 説明 |
 |-----|-------------|
 | Event Channels | イベントチャンネルの使用状況と未割り当てフィールドを分析 |
 | Variables | 変数の使用状況と未割り当てフィールドを分析 |
+| Runtime Sets | ランタイムセットの使用状況と未割り当てフィールドを分析 |
 
 両タブとも、それぞれのアセットタイプに対して同じ機能を提供します。
 
@@ -241,7 +242,7 @@ Dependency Analyzerは静的解析のみを使用します。以下は検出し�
 - 文字列ベースの参照
 - ランタイムで作成された参照
 
-ランタイム参照を検出するには、Play Mode中に[Event Monitor](event-monitor)を使用してください。
+ランタイム参照を検出するには、Play Mode中に[Event Monitor](monitor)を使用してください。
 
 ---
 
@@ -271,5 +272,5 @@ Dependency Analyzerは静的解析のみを使用します。以下は検出し�
 ## 参考資料
 
 - [デバッグ概要]({{ '/ja/debugging/' | relative_url }}) - すべてのデバッグツール
-- [Event Monitor](event-monitor) - ランタイムイベント追跡
+- [Event Monitor](monitor) - ランタイムイベント追跡
 - [トラブルシューティング]({{ '/ja/troubleshooting' | relative_url }}) - 一般的な問題

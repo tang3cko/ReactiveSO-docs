@@ -319,5 +319,5 @@ foreach (var item in runtimeSet.Items)
 ## 参考資料
 
 - [ランタイムセットガイド]({{ '/ja/guides/runtime-sets' | relative_url }}) - ランタイムセットの使い方
-- [ランタイムセットモニター]({{ '/ja/debugging/runtime-set-monitor' | relative_url }}) - セット内容のデバッグ
+- [ランタイムセットモニター]({{ '/ja/debugging/monitor' | relative_url }}) - セット内容のデバッグ
 - [デバッグ概要]({{ '/ja/debugging/' | relative_url }}) - すべてのデバッグツール

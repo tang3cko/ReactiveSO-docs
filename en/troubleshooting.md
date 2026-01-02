@@ -406,4 +406,4 @@ For support, use the following channels.
 
 - [Event Channels Guide]({{ '/en/guides/event-channels' | relative_url }}) - Basic usage
 - [Debugging]({{ '/en/debugging/' | relative_url }}) - Debugging tools
-- [Event Monitor]({{ '/en/debugging/event-monitor' | relative_url }}) - Real-time tracking
+- [Event Monitor]({{ '/en/debugging/monitor' | relative_url }}) - Real-time tracking

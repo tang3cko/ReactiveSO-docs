@@ -156,6 +156,9 @@ private void UpdateScoreDisplay(int newScore)
 
 ## Long
 
+{: .note }
+> このタイプはInspectorでのManual Trigger（手動発火）をサポートしていません。
+
 大きな数値とタイムスタンプのための64ビット整数値を運ぶイベント。
 
 ### 作成
@@ -256,6 +259,9 @@ private void UpdateHealthBar(float healthPercent)
 ---
 
 ## Double
+
+{: .note }
+> このタイプはInspectorでのManual Trigger（手動発火）をサポートしていません。
 
 高精度計算のための倍精度値を運ぶイベント。
 
@@ -509,6 +515,9 @@ private void SpawnEnemy(Vector3 position)
 
 ## Quaternion
 
+{: .note }
+> このタイプはInspectorでのManual Trigger（手動発火）をサポートしていません。
+
 3D方向のための回転値を運ぶイベント。
 
 ### 作成
@@ -557,6 +566,9 @@ private void HandleRotation(Quaternion rotation)
 ---
 
 ## Color
+
+{: .note }
+> このタイプはInspectorでのManual Trigger（手動発火）をサポートしていません。
 
 UIテーマとビジュアルエフェクトのための色値を運ぶイベント。
 
