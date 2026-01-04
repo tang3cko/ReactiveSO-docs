@@ -90,7 +90,9 @@ Ready to use Reactive SO in your project?
 
 ## Requirements
 
-- Unity 6000.2 or newer
+- **v2.1.0+**: Unity 6000.0 (Unity 6.0) or newer
+- v1.1.1–v2.0.0: Unity 6000.2 (Unity 6.2) or newer
+- v1.0.0–v1.1.0: Unity 2022.3 or newer
 
 ---
 
