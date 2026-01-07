@@ -23,6 +23,7 @@ has_children: true
 | [変数タイプ](variable-types) | GPU Syncを含む11種類のビルトイン変数 |
 | [ランタイムセットタイプ](runtime-set-types) | オブジェクト追跡用のビルトインランタイムセット |
 | [リアクティブエンティティセット API](reactive-entity-sets-api) | エンティティ単位の状態管理API |
+| [アクションタイプ](action-types) | Commandパターン用ActionSO基底クラス |
 
 ---
 

@@ -23,6 +23,7 @@ These guides explain how to use each Reactive SO feature in detail. Each guide i
 | [Variables](variables) | Create reactive shared state with change detection |
 | [Runtime Sets](runtime-sets) | Track object collections without singletons |
 | [Reactive Entity Sets](reactive-entity-sets) | Centralized per-entity state management |
+| [Actions](actions) | Define reusable, data-driven commands |
 | [Testing](testing) | Unit testing patterns for Reactive SO components |
 
 ---

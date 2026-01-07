@@ -23,6 +23,7 @@ has_children: true
 | [Variables](variables) | 変更検出付きのリアクティブな共有状態を作成 |
 | [Runtime Sets](runtime-sets) | シングルトンなしでオブジェクトコレクションを追跡 |
 | [Reactive Entity Sets](reactive-entity-sets) | 集中型のエンティティ単位の状態管理 |
+| [Actions](actions) | 再利用可能なデータ駆動コマンドを定義 |
 | [テスト](testing) | Reactive SOコンポーネントのユニットテストパターン |
 
 ---

@@ -23,6 +23,7 @@ This section provides API reference documentation for all Reactive SO types. Use
 | [Variable Types](variable-types) | All 11 built-in variable types with GPU Sync |
 | [Runtime Set Types](runtime-set-types) | Built-in runtime set types for object tracking |
 | [Reactive Entity Sets API](reactive-entity-sets-api) | Complete API for per-entity state management |
+| [Action Types](action-types) | ActionSO base classes for command pattern |
 
 ---
 
