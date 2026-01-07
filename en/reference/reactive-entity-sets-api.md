@@ -33,10 +33,10 @@ The core ScriptableObject that stores entity state using a Sparse Set data struc
 
 ```csharp
 public abstract class ReactiveEntitySetSO<TData> : ReactiveEntitySetSO
-    where TData : struct
+    where TData : unmanaged
 ```
 
-TData must be a value type (struct).
+TData must be an unmanaged type (value type without managed references). This enables Job System and Burst compatibility.
 
 ---
 
@@ -45,8 +45,8 @@ TData must be a value type (struct).
 | Property | Type | Description |
 |----------|------|-------------|
 | Count | `int` | Number of registered entities |
-| Data | `ArraySegment<TData>` | Read-only access to all state data |
-| EntityIds | `ArraySegment<int>` | Read-only access to all entity IDs |
+| Data | `NativeSlice<TData>` | Read-only access to all state data (Job System compatible) |
+| EntityIds | `NativeSlice<int>` | Read-only access to all entity IDs (Job System compatible) |
 
 ### Events
 
@@ -275,13 +275,13 @@ entitySet.ForEach((id, state) => {
 
 ### Data property
 
-For performance-critical code, access the underlying array directly.
+For performance-critical code, access the underlying data directly via NativeSlice.
 
 ```csharp
 var data = entitySet.Data;
-for (int i = 0; i < data.Count; i++)
+for (int i = 0; i < data.Length; i++)
 {
-    ProcessState(data.Array[data.Offset + i]);
+    ProcessState(data[i]);
 }
 ```
 

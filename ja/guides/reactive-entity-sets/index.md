@@ -133,6 +133,7 @@ flowchart TB
 | [パターン](patterns) | ボスヘルスバー、ステータスエフェクト、セーブ/ロード |
 | [ベストプラクティス](best-practices) | パフォーマンスのヒント、トラブルシューティング |
 | [永続化](persistence) | シーン遷移時のデータ消失を防ぐ |
+| [Job System](job-system) | Orchestratorを使った高性能並列処理 |
 
 ---
 

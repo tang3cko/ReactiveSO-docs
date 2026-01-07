@@ -33,10 +33,10 @@ Sparse Setデータ構造を使用してエンティティ状態を格納する�
 
 ```csharp
 public abstract class ReactiveEntitySetSO<TData> : ReactiveEntitySetSO
-    where TData : struct
+    where TData : unmanaged
 ```
 
-TDataは値型（struct）である必要があります。
+TDataはunmanaged型（マネージド参照を含まない値型）である必要があります。これによりJob SystemとBurstとの互換性が有効になります。
 
 ---
 
@@ -45,8 +45,8 @@ TDataは値型（struct）である必要があります。
 | プロパティ | タイプ | 説明 |
 |----------|------|-------------|
 | Count | `int` | 登録されたエンティティ数 |
-| Data | `ArraySegment<TData>` | すべての状態データへの読み取り専用アクセス |
-| EntityIds | `ArraySegment<int>` | すべてのエンティティIDへの読み取り専用アクセス |
+| Data | `NativeSlice<TData>` | すべての状態データへの読み取り専用アクセス（Job System互換） |
+| EntityIds | `NativeSlice<int>` | すべてのエンティティIDへの読み取り専用アクセス（Job System互換） |
 
 ### イベント
 
@@ -271,13 +271,13 @@ entitySet.ForEach((id, state) => {
 
 ### Dataプロパティ
 
-パフォーマンスクリティカルなコードでは、基となる配列に直接アクセスできます。
+パフォーマンスクリティカルなコードでは、NativeSlice経由で直接データにアクセスできます。
 
 ```csharp
 var data = entitySet.Data;
-for (int i = 0; i < data.Count; i++)
+for (int i = 0; i < data.Length; i++)
 {
-    ProcessState(data.Array[data.Offset + i]);
+    ProcessState(data[i]);
 }
 ```
 

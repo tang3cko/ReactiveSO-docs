@@ -149,8 +149,8 @@ public class EnemyManager : MonoBehaviour
 | Property | Type | Description |
 |----------|------|-------------|
 | `Count` | `int` | Number of registered entities |
-| `EntityIds` | `ArraySegment<int>` | All registered entity IDs |
-| `Data` | `ArraySegment<TData>` | All entity data |
+| `EntityIds` | `NativeSlice<int>` | All registered entity IDs |
+| `Data` | `NativeSlice<TData>` | All entity data |
 
 ### Methods
 
@@ -174,7 +174,7 @@ public class EnemyManager : MonoBehaviour
 
 ## Performance characteristics
 
-Reactive Entity Sets use a Sparse Set data structure.
+Reactive Entity Sets use a Sparse Set data structure backed by NativeArray and NativeHashMap.
 
 | Operation | Time Complexity |
 |-----------|-----------------|
@@ -184,7 +184,7 @@ Reactive Entity Sets use a Sparse Set data structure.
 | SetData | O(1) |
 | Iteration | O(n) |
 
-The Sparse Set allocates memory in pages, only creating pages for used ID ranges. This is efficient for sparse ID distributions.
+Data is stored contiguously in NativeArray for cache efficiency and Job System compatibility. The NativeHashMap provides O(1) ID-to-index lookup.
 
 ---
 

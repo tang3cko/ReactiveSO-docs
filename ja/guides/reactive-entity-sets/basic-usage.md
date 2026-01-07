@@ -149,8 +149,8 @@ public class EnemyManager : MonoBehaviour
 | プロパティ | 型 | 説明 |
 |-----------|-----|------|
 | `Count` | `int` | 登録されたエンティティ数 |
-| `EntityIds` | `ArraySegment<int>` | すべての登録エンティティID |
-| `Data` | `ArraySegment<TData>` | すべてのエンティティデータ |
+| `EntityIds` | `NativeSlice<int>` | すべての登録エンティティID |
+| `Data` | `NativeSlice<TData>` | すべてのエンティティデータ |
 
 ### メソッド
 
@@ -174,7 +174,7 @@ public class EnemyManager : MonoBehaviour
 
 ## パフォーマンス特性
 
-Reactive Entity SetsはSparse Setデータ構造を使用します。
+Reactive Entity SetsはNativeArrayとNativeHashMapに基づくSparse Setデータ構造を使用します。
 
 | 操作 | 時間計算量 |
 |------|-----------|
@@ -184,7 +184,7 @@ Reactive Entity SetsはSparse Setデータ構造を使用します。
 | SetData | O(1) |
 | イテレーション | O(n) |
 
-Sparse Setはページ単位でメモリを割り当て、使用されるID範囲のページのみを作成します。これはスパースなID分布に効率的です。
+データはキャッシュ効率とJob System互換性のためにNativeArrayに連続して格納されます。NativeHashMapがO(1)のIDからインデックスへのルックアップを提供します。
 
 ---
 
