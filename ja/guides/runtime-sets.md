@@ -36,7 +36,7 @@ foreach (var enemy in activeEnemies.Items) { ... }
 
 ### ライフサイクル
 
-オブジェクトの登録/解除は以下のように行われます：
+オブジェクトの登録/解除は以下のように行われます。
 
 ```mermaid
 sequenceDiagram
@@ -105,7 +105,7 @@ sequenceDiagram
 
 ## 基本的な使い方
 
-### ステップ1：Runtime Setアセットを作成
+### ステップ1: Runtime Setアセットを作成
 
 Projectウィンドウで右クリックし、以下のメニューパスを選択します。
 
@@ -115,7 +115,7 @@ Create > Reactive SO > Runtime Sets > GameObject Runtime Set
 
 `ActiveEnemies`や`SpawnedPickups`のような説明的な名前を付けます。
 
-### ステップ2：Event Channelを作成（オプション）
+### ステップ2: Event Channelを作成（オプション）
 
 コレクション変更時の通知が必要な場合は、Event Channelを作成します。
 
@@ -125,7 +125,7 @@ Create > Reactive SO > Channels > Void Event
 
 Runtime Setの**On Items Changed**フィールドに割り当てます。
 
-### ステップ3：オブジェクトが自身を登録
+### ステップ3: オブジェクトが自身を登録
 
 OnEnable/OnDisableパターンを使用します。
 
@@ -149,7 +149,7 @@ public class Enemy : MonoBehaviour
 }
 ```
 
-### ステップ4：コレクションをクエリ
+### ステップ4: コレクションをクエリ
 
 どこからでもアクティブオブジェクトにアクセスできます。
 
@@ -194,7 +194,7 @@ public class WaveManager : MonoBehaviour
 
 ## 一般的なパターン
 
-### パターン1：ウェーブベースのスポーン
+### パターン1: ウェーブベースのスポーン
 
 敵を追跡してウェーブ完了を検出します。
 
@@ -224,7 +224,7 @@ public class WaveSpawner : MonoBehaviour
 }
 ```
 
-### パターン2：最も近いオブジェクトを検索
+### パターン2: 最も近いオブジェクトを検索
 
 `FindObjectsOfType`なしでクエリできます。
 
@@ -250,7 +250,7 @@ public GameObject GetNearestEnemy(Vector3 position)
 }
 ```
 
-### パターン3：ピックアップコレクション
+### パターン3: ピックアップコレクション
 
 収集可能アイテムを追跡します。
 
@@ -277,7 +277,7 @@ public class Pickup : MonoBehaviour
 }
 ```
 
-### パターン4：レベルクリーンアップ
+### パターン4: レベルクリーンアップ
 
 スポーンされた全オブジェクトを一度に破棄できます。
 
@@ -372,7 +372,7 @@ private void Start()
 
 ### イテレーション時にnullチェック
 
-アイテムはチェック間に破棄される可能性があります：
+アイテムはチェック間に破棄される可能性があります。
 
 ```csharp
 foreach (var enemy in activeEnemies.Items)
@@ -424,7 +424,7 @@ Set1
 
 ## カスタムRuntime Setの作成
 
-カスタム型には、`RuntimeSetSO<T>`を継承：
+カスタム型には`RuntimeSetSO<T>`を継承します。
 
 ```csharp
 [CreateAssetMenu(
@@ -444,7 +444,7 @@ public class EnemyRuntimeSetSO : RuntimeSetSO<Enemy>
 }
 ```
 
-コンポーネントで使用：
+コンポーネントで使用します。
 
 ```csharp
 public class Enemy : MonoBehaviour

@@ -17,7 +17,7 @@ nav_order: 2
 
 ## 4つのツール
 
-Reactive SOは4つの補完的なツールを提供します：
+Reactive SOは4つの補完的なツールを提供します。
 
 | ツール | 目的 | 最適な用途 |
 |--------|------|------------|
@@ -30,7 +30,7 @@ Reactive SOは4つの補完的なツールを提供します：
 
 ## Instance vs Globalルール
 
-Reactive SOを使用する際の最も重要な判断：
+Reactive SOを使用する際の最も重要な判断です。
 
 > **インスタンスデータ**（オブジェクトごとに固有）→ C#フィールドを使用
 > **グローバルデータ**（オブジェクト間で共有）→ ScriptableObjectを使用
@@ -67,7 +67,7 @@ public class Enemy : MonoBehaviour
 
 ### 決定ツリー
 
-以下のフローチャートで、状況に応じた適切なツールを選択できます：
+以下のフローチャートで、状況に応じた適切なツールを選択できます。
 
 ```mermaid
 flowchart LR
@@ -87,7 +87,7 @@ flowchart LR
 
 ### Event Channels
 
-システムを疎結合化する**グローバル通知**に使用：
+システムを疎結合化する**グローバル通知**に使用します。
 
 ```csharp
 // 最適：ゲーム全体の通知
@@ -100,7 +100,7 @@ flowchart LR
 [SerializeField] StringEventChannelSO onAudioRequest;
 ```
 
-インスタンス固有のイベントには使用しないでください：
+インスタンス固有のイベントには使用しないでください。
 
 ```csharp
 // 悪い例：すべての敵が同じ死亡イベントに反応
@@ -120,7 +120,7 @@ public class Enemy : MonoBehaviour
 
 ### Variables
 
-複数のシステムが読み取る**グローバル状態**に使用：
+複数のシステムが読み取る**グローバル状態**に使用します。
 
 ```csharp
 // 最適：グローバルゲーム状態
@@ -133,7 +133,7 @@ public class Enemy : MonoBehaviour
 [SerializeField] IntVariableSO maxEnemies;
 ```
 
-インスタンス状態には使用しないでください：
+インスタンス状態には使用しないでください。
 
 ```csharp
 // 悪い例：個々の敵の体力
@@ -145,7 +145,7 @@ private int health = 100;
 
 ### Runtime Sets
 
-シングルトンなしで**アクティブオブジェクトを追跡**：
+シングルトンなしで**アクティブオブジェクトを追跡**します。
 
 ```csharp
 // 最適：動的オブジェクト管理
@@ -160,7 +160,7 @@ private void OnDisable() => enemies?.Remove(gameObject);
 
 ### Reactive Entity Sets
 
-IDベースルックアップを持つ**エンティティごとの状態**に使用：
+IDベースルックアップを持つ**エンティティごとの状態**に使用します。
 
 ```csharp
 // 最適：エンティティごとのデータストレージ
@@ -178,9 +178,9 @@ entitySet.UpdateData(this, state => {
 
 ## 共通パターン
 
-### パターン1：動的な敵スポーン
+### パターン1: 動的な敵スポーン
 
-インスタンスフィールドとグローバルイベントを組み合わせる：
+インスタンスフィールドとグローバルイベントを組み合わせます。
 
 ```csharp
 public class Enemy : MonoBehaviour
@@ -209,9 +209,9 @@ public class Enemy : MonoBehaviour
 }
 ```
 
-### パターン2：グローバルスコアシステム
+### パターン2: グローバルスコアシステム
 
-真に共有される状態にはVariablesを使用：
+真に共有される状態にはVariablesを使用します。
 
 ```csharp
 public class ScoreManager : MonoBehaviour
@@ -238,9 +238,9 @@ public class ScoreDisplay : MonoBehaviour
 }
 ```
 
-### パターン3：Runtime Setsでの敵管理
+### パターン3: Runtime Setsでの敵管理
 
-シングルトンマネージャーを置き換える：
+シングルトンマネージャーを置き換えます。
 
 ```csharp
 public class EnemySpawner : MonoBehaviour
@@ -266,9 +266,9 @@ public class Enemy : MonoBehaviour
 }
 ```
 
-### パターン4：ハイブリッドアプローチ
+### パターン4: ハイブリッドアプローチ
 
-複数のパターンを組み合わせる：
+複数のパターンを組み合わせます。
 
 ```csharp
 public class Player : MonoBehaviour
@@ -303,7 +303,7 @@ public class Player : MonoBehaviour
 
 ## よくある間違い
 
-### 間違い1：インスタンスイベントにEvent Channelsを使用
+### 間違い1: インスタンスイベントにEvent Channelsを使用
 
 ```csharp
 // 悪い例：すべての敵が同じ死亡イベントを購読
@@ -317,7 +317,7 @@ private void Die()
 }
 ```
 
-### 間違い2：インスタンス状態にVariablesを使用
+### 間違い2: インスタンス状態にVariablesを使用
 
 ```csharp
 // 悪い例：共有体力
@@ -327,7 +327,7 @@ private void Die()
 private int health = 100;
 ```
 
-### 間違い3：ScriptableObjectの過剰使用
+### 間違い3: ScriptableObjectの過剰使用
 
 ```csharp
 // 悪い例：すべてがScriptableObjectである必要はない

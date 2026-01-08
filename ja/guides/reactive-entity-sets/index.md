@@ -134,6 +134,7 @@ flowchart TB
 | [ベストプラクティス](best-practices) | パフォーマンスのヒント、トラブルシューティング |
 | [永続化](persistence) | シーン遷移時のデータ消失を防ぐ |
 | [Job System](job-system) | Orchestratorを使った高性能並列処理 |
+| [可観測性](observability) | 集合論的可観測性とスナップショットパターン |
 
 ---
 

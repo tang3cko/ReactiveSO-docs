@@ -134,6 +134,7 @@ The data flows through the system in three stages.
 | [Best Practices](best-practices) | Performance tips, troubleshooting |
 | [Persistence](persistence) | Prevent data loss across scene transitions |
 | [Job System](job-system) | High-performance parallel processing with Orchestrator |
+| [Observability](observability) | Set theoretic observability and snapshot patterns |
 
 ---
 

@@ -26,9 +26,9 @@ Reactive SOはUnity Package Manager経由でインストールします。
 
 ---
 
-## クイックスタート：最初のEvent Channel
+## クイックスタート - 最初のEvent Channel
 
-### ステップ1：Event Channelアセットを作成
+### ステップ1: Event Channelアセットを作成
 
 Projectウィンドウで右クリックし、以下のメニューパスを選択します。
 
@@ -40,7 +40,7 @@ Create > Reactive SO > Channels > Void Event
 
 名前を `OnPlayerDeath` にします。
 
-### ステップ2：イベントを発火（Publisher）
+### ステップ2: イベントを発火（Publisher）
 
 ```csharp
 using Tang3cko.ReactiveSO;
@@ -57,7 +57,7 @@ public class Player : MonoBehaviour
 }
 ```
 
-### ステップ3：イベントを購読（Subscriber）
+### ステップ3: イベントを購読（Subscriber）
 
 ```csharp
 using Tang3cko.ReactiveSO;
@@ -84,7 +84,7 @@ public class GameManager : MonoBehaviour
 }
 ```
 
-### ステップ4：Inspectorで接続
+### ステップ4: Inspectorで接続
 
 1. Player GameObjectを選択
 2. `OnPlayerDeath` アセットをシリアライズフィールドにドラッグ

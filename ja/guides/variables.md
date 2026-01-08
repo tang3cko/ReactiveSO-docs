@@ -94,7 +94,7 @@ int currentHealth = playerHealth.Value;
 
 ## 基本的な使い方
 
-### ステップ1：Variableアセットを作成
+### ステップ1: Variableアセットを作成
 
 Projectウィンドウで右クリックし、以下のメニューパスを選択します。
 
@@ -104,14 +104,14 @@ Create > Reactive SO > Variables > Int Variable
 
 `PlayerHealth`や`CurrentScore`のような説明的な名前を付けます。
 
-### ステップ2：Variableを設定
+### ステップ2: Variableを設定
 
 アセットを選択し、Inspectorで以下を設定します。
 
 - **Initial Value** - 開始値（例：体力なら100）
 - **Description** - このVariableが表すもの
 
-### ステップ3：Event Channelを作成（オプション）
+### ステップ3: Event Channelを作成（オプション）
 
 変更の通知が必要な場合は、対応するEvent Channelを作成します。
 
@@ -121,7 +121,7 @@ Create > Reactive SO > Channels > Int Event
 
 Variableの**On Value Changed**フィールドに割り当てます。
 
-### ステップ4：スクリプトで使用
+### ステップ4: スクリプトで使用
 
 ```csharp
 using Tang3cko.ReactiveSO;
@@ -298,7 +298,7 @@ float healthFactor = saturate(health / 100.0);
 
 ## 一般的なパターン
 
-### パターン1：複数のリーダー
+### パターン1: 複数のリーダー
 
 複数のシステムが同じVariableを読み取ることができます。
 
@@ -313,7 +313,7 @@ scoreText.text = $"Score: {currentScore.Value}";
 onScoreChanged.OnEventRaised += CheckHighScore;
 ```
 
-### パターン2：セーブデータからロード
+### パターン2: セーブデータからロード
 
 ```csharp
 public void LoadGame(SaveData save)
@@ -325,7 +325,7 @@ public void LoadGame(SaveData save)
 }
 ```
 
-### パターン3：AIがプレイヤー状態を読み取り
+### パターン3: AIがプレイヤー状態を読み取り
 
 ```csharp
 public class EnemyAI : MonoBehaviour
@@ -379,7 +379,7 @@ Paused
 
 ### 組み込みの履歴なし
 
-Variablesは現在の値のみを保存。履歴が必要な場合はサブスクライバーで実装：
+Variablesは現在の値のみを保存します。履歴が必要な場合はサブスクライバーで実装します。
 
 ```csharp
 private List<int> scoreHistory = new();
@@ -392,7 +392,7 @@ private void OnScoreChanged(int score)
 
 ### 参照型の変更は検出されない
 
-GameObjectのVariableでは、プロパティの変更はイベントをトリガーしません：
+GameObjectのVariableでは、プロパティの変更はイベントをトリガーしません。
 
 ```csharp
 // ❌ イベントなし（参照は変わっていない）
@@ -406,7 +406,7 @@ target.Value = newEnemy;
 
 ## カスタムVariableタイプの作成
 
-カスタムデータ型には、`VariableSO<T>`を継承：
+カスタムデータ型には`VariableSO<T>`を継承します。
 
 ```csharp
 [CreateAssetMenu(
@@ -419,7 +419,7 @@ public class WeaponVariableSO : VariableSO<Weapon>
 }
 ```
 
-対応するEvent Channelを作成：
+対応するEvent Channelを作成します。
 
 ```csharp
 [CreateAssetMenu(

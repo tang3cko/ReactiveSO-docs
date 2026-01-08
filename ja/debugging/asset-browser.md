@@ -24,7 +24,7 @@ nav_order: 6
 
 ## 機能
 
-Asset Browserは、すべてのReactive SOアセットタイプに対する統合ビューを提供します：
+Asset Browserは、すべてのReactive SOアセットタイプに対する統合ビューを提供します。
 
 - **Event Channels**
 - **Variables**

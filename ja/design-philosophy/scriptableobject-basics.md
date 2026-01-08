@@ -110,7 +110,7 @@ Playerスクリプトが`PlayerHealth.Value`を変更すると、HealthBar UIと
 
 ---
 
-## 原点：Unite Austin 2017
+## 原点 - Unite Austin 2017
 
 Reactive SOは、Ryan Hippleが**Unite Austin 2017**で発表した講演「**Game Architecture with Scriptable Objects**」に着想を得ています。
 

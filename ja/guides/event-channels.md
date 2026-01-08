@@ -73,7 +73,7 @@ Event Channelsは以下のような場合に使用します。
 
 ## 基本的な使い方
 
-### ステップ1：Event Channelアセットを作成
+### ステップ1: Event Channelアセットを作成
 
 Projectウィンドウで右クリックし、以下のメニューパスを選択します。
 
@@ -83,7 +83,7 @@ Create > Reactive SO > Channels > Void Event
 
 `OnPlayerDeath`や`OnLevelCompleted`のような説明的な名前を付けます。
 
-### ステップ2：パブリッシャーを作成
+### ステップ2: パブリッシャーを作成
 
 パブリッシャーは何かが起きたときにイベントを発火します。
 
@@ -103,7 +103,7 @@ public class Player : MonoBehaviour
 }
 ```
 
-### ステップ3：サブスクライバーを作成
+### ステップ3: サブスクライバーを作成
 
 サブスクライバーはイベントをリッスンして応答します。
 
@@ -133,7 +133,7 @@ public class GameOverUI : MonoBehaviour
 }
 ```
 
-### ステップ4：Inspectorで接続
+### ステップ4: Inspectorで接続
 
 1. Player GameObjectを選択
 2. `OnPlayerDeath`アセットをシリアライズフィールドにドラッグ
