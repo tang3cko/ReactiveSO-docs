@@ -6,6 +6,7 @@ en:
   getting_started: "Getting Started"
   design_philosophy: "Design Philosophy"
   guides: "Guides"
+  samples: "Samples"
   reference: "Reference"
   debugging: "Debugging"
   troubleshooting: "Troubleshooting"
@@ -16,12 +17,19 @@ en:
 
   # Guide titles
   event_channels: "Event Channels"
+  actions: "Actions"
   variables: "Variables"
   runtime_sets: "Runtime Sets"
   reactive_entity_sets: "Reactive Entity Sets"
 
+  # Sample titles
+  basic_demo: "Basic Demo"
+  mote_demo: "GPU Sync (Motes)"
+  runtime_sets_demo: "Runtime Sets Demo"
+
   # Reference titles
   event_types: "Event Types"
+  action_types: "Action Types"
   variable_types: "Variable Types"
   runtime_set_types: "Runtime Set Types"
   reactive_entity_sets_api: "Reactive Entity Sets API"
@@ -30,9 +38,11 @@ en:
   # Debugging titles
   overview: "Overview"
   event_monitor: "Event Monitor"
+  action_monitor: "Action Monitor"
   variable_monitor: "Variable Monitor"
   runtime_set_monitor: "Runtime Set Monitor"
   dependency_analyzer: "Dependency Analyzer"
+  asset_browser: "Asset Browser"
 
   # Integrations titles
   integrations: "Integrations"
@@ -50,6 +60,7 @@ ja:
   getting_started: "はじめに"
   design_philosophy: "Design Philosophy"
   guides: "ガイド"
+  samples: "サンプル"
   reference: "リファレンス"
   debugging: "デバッグ"
   troubleshooting: "トラブルシューティング"
@@ -60,12 +71,19 @@ ja:
 
   # Guide titles
   event_channels: "Event Channels"
+  actions: "Actions"
   variables: "Variables"
   runtime_sets: "Runtime Sets"
   reactive_entity_sets: "Reactive Entity Sets"
 
+  # Sample titles
+  basic_demo: "基本デモ"
+  mote_demo: "GPU Sync (Motes)"
+  runtime_sets_demo: "Runtime Sets デモ"
+
   # Reference titles
   event_types: "Event Types"
+  action_types: "Action Types"
   variable_types: "Variable Types"
   runtime_set_types: "Runtime Set Types"
   reactive_entity_sets_api: "Reactive Entity Sets API"
@@ -74,9 +92,11 @@ ja:
   # Debugging titles
   overview: "概要"
   event_monitor: "Event Monitor"
+  action_monitor: "Action Monitor"
   variable_monitor: "Variable Monitor"
   runtime_set_monitor: "Runtime Set Monitor"
   dependency_analyzer: "Dependency Analyzer"
+  asset_browser: "Asset Browser"
 
   # Integrations titles
   integrations: "外部連携"

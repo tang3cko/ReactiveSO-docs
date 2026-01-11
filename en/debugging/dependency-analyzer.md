@@ -23,15 +23,16 @@ Navigate to **Window > Reactive SO > Dependency Analyzer**.
 
 ## Tabs
 
-The Dependency Analyzer has three tabs.
+The Dependency Analyzer has four tabs.
 
 | Tab | Description |
 |-----|-------------|
 | Event Channels | Analyze event channel usage and unassigned fields |
+| Actions | Analyze action usage and unassigned fields |
 | Variables | Analyze variable usage and unassigned fields |
 | Runtime Sets | Analyze runtime set usage and unassigned fields |
 
-Both tabs provide the same functionality for their respective asset types.
+All tabs provide the same functionality for their respective asset types.
 
 ---
 

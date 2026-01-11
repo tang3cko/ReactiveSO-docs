@@ -27,6 +27,7 @@ nav_order: 6
 Asset Browserは、すべてのReactive SOアセットタイプに対する統合ビューを提供します。
 
 - **Event Channels**
+- **Actions**
 - **Variables**
 - **Runtime Sets**
 - **Reactive Entity Sets**
@@ -53,7 +54,12 @@ Asset BrowserはPlay Mode中にインタラクティブになります。
 ### Event Channels
 
 - **Voidイベント**: **Raise**ボタンをクリックして、イベントを即座に発火させます。
-- **その他のイベント**: **Raise**をクリックするとProjectウィンドウのアセットがpingされます（手動発火にはInspectorが必要です）。
+- **その他のイベント**: **Raise**をクリックするとProjectウィンドウのアセットがpingされます（詳細なパラメータ指定が必要なため、手動発火にはInspectorを使用します）。
+
+### Actions
+
+- **Executeボタン**: アクションを即座に実行します。
+- **型付きアクション**: `ActionSO<T>` の場合、Executeをクリックするとアセットが選択されます。InspectorのManual Executeセクションからパラメータを指定して実行できます。
 
 ### Variables
 
@@ -79,6 +85,10 @@ Asset BrowserはPlay Mode中にインタラクティブになります。
 ### イベントのデバッグ
 
 Voidイベント（`OnGameStart`や`OnPlayerDeath`など）をリストから直接発火させて、システムの応答をテストします。
+
+### アクションのテスト
+
+一時的なUIボタンを作成することなく、Actionsで定義されたゲームロジックをエディタから直接トリガーします。
 
 ### 状態の監視
 

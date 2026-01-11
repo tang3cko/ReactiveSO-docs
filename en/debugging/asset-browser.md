@@ -24,9 +24,10 @@ Navigate to **Window > Reactive SO > Asset Browser**.
 
 ## Features
 
-The Asset Browser provides a unified view for all Reactive SO asset types:
+The Asset Browser provides a unified view for all Reactive SO asset types.
 
 - **Event Channels**
+- **Actions**
 - **Variables**
 - **Runtime Sets**
 - **Reactive Entity Sets**
@@ -55,6 +56,11 @@ The Asset Browser becomes interactive during Play Mode.
 - **Void Events**: Click the **Raise** button to fire the event immediately.
 - **Other Events**: Click **Raise** to ping the asset in the Project window (manual trigger requires Inspector).
 
+### Actions
+
+- **Execute Button**: Click to execute the action immediately.
+- **Typed Actions**: For `ActionSO<T>`, clicking Execute selects the asset in the Project window. You can then provide parameters via the Inspector's Manual Execute section.
+
 ### Variables
 
 - **Value Column**: Displays the current runtime value of the variable.
@@ -79,6 +85,10 @@ Quickly see all defined events and variables in your project to avoid creating d
 ### Debugging events
 
 Fire void events (like `OnGameStart` or `OnPlayerDeath`) directly from the list to test system responses.
+
+### Testing actions
+
+Trigger game logic defined in Actions directly from the editor without needing to create temporary UI buttons.
 
 ### Monitoring state
 

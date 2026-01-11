@@ -30,7 +30,7 @@ The Monitor Window shares a common interface across all tabs.
 
 - **Clear**: Removes all current log entries.
 - **Search**: Filters the log list by name, type, or other text.
-- **Menu (⋮)**:
+- **Menu (⋮)**
     - **Export/CSV**: Save the current logs to a CSV file.
     - **Export/CSV (Excel)**: Save with UTF-8 BOM for Excel compatibility.
     - **Max Entries**: Set the maximum number of logs to keep (100 - 10K).
@@ -42,7 +42,7 @@ The Monitor Window shares a common interface across all tabs.
 
 ### Log persistence
 
-Logs behave as follows:
+Logs behave as follows.
 
 | Action | Behavior |
 |--------|----------|
@@ -74,6 +74,22 @@ The Caller column shows `FileName.cs:MethodName:LineNumber`. Click it to open th
 
 {: .note }
 > **Limitation**: Caller info works for code calls only. Events raised via UnityEvents (e.g., Inspector button clicks) will show "-".
+
+---
+
+## Actions Tab
+
+Tracks executions of `ActionSO` assets.
+
+### Columns
+
+| Column | Description |
+|--------|-------------|
+| Time | Seconds since Play Mode started |
+| Name | Name of the action asset |
+| Type | Action type |
+| Description | Action description (from Inspector) |
+| Caller | Code location that executed the action |
 
 ---
 
