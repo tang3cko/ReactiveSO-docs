@@ -83,31 +83,52 @@ Built-in monitoring tools ([Event Monitor]({{ '/en/debugging/monitor' | relative
 
 ## How Reactive SO enables testing
 
-Dependencies are injected via Unity's serialization system:
+### Inspector as a Non-Coding DI Container
+
+One of the most powerful features of Reactive SO is that **Unity's Inspector itself becomes your Dependency Injection (DI) container.** You don't need third-party frameworks like VContainer or Zenject to achieve decoupling.
+
+- **Zero setup** - Assign dependencies by dragging and dropping assets in the Inspector.
+- **Visual mocking** - Swap a production data set with a "test data set" asset without touching a single line of code.
+- **Designer-friendly** - Designers can create specific test scenarios by creating new ScriptableObject assets with custom values.
+
+### State Injection
+
+Testing complex game states (e.g., "a boss with 10% HP and enraged status") usually requires playing through the game or using debug commands. With Reactive Entity Sets (RES), you can use **State Injection**:
 
 ```csharp
-public class Enemy : MonoBehaviour
+[Test]
+public void BossBattle_Enraged_Test()
 {
-    [SerializeField] private IntEventChannelSO onScoreAdded;
-    // Assign via Inspector
+    // 1. Create a fresh set instance
+    var set = ScriptableObject.CreateInstance<EnemyEntitySetSO>();
+    
+    // 2. Inject specific complex state instantly
+    set.Register(bossId, new EnemyState { Health = 10, IsEnraged = true });
+    
+    // 3. Run logic and verify results
+    damageSystem.ApplyDamage(bossId, 15);
+    Assert.IsTrue(set[bossId].IsDead);
 }
 ```
 
-For tests, create ScriptableObjects directly without asset files:
+This "State Injection" turns hours of manual debugging into milliseconds of automated testing.
 
-```csharp
-[SetUp]
-public void Setup()
-{
-    channel = ScriptableObject.CreateInstance<IntEventChannelSO>();
-}
-```
+### Snapshots as Test Cases
 
-This approach provides:
+The [Snapshot API]({{ '/en/advanced/reactive-entity-sets' | relative_url }}) takes testability to the ultimate level. Because RES data is strictly separated from logic, you can:
 
-- **No additional setup** - Use Unity's built-in serialization
-- **Inspector-based configuration** - Designer-friendly dependency assignment
-- **Simple test instances** - CreateInstance works in Edit Mode
+1.  **Capture** a snapshot when a bug occurs in production.
+2.  **Save** that snapshot as an asset or binary file.
+3.  **Load** that snapshot in a unit test to reproduce the exact state.
+4.  **Verify** the fix by running the logic over the loaded snapshot.
+
+This transforms failing game states into permanent regression tests.
+
+### Verification through Observability
+
+Traditional unit testing often relies on checking "side effects" (e.g., did a private field change?). In Reactive SO, we prioritize **Observability**.
+
+Tests verify logic by subscribing to the same **Event Channels** and **Variables** that the UI and other systems use. This means your tests are "watching" the system just like a user or a debugger would, leading to more robust and meaningful assertions.
 
 ---
 

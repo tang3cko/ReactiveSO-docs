@@ -312,6 +312,80 @@ public class ReactiveEntitySetSOTests
 }
 ```
 
+### Advanced: Snapshot-based testing
+
+Using the Snapshot API, you can load a pre-saved state and verify logic behavior. This is highly effective for reproducing complex bugs.
+
+```csharp
+[Test]
+public void Snapshot_Logic_RegressionTest()
+{
+    // 1. Arrange: Load captured snapshot or construct manually
+    // Allocate arrays for the snapshot
+    int count = 1;
+    var data = new NativeArray<EnemyState>(count, Allocator.Temp);
+    var ids = new NativeArray<int>(count, Allocator.Temp);
+
+    // Set "buggy" state
+    data[0] = enragedBossState;
+    ids[0] = bossId;
+
+    // Create snapshot struct
+    var snapshot = new EntitySetSnapshot<EnemyState>(data, ids, count);
+
+    // 2. Act: Restore state to a fresh set
+    var set = ScriptableObject.CreateInstance<EnemyEntitySetSO>();
+    set.RestoreSnapshot(snapshot);
+
+    // 3. Act: Run specific logic
+    battleSystem.ProcessTick(set);
+
+    // 4. Assert: Verify outcome
+    Assert.IsTrue(set[bossId].HasAttacked);
+    
+    // Dispose snapshot (which disposes the arrays)
+    snapshot.Dispose();
+}
+```
+
+---
+
+## Integration Testing pattern
+
+Because Reactive SO components are isolated, you can chain multiple systems together in an Edit Mode test to verify complex workflows.
+
+```csharp
+public class BattleWorkflowTests
+{
+    [Test]
+    public void FullBattleTick_IntegrationTest()
+    {
+        // Setup multiple systems
+        var enemies = ScriptableObject.CreateInstance<EnemySetSO>();
+        var player = ScriptableObject.CreateInstance<PlayerVariableSO>();
+        var log = ScriptableObject.CreateInstance<LogChannelSO>();
+
+        // Inject dependencies manually
+        var strategySystem = new StrategySystem(enemies);
+        var combatSystem = new CombatSystem(enemies, player, log);
+
+        // 1. Arrange: Initial state
+        enemies.Register(1, new EnemyState { HP = 10, Pos = Vector3.forward });
+        player.Value = new PlayerState { HP = 100 };
+
+        // 2. Act: Run a sequence of logic
+        strategySystem.Update();
+        combatSystem.Update();
+
+        // 3. Assert: Multi-system outcome
+        Assert.Less(player.Value.HP, 100, "Player should take damage");
+        // Verify via event channel observability
+        // (Assuming LogChannelSO tracks calls in a list for testing)
+        Assert.IsTrue(log.Contains("Player was hit!"));
+    }
+}
+```
+
 ---
 
 ## Dependency Injection pattern

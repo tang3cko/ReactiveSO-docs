@@ -8,7 +8,7 @@ nav_order: 6
 # Asset Browser
 
 {: .note }
-> v1.1.0以降で利用可能。
+> v2.1.0以降で利用可能。Asset Browserはv1.1.0のVariable Monitorの状態一覧機能を引き継いでいます。
 
 ## 目的
 

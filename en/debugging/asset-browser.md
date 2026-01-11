@@ -8,7 +8,7 @@ nav_order: 6
 # Asset Browser
 
 {: .note }
-> Available since v1.1.0.
+> Available since v2.1.0. The Asset Browser succeeds the Variable Monitor's state overview functionality from v1.1.0.
 
 ## Purpose
 

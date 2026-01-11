@@ -7,6 +7,9 @@ nav_order: 5
 
 # Action types
 
+{: .note }
+> Actions are available since v2.1.0.
+
 ## Purpose
 
 This reference documents the Action API for creating data-driven, reusable commands. You will find the API reference, implementation patterns, and examples for the ActionSO base classes.

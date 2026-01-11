@@ -7,6 +7,9 @@ nav_order: 5
 
 # Action Types
 
+{: .note }
+> Actionsはv2.1.0から利用可能です。
+
 ## 目的
 
 このリファレンスでは、データ駆動で再利用可能なコマンドを作成するためのAction APIを文書化しています。ActionSO基底クラスのAPIリファレンス、実装パターン、例を確認できます。

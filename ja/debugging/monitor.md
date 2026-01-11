@@ -8,7 +8,7 @@ nav_order: 2
 # Monitor Window
 
 {: .note }
-> 統合されたMonitor Windowはv1.1.0から利用可能です。
+> 統合されたMonitor Windowはv2.1.0から利用可能です。v2.1.0以前は、Event Channels、Variables、Runtime Sets用の個別のモニターウィンドウが存在していました。
 
 ## 目的
 

@@ -83,31 +83,52 @@ flowchart LR
 
 ## Reactive SOによるテストの実現
 
-依存関係はUnityのシリアライゼーションシステム経由で注入されます。
+### 「ノンコーディングDIコンテナ」としてのInspector
+
+Reactive SOの最も強力な機能の一つは、**UnityのInspector自体が依存性注入（DI）コンテナになる**ことです。疎結合を実現するためにVContainerやZenjectのようなサードパーティのフレームワークを導入する必要はありません。
+
+- **セットアップ不要** - Inspectorでアセットをドラッグ＆ドロップするだけで依存関係を割り当てられます。
+- **視覚的なモッキング** - コードを1行も書き換えることなく、本番用データセットを「テスト用データセット」アセットに差し替えられます。
+- **デザイナーフレンドリー** - デザイナーはカスタム値を持つ新しいScriptableObjectアセットを作成するだけで、特定のテストシナリオを作成できます。
+
+### ステート・インジェクション（状態の直接注入）
+
+「残りHP10%で怒り状態のボス」のような複雑なゲーム状態をテストするには、通常、そこまでプレイするかデバッグコマンドを使用する必要があります。Reactive Entity Sets（RES）では、**ステート・インジェクション**が可能です。
 
 ```csharp
-public class Enemy : MonoBehaviour
+[Test]
+public void BossBattle_Enraged_Test()
 {
-    [SerializeField] private IntEventChannelSO onScoreAdded;
-    // Inspectorで割り当て
+    // 1. 新しいセットインスタンスを作成
+    var set = ScriptableObject.CreateInstance<EnemyEntitySetSO>();
+    
+    // 2. 複雑な状態を瞬時に注入
+    set.Register(bossId, new EnemyState { Health = 10, IsEnraged = true });
+    
+    // 3. ロジックを実行して結果を検証
+    damageSystem.ApplyDamage(bossId, 15);
+    Assert.IsTrue(set[bossId].IsDead);
 }
 ```
 
-テストでは、アセットファイルなしでScriptableObjectを直接作成できます。
+この「ステート・インジェクション」は、数時間のデバッグ作業を数ミリ秒の自動テストに変換します。
 
-```csharp
-[SetUp]
-public void Setup()
-{
-    channel = ScriptableObject.CreateInstance<IntEventChannelSO>();
-}
-```
+### テストケースとしてのスナップショット
 
-このアプローチには以下の特徴があります。
+[Snapshot API]({{ '/ja/advanced/reactive-entity-sets' | relative_url }})は、テスト容易性を究極のレベルに引き上げます。RESのデータはロジックから厳密に分離されているため、以下のことが可能です。
 
-- **追加セットアップ不要** - Unityの組み込みシリアライゼーションを使用
-- **Inspectorベースの設定** - デザイナーフレンドリーな依存関係の割り当て
-- **シンプルなテストインスタンス** - CreateInstanceがEdit Modeで動作
+1.  本番環境でバグが発生した際にスナップショットを**キャプチャ**する。
+2.  そのスナップショットをアセットまたはバイナリファイルとして**保存**する。
+3.  ユニットテストでそのスナップショットを**ロード**し、正確な状態を再現する。
+4.  ロードされたスナップショットに対してロジックを実行し、修正を**検証**する。
+
+これにより、失敗したゲーム状態を永続的な回帰テスト（リグレッションテスト）に変換できます。
+
+### 可観測性（Observability）による検証
+
+従来のユニットテストは、しばしば「副作用」の確認（例：プライベート変数が書き換わったか？）に依存しがちです。Reactive SOでは、**可観測性**を優先します。
+
+テストは、UIや他のシステムが使用するのと同じ**Event Channel**や**Variable**を購読することでロジックを検証します。これは、テストがユーザーやデバッガーと同じようにシステムを「観察」していることを意味し、より堅牢で意味のあるアサーション（検証）につながります。
 
 ---
 

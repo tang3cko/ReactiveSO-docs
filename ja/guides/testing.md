@@ -312,6 +312,80 @@ public class ReactiveEntitySetSOTests
 }
 ```
 
+### 応用：スナップショットベースのテスト
+
+Snapshot APIを使用すると、保存済みの状態をロードしてロジックの動作を検証できます。これは複雑なバグの再現に非常に有効です。
+
+```csharp
+[Test]
+public void Snapshot_Logic_RegressionTest()
+{
+    // 1. Arrange: スナップショットを構築（またはファイルからロード）
+    // 配列を確保
+    int count = 1;
+    var data = new NativeArray<EnemyState>(count, Allocator.Temp);
+    var ids = new NativeArray<int>(count, Allocator.Temp);
+
+    // "バグ"の状態をセット
+    data[0] = enragedBossState;
+    ids[0] = bossId;
+
+    // スナップショット構造体を作成
+    var snapshot = new EntitySetSnapshot<EnemyState>(data, ids, count);
+
+    // 2. Act: 新しいセットに状態を復元
+    var set = ScriptableObject.CreateInstance<EnemyEntitySetSO>();
+    set.RestoreSnapshot(snapshot);
+
+    // 3. Act: 特定のロジックを実行
+    battleSystem.ProcessTick(set);
+
+    // 4. Assert: 結果を検証
+    Assert.IsTrue(set[bossId].HasAttacked);
+    
+    // スナップショットを破棄（内部の配列も破棄されます）
+    snapshot.Dispose();
+}
+```
+
+---
+
+## 統合テスト（Integration Test）パターン
+
+Reactive SOコンポーネントは隔離されているため、複数のシステムをEdit Modeテストで連結し、複雑なワークフローを検証できます。
+
+```csharp
+public class BattleWorkflowTests
+{
+    [Test]
+    public void FullBattleTick_IntegrationTest()
+    {
+        // 複数のシステムをセットアップ
+        var enemies = ScriptableObject.CreateInstance<EnemySetSO>();
+        var player = ScriptableObject.CreateInstance<PlayerVariableSO>();
+        var log = ScriptableObject.CreateInstance<LogChannelSO>();
+
+        // 依存関係を手動で注入
+        var strategySystem = new StrategySystem(enemies);
+        var combatSystem = new CombatSystem(enemies, player, log);
+
+        // 1. Arrange: 初期状態
+        enemies.Register(1, new EnemyState { HP = 10, Pos = Vector3.forward });
+        player.Value = new PlayerState { HP = 100 };
+
+        // 2. Act: 一連のロジックを実行
+        strategySystem.Update();
+        combatSystem.Update();
+
+        // 3. Assert: 複数システムにまたがる結果を検証
+        Assert.Less(player.Value.HP, 100, "プレイヤーがダメージを受けるはず");
+        // イベントチャネルの可観測性を利用して検証
+        // (LogChannelSOがテスト用に呼び出し履歴を保持していると仮定)
+        Assert.IsTrue(log.Contains("Player was hit!"));
+    }
+}
+```
+
 ---
 
 ## 依存性注入パターン

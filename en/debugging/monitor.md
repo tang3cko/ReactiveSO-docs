@@ -8,7 +8,7 @@ nav_order: 2
 # Monitor Window
 
 {: .note }
-> The unified Monitor Window is available since v1.1.0.
+> The unified Monitor Window is available since v2.1.0. Prior to v2.1.0, individual monitor windows existed for Event Channels, Variables, and Runtime Sets.
 
 ## Purpose
 
