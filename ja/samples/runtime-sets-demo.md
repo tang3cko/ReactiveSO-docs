@@ -48,29 +48,34 @@ graph LR
     subgraph "Logic"
         SPAWNER[ObjectSpawner]
         CLEANER[RuntimeSetCleaner]
-        DESTROYER[ObjectDestroyer]
+    end
+
+    subgraph "Spawned Objects"
+        OBJ[RuntimeSetMember]
     end
 
     UI -->|"RaiseEvent()"| SPAWN_EVT
     UI -->|"RaiseEvent()"| CLEAR_EVT
     SPAWN_EVT -->|"OnEventRaised"| SPAWNER
+    SPAWNER -->|"Instantiate()"| OBJ
+    OBJ -->|"OnEnable: Add()"| SET
+    OBJ -->|"OnDisable: Remove()"| SET
     CLEAR_EVT -->|"OnEventRaised"| CLEANER
-    SPAWNER -->|"Add()"| SET
     CLEANER -->|"DestroyItems()"| SET
-    DESTROYER -->|"Remove()"| SET
     SET -->|"onItemsChanged"| UPDATE_EVT
     UPDATE_EVT -->|"OnEventRaised"| DSP
 ```
 
-**重要なポイント**: Runtime Setsはマネージャーシングルトンの必要性を排除します。オブジェクトは共有されたRuntimeSetSOに自身を登録し、コレクションはアイテムが追加または削除されたときに自動的にサブスクライバーに通知します。
+**重要なポイント**: Runtime Setsはマネージャーシングルトンの必要性を排除します。オブジェクトは`RuntimeSetMember.OnEnable()`で自身を登録し、`OnDisable()`で解除します。これにより適切なライフサイクル管理が保証され、破棄や無効化時に自動的にコレクションから削除されます。
 
 ## 主要ファイル
 
 | ファイル | 説明 |
 | :--- | :--- |
 | `Scripts/RuntimeSetDemoUI.cs` | UIボタンをEventChannelsに接続 |
-| `Scripts/ObjectSpawner.cs` | オブジェクトをスポーンしRuntimeSetに登録 |
-| `Scripts/ObjectDestroyer.cs` | 衝突時にオブジェクトを削除 |
+| `Scripts/ObjectSpawner.cs` | オブジェクトをスポーン（prefabにはRuntimeSetMemberが必要） |
+| `Scripts/RuntimeSetMember.cs` | prefab用の自己登録コンポーネント |
+| `Scripts/ObjectDestroyer.cs` | 衝突時にオブジェクトを破棄 |
 | `Scripts/RuntimeSetDisplay.cs` | 現在のオブジェクト数を表示 |
 | `Scripts/RuntimeSetCleaner.cs` | RuntimeSetからすべてのオブジェクトをクリア |
 | `ScriptableObjects/RuntimeSets/SpawnedObjects.asset` | GameObjectRuntimeSetSO |

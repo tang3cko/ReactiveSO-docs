@@ -26,6 +26,7 @@ Reactive SOは以下のデバッグツールを提供しています。
 | [Variable Monitor](monitor) | リアルタイム変数状態監視 |
 | [Runtime Set Monitor](monitor) | リアルタイムランタイムセット監視 |
 | [Asset Browser](asset-browser) | すべてのReactive SOアセットを閲覧・検索・管理 |
+| [RES Table View](res-table-view) | ReactiveEntitySetのデータをテーブル形式で表示・編集・保存 |
 | [Dependency Analyzer](dependency-analyzer) | シーンとプレハブの静的解析 |
 | Manual Trigger | コードなしでInspectorからイベントやアクションをテスト |
 | Subscribers List | Play Mode中のアクティブなサブスクライバーを表示 |

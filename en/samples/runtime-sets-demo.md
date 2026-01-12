@@ -48,29 +48,34 @@ graph LR
     subgraph "Logic"
         SPAWNER[ObjectSpawner]
         CLEANER[RuntimeSetCleaner]
-        DESTROYER[ObjectDestroyer]
+    end
+
+    subgraph "Spawned Objects"
+        OBJ[RuntimeSetMember]
     end
 
     UI -->|"RaiseEvent()"| SPAWN_EVT
     UI -->|"RaiseEvent()"| CLEAR_EVT
     SPAWN_EVT -->|"OnEventRaised"| SPAWNER
+    SPAWNER -->|"Instantiate()"| OBJ
+    OBJ -->|"OnEnable: Add()"| SET
+    OBJ -->|"OnDisable: Remove()"| SET
     CLEAR_EVT -->|"OnEventRaised"| CLEANER
-    SPAWNER -->|"Add()"| SET
     CLEANER -->|"DestroyItems()"| SET
-    DESTROYER -->|"Remove()"| SET
     SET -->|"onItemsChanged"| UPDATE_EVT
     UPDATE_EVT -->|"OnEventRaised"| DSP
 ```
 
-**Key Insight**: Runtime Sets eliminate the need for manager singletons. Objects register themselves to a shared RuntimeSetSO, and the collection automatically notifies subscribers when items are added or removed.
+**Key Insight**: Runtime Sets eliminate the need for manager singletons. Objects register themselves via `RuntimeSetMember.OnEnable()` and unregister via `OnDisable()`. This ensures proper lifecycle management - objects are automatically removed when destroyed or disabled.
 
 ## Key Files
 
 | File | Description |
 | :--- | :--- |
 | `Scripts/RuntimeSetDemoUI.cs` | Connects UI buttons to EventChannels |
-| `Scripts/ObjectSpawner.cs` | Spawns objects and registers to RuntimeSet |
-| `Scripts/ObjectDestroyer.cs` | Removes objects on collision |
+| `Scripts/ObjectSpawner.cs` | Spawns objects (prefabs must have RuntimeSetMember) |
+| `Scripts/RuntimeSetMember.cs` | Self-registration component for prefabs |
+| `Scripts/ObjectDestroyer.cs` | Destroys objects on collision |
 | `Scripts/RuntimeSetDisplay.cs` | Displays current object count |
 | `Scripts/RuntimeSetCleaner.cs` | Clears all objects from RuntimeSet |
 | `ScriptableObjects/RuntimeSets/SpawnedObjects.asset` | GameObjectRuntimeSetSO |

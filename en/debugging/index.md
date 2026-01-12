@@ -26,6 +26,7 @@ Reactive SO provides the following debugging tools.
 | [Variable Monitor](monitor) | Real-time variable state monitoring |
 | [Runtime Set Monitor](monitor) | Real-time runtime set monitoring |
 | [Asset Browser](asset-browser) | Browse, search, and manage all Reactive SO assets |
+| [RES Table View](res-table-view) | View, edit, and save ReactiveEntitySet data in table format |
 | [Dependency Analyzer](dependency-analyzer) | Static analysis for scenes and prefabs |
 | Manual Trigger | Test events and actions from Inspector without code |
 | Subscribers List | View active subscribers during Play Mode |
