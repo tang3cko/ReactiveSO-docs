@@ -36,7 +36,7 @@ Projectウィンドウで右クリックし、以下のメニューパスを選�
 Create > Reactive SO > Channels > Void Event
 ```
 
-<!-- TODO: Add screenshot of Create menu showing Reactive SO > Channels submenu -->
+![Create Menu]({{ '/assets/images/getting-started/create-menu.png' | relative_url }})
 
 名前を `OnPlayerDeath` にします。
 
@@ -90,7 +90,7 @@ public class GameManager : MonoBehaviour
 2. `OnPlayerDeath` アセットをシリアライズフィールドにドラッグ
 3. GameManagerにも同様に設定
 
-<!-- TODO: Add screenshot showing Inspector with Event Channel field assignment -->
+![Inspector Assignment]({{ '/assets/images/getting-started/inspector-assignment.png' | relative_url }})
 
 これで完了です！PlayerとGameManagerは疎結合になりました。
 

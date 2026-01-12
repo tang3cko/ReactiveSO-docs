@@ -36,7 +36,7 @@ Right-click in the Project window.
 Create > Reactive SO > Channels > Void Event
 ```
 
-<!-- TODO: Add screenshot of Create menu showing Reactive SO > Channels submenu -->
+![Create Menu]({{ '/assets/images/getting-started/create-menu.png' | relative_url }})
 
 Name it `OnPlayerDeath`.
 
@@ -90,7 +90,7 @@ public class GameManager : MonoBehaviour
 2. Drag the `OnPlayerDeath` asset to the serialized field
 3. Do the same for GameManager
 
-<!-- TODO: Add screenshot showing Inspector with Event Channel field assignment -->
+![Inspector Assignment]({{ '/assets/images/getting-started/inspector-assignment.png' | relative_url }})
 
 That's it! The Player and GameManager are now decoupled.
 
