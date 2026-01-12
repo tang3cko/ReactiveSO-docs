@@ -17,7 +17,7 @@ nav_order: 3
 - コレクション変更時のイベント駆動UI更新
 - Inspectorでのアクティブオブジェクトのリアルタイム可視化
 
-<!-- TODO: Add GIF showing objects spawning and the RuntimeSet tracking them in real-time -->
+![Runtime Sets Demo]({{ '/assets/images/samples/runtime-sets-demo.png' | relative_url }})
 
 ## 使用している機能
 

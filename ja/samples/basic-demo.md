@@ -17,7 +17,7 @@ nav_order: 1
 - カウンターの値を読み取るディスプレイ
 - 初期値を復元するリセットボタン
 
-<!-- TODO: Add GIF showing the counter incrementing when buttons are clicked -->
+![Basic Demo]({{ '/assets/images/samples/basic-demo.png' | relative_url }})
 
 ## 使用している機能
 

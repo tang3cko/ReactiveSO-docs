@@ -26,7 +26,7 @@ Footstep ripples complement the motes.
 - Ripples share the same color as motes via GPU Sync (`_RippleColor`)
 - UI color changes affect both motes and ripples simultaneously
 
-<!-- TODO: Add video showing motes reacting to player proximity with glow and repulsion effects -->
+![Mote Demo]({{ '/assets/images/samples/mote-demo.png' | relative_url }})
 
 ## Features Used
 

@@ -17,7 +17,7 @@ The demo shows:
 - Event-driven UI updates when the collection changes
 - Inspector visibility of active objects in real-time
 
-<!-- TODO: Add GIF showing objects spawning and the RuntimeSet tracking them in real-time -->
+![Runtime Sets Demo]({{ '/assets/images/samples/runtime-sets-demo.png' | relative_url }})
 
 ## Features Used
 
