@@ -18,12 +18,23 @@ This documentation covers everything you need to use Reactive SO in your Unity p
 
 ## Why Reactive SO?
 
-Traditional Unity development often leads to tightly coupled components that are hard to test and maintain. Reactive SO addresses these challenges through its core design principles.
+Traditional Unity development often leads to tightly coupled components that are hard to test and maintain. Reactive SO addresses these challenges through four core principles.
 
-- **Complete Decoupling** - Publishers and subscribers communicate through ScriptableObject assets without direct references
-- **Visual Event Flow** - See event dependencies directly in the Unity Inspector
-- **Zero Runtime Overhead** - Debugging features only active in Editor
-- **Strongly-Typed** - 12 event types covering all common Unity types
+### Decoupled by Design
+
+Publishers and subscribers communicate through ScriptableObject assets without direct references. No singletons, no FindObjectOfType, no tight coupling.
+
+### Inspector-First
+
+Wire up event connections, configure shared state, and verify dependencies—all from the Inspector. Your architecture becomes visible and editable without touching code.
+
+### Observable
+
+See what's happening at runtime. The Monitor Window shows events firing, variables changing, and sets updating in real-time. Asset Browser and Dependency Analyzer help you understand and maintain your project.
+
+### Scalable
+
+Start with Event Channels for simple notifications. Add Variables for shared state, Runtime Sets for object tracking. Scale up to Reactive Entity Sets for tens of thousands of entities with Job System integration.
 
 ---
 
@@ -77,6 +88,22 @@ entitySet.Register(entityId, new EntityData { ... });
 ```
 
 [Learn more about Reactive Entity Sets]({{ '/en/guides/reactive-entity-sets' | relative_url }})
+
+---
+
+## Additional Features
+
+### ActionSO
+
+Command pattern implemented as ScriptableObject assets. Define reusable actions, wire them in the Inspector, and execute them manually during Play Mode for testing.
+
+[Learn more about Actions]({{ '/en/guides/actions' | relative_url }})
+
+### R3 Integration
+
+When [R3](https://github.com/Cysharp/R3) is installed, Event Channels and Reactive Entity Sets can be converted to Observable streams for reactive programming workflows.
+
+[Learn more about Integrations]({{ '/en/integrations/' | relative_url }})
 
 ---
 

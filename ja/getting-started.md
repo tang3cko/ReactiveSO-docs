@@ -153,6 +153,20 @@ onPlayerDeath.RaiseEvent();
 
 ---
 
+## 動作を確認する
+
+Monitor Windowを使って、イベントがリアルタイムで発火するのを確認しましょう。
+
+1. **Window > Reactive SO > Monitor** を開く
+2. Play Modeに入る
+3. プレイヤーの死亡をトリガー——イベントがログに即座に表示される
+
+この観察可能性がReactive SOの中核です。アーキテクチャで何が起きているかを常に確認できます。
+
+[デバッグツールの詳細]({{ '/ja/debugging/' | relative_url }})
+
+---
+
 ## 次のステップ
 
 | やりたいこと | 参照 |

@@ -18,12 +18,23 @@ Unity向けのScriptableObjectベースのリアクティブアーキテクチ�
 
 ## なぜReactive SO？
 
-従来のUnity開発では、コンポーネント間が密結合になりがちで、テストや保守が困難になります。Reactive SOはこれらの課題をコア設計原則によって解決します。
+従来のUnity開発では、コンポーネント間が密結合になりがちで、テストや保守が困難になります。Reactive SOはこれらの課題を4つのコア原則で解決します。
 
-- **完全な疎結合** - パブリッシャーとサブスクライバーがScriptableObjectアセットを通じて直接参照なしに通信
-- **視覚的なイベントフロー** - Unity Inspectorでイベントの依存関係を直接確認
-- **ゼロランタイムオーバーヘッド** - デバッグ機能はEditorでのみ動作
-- **強い型付け** - 一般的なUnity型をカバーする12種類のイベントタイプ
+### 設計レベルでの疎結合
+
+パブリッシャーとサブスクライバーはScriptableObjectアセットを介して通信します。シングルトンもFindObjectOfTypeも密結合もありません。
+
+### Inspector中心
+
+イベントの接続、共有状態の設定、依存関係の確認——すべてInspectorで完結。コードを触らずにアーキテクチャを可視化・編集できます。
+
+### 観察可能
+
+実行中の状態をリアルタイムで確認できます。Monitor Windowはイベントの発火、変数の変更、セットの更新を表示。Asset BrowserとDependency Analyzerでプロジェクトの理解と保守をサポートします。
+
+### スケーラブル
+
+Event Channelsでシンプルな通知から始めましょう。Variablesで状態共有、Runtime Setsでオブジェクト追跡。Reactive Entity Setsなら数万のエンティティをJob System統合で管理できます。
 
 ---
 
@@ -77,6 +88,22 @@ entitySet.Register(entityId, new EntityData { ... });
 ```
 
 [Reactive Entity Setsの詳細]({{ '/ja/guides/reactive-entity-sets' | relative_url }})
+
+---
+
+## 追加機能
+
+### ActionSO
+
+ScriptableObjectアセットとして実装されたCommandパターン。再利用可能なアクションを定義し、Inspectorで設定、Play Mode中に手動実行してテストできます。
+
+[Actionsの詳細]({{ '/ja/guides/actions' | relative_url }})
+
+### R3連携
+
+[R3](https://github.com/Cysharp/R3)がインストールされている場合、Event ChannelsとReactive Entity SetsをObservableストリームに変換し、リアクティブプログラミングのワークフローに統合できます。
+
+[Integrationsの詳細]({{ '/ja/integrations/' | relative_url }})
 
 ---
 

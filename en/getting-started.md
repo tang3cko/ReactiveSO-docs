@@ -153,6 +153,20 @@ Keep event flow visible by assigning channels in the Inspector rather than findi
 
 ---
 
+## See it in action
+
+Use the Monitor Window to watch your event fire in real-time.
+
+1. Open **Window > Reactive SO > Monitor**
+2. Enter Play Mode
+3. Trigger the player death—the event appears instantly in the log
+
+This observability is central to Reactive SO. You can always see what's happening in your architecture.
+
+[Learn more about debugging tools]({{ '/en/debugging/' | relative_url }})
+
+---
+
 ## What's next?
 
 | If you want to... | Read... |
