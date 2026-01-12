@@ -20,6 +20,8 @@ This guide explains how to use the Monitor Window to track events, variables, an
 
 Navigate to **Window > Reactive SO > Monitor**.
 
+![Monitor Window]({{ '/assets/images/debugging/monitor-window.png' | relative_url }})
+
 ---
 
 ## Common features

@@ -23,6 +23,8 @@ Open the window using one of the following methods:
 1. **From menu**: Window > Reactive SO > RES Table View
 2. **From Inspector**: Select a ReactiveEntitySetSO asset and click "Open Table View"
 
+![RES Table View]({{ '/assets/images/debugging/res-table-view.png' | relative_url }})
+
 ---
 
 ## Basic Usage

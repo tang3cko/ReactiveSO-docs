@@ -17,6 +17,8 @@ nav_order: 1
 - カウンターの値を読み取るディスプレイ
 - 初期値を復元するリセットボタン
 
+<!-- TODO: Add GIF showing the counter incrementing when buttons are clicked -->
+
 ## 使用している機能
 
 | 機能 | アセット | 説明 |

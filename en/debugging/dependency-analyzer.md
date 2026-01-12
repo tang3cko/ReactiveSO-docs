@@ -17,7 +17,7 @@ This guide explains how to use the Dependency Analyzer for static analysis. You 
 
 Navigate to **Window > Reactive SO > Dependency Analyzer**.
 
-<!-- TODO: Add screenshot of Dependency Analyzer Window showing tree view with Event Channels and their usages -->
+![Dependency Analyzer]({{ '/assets/images/debugging/dependency-analyzer.png' | relative_url }})
 
 ---
 

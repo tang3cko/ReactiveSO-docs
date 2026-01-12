@@ -1,7 +1,7 @@
 ---
 layout: default
 title: Samples
-nav_order: 5
+nav_order: 5.5
 has_children: true
 ---
 
@@ -25,3 +25,4 @@ You can find the source code for these samples in the package under `Samples~`. 
 | [Basic Demo (Counter)](basic-demo) | Event Channels, Variables | A simple counter UI demonstrating decoupled communication between buttons, logic, and display. |
 | [GPU Sync (Motes)](mote-demo) | GPU Sync, Variables, Compute Shaders | Demonstrates how to sync VariableSO values directly to shaders for high-performance visual effects. |
 | [Runtime Sets Demo](runtime-sets-demo) | Runtime Sets, Dynamic Lists | Shows how to manage dynamic collections of objects (like spawned enemies) without manager singletons. |
+| [Tiny History Demo](tiny-history-demo/) | Event Channels, Reactive Entity Sets, GPU Sync | An integrated example: nation simulation with timeline navigation, demonstrating Jobs integration and history snapshots. |

@@ -2,7 +2,7 @@
 layout: default
 title: Asset Browser
 parent: Debugging
-nav_order: 6
+nav_order: 4
 ---
 
 # Asset Browser
@@ -19,6 +19,8 @@ This guide explains how to use the Asset Browser Window to manage and inspect al
 ## Opening the window
 
 Navigate to **Window > Reactive SO > Asset Browser**.
+
+![Asset Browser]({{ '/assets/images/debugging/asset-browser.png' | relative_url }})
 
 ---
 

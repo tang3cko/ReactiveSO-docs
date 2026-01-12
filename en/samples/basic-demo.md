@@ -17,6 +17,8 @@ The counter UI consists of the following elements.
 - A display that reads the counter value
 - A reset button that restores the initial value
 
+<!-- TODO: Add GIF showing the counter incrementing when buttons are clicked -->
+
 ## Features Used
 
 | Feature | Asset | Description |

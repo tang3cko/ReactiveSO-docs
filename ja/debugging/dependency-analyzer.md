@@ -17,7 +17,7 @@ nav_order: 3
 
 **Window > Reactive SO > Dependency Analyzer**に移動します。
 
-<!-- TODO: Add screenshot of Dependency Analyzer Window showing tree view with Event Channels and their usages -->
+![Dependency Analyzer]({{ '/assets/images/debugging/dependency-analyzer.png' | relative_url }})
 
 ---
 

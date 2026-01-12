@@ -2,7 +2,7 @@
 layout: default
 title: Asset Browser
 parent: デバッグ
-nav_order: 6
+nav_order: 4
 ---
 
 # Asset Browser
@@ -19,6 +19,8 @@ nav_order: 6
 ## ウィンドウを開く
 
 **Window > Reactive SO > Asset Browser**に移動します。
+
+![Asset Browser]({{ '/assets/images/debugging/asset-browser.png' | relative_url }})
 
 ---
 

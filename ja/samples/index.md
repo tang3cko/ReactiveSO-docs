@@ -1,7 +1,7 @@
 ---
 layout: default
 title: サンプル
-nav_order: 5
+nav_order: 5.5
 has_children: true
 ---
 
@@ -25,3 +25,4 @@ has_children: true
 | [基本デモ (Counter)](basic-demo) | Event Channels, Variables | ボタン、ロジック、表示間の疎結合な通信を示すシンプルなカウンターUI。 |
 | [GPU Sync (Motes)](mote-demo) | GPU Sync, Variables, Compute Shaders | VariableSOの値をシェーダーに直接同期させ、高性能な視覚効果を実現する方法を示します。 |
 | [Runtime Sets デモ](runtime-sets-demo) | Runtime Sets, Dynamic Lists | マネージャークラス（シングルトン）を使わずに、動的なオブジェクトの集合（スポーンされた敵など）を管理する方法を示します。 |
+| [Tiny History デモ](tiny-history-demo/) | Event Channels, Reactive Entity Sets, GPU Sync | 統合サンプル：タイムライン操作機能付き国家シミュレーション。Jobs 統合と履歴スナップショットを実演します。 |

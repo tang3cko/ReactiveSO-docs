@@ -20,6 +20,8 @@ nav_order: 2
 
 **Window > Reactive SO > Monitor**に移動します。
 
+![Monitor Window]({{ '/assets/images/debugging/monitor-window.png' | relative_url }})
+
 ---
 
 ## 共通機能

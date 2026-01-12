@@ -26,6 +26,8 @@ Event Channelsの **GPU Sync** 機能のデモです。このデモでは、Vari
 - 波紋はGPU Sync（`_RippleColor`）を介してMoteと同じ色を共有
 - UIでの色変更はMoteと波紋の両方に同時に影響
 
+<!-- TODO: Add video showing motes reacting to player proximity with glow and repulsion effects -->
+
 ## 使用している機能
 
 | 機能 | アセット | シェーダープロパティ | 説明 |

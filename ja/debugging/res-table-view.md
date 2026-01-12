@@ -23,6 +23,8 @@ nav_order: 5
 1. **メニューから**: Window > Reactive SO > RES Table View
 2. **Inspectorから**: ReactiveEntitySetSO アセットを選択し、「Open Table View」ボタンをクリック
 
+![RES Table View]({{ '/assets/images/debugging/res-table-view.png' | relative_url }})
+
 ---
 
 ## 基本的な使い方

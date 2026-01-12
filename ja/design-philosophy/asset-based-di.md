@@ -21,7 +21,7 @@ nav_order: 2.5
 
 ### 定義
 
-[Martin Fowlerは2004年に依存性注入を定義しました](https://martinfowler.com/articles/injection.html)：
+[Martin Fowlerは2004年に依存性注入を定義しました](https://martinfowler.com/articles/injection.html)。
 
 > 「依存性注入の基本的な考え方は、別個のオブジェクト（アセンブラ）がリスタークラスのフィールドに適切な実装を設定することである。」
 
@@ -40,7 +40,7 @@ nav_order: 2.5
 {: .important }
 > **依存性注入**は設計パターンです。**DIコンテナ**（VContainerやZenjectなど）はDIを自動化するツールです。依存性注入を実践するためにDIコンテナは必要ありません。
 
-この区別は非常に重要です：
+この区別は非常に重要です。
 
 | 用語 | 意味 |
 |:-----|:-----|
@@ -52,7 +52,7 @@ nav_order: 2.5
 
 ### UnityにおけるPure DI
 
-以下のコードを書いたとき：
+以下のコードを書いたとします。
 
 ```csharp
 public class PlayerController : MonoBehaviour
@@ -100,7 +100,7 @@ Reactive SOはこれらの特性を活用し、ScriptableObjectをシステム�
 
 ### ScriptableObjectのトレードオフ
 
-ScriptableObjectは万能ではありません。以下のトレードオフを考慮してください：
+ScriptableObjectは万能ではありません。以下のトレードオフを考慮してください。
 
 - **ランタイムデータの永続性** - 非シリアライズデータはアセットがアンロードされると失われる可能性があります（[トラブルシューティング]({{ '/ja/troubleshooting#data-loss' | relative_url }})を参照）
 - **シーン固有ではない設計** - シーンごとの状態には、MonoBehaviourの方が適切な場合があります
