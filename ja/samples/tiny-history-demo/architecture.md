@@ -117,7 +117,7 @@ Frame Start
 └──────────┬──────────┘
            ▼
 ┌─────────────────────┐
-│  6. GPU Sync        │  州と軍隊のレンダリング用
+│  6. GPU Render      │  州と軍隊のレンダリング用
 │                     │  GPUバッファを更新
 └──────────┬──────────┘
            ▼
@@ -147,7 +147,7 @@ graph LR
 
 ### Entity Sets から GPU へ
 
-州と軍隊のデータは Entity Sets から GPU バッファへ流れます。
+州と軍隊のデータは手動更新により Entity Sets から GPU バッファへ流れます。
 
 ```mermaid
 graph LR
@@ -166,7 +166,7 @@ graph LR
         ARMY[Army.shader]
     end
 
-    P_SET --> |OnChanged| P_BUF --> MAP
+    P_SET --> |Per Frame| P_BUF --> MAP
     A_SET --> |Per Frame| A_BUF --> ARMY
 ```
 

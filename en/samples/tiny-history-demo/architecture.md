@@ -117,7 +117,7 @@ Frame Start
 └──────────┬──────────┘
            ▼
 ┌─────────────────────┐
-│  6. GPU Sync        │  Update GPU buffers for
+│  6. GPU Render      │  Update GPU buffers for
 │                     │  province and army rendering
 └──────────┬──────────┘
            ▼
@@ -147,7 +147,7 @@ graph LR
 
 ### Entity Sets to GPU
 
-Province and army data flows from Entity Sets to GPU buffers.
+Province and army data flows from Entity Sets to GPU buffers via manual updates.
 
 ```mermaid
 graph LR
@@ -166,7 +166,7 @@ graph LR
         ARMY[Army.shader]
     end
 
-    P_SET --> |OnChanged| P_BUF --> MAP
+    P_SET --> |Per Frame| P_BUF --> MAP
     A_SET --> |Per Frame| A_BUF --> ARMY
 ```
 

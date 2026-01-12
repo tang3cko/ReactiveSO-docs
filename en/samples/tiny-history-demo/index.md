@@ -12,7 +12,7 @@ has_children: true
 
 ## Purpose
 
-This sample demonstrates how Event Channels, Reactive Entity Sets, and GPU Sync work together in a production-style application. Use it as a reference for building complex systems with Reactive SO.
+This sample demonstrates how Event Channels and Reactive Entity Sets work together in a production-style application. Use it as a reference for building complex systems with Reactive SO.
 
 > **Advanced Showcase** - This is an integrated example showing all features working together. If you're new to Reactive SO, start with the simpler samples ([Basic Demo]({{ '/en/samples/basic-demo' | relative_url }}), [Mote Demo]({{ '/en/samples/mote-demo' | relative_url }})) and the feature guides first.
 {: .note }
@@ -40,8 +40,7 @@ A nation simulation with timeline navigation. Watch AI-controlled nations compet
 | Event Channels | UI communication | Timeline seek requests |
 | Reactive Variables | State sync | Play/pause, current frame, simulation speed |
 | Reactive Entity Sets | Jobs integration | Army, province, nation state with double buffering |
-| Reactive Entity Sets | GPU Sync | Province ownership to map shader |
-| GPU Sync | Rendering | Province colors, army positions |
+| Custom GPU Rendering | Rendering | Province colors via GraphicsBuffer, army instancing |
 
 ---
 

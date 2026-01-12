@@ -12,16 +12,16 @@ nav_order: 3
 
 ## Purpose
 
-This page explains how Tiny History Demo uses Reactive Entity Sets for Jobs integration, GPU synchronization, and history snapshots.
+This page explains how Tiny History Demo uses Reactive Entity Sets for Jobs integration, custom GPU rendering, and history snapshots.
 
 ---
 
 ## Overview
 
-The sample demonstrates four Reactive Entity Set patterns:
+The sample demonstrates four patterns:
 
 1. **Jobs Integration**: Double buffering for safe parallel processing
-2. **GPU Sync**: Automatic buffer updates for rendering
+2. **Custom GPU Rendering**: Manual buffer updates for rendering
 3. **State Queries**: Aggregation and filtering without allocation
 4. **History Snapshots**: Save and restore entity state for time travel
 
@@ -102,39 +102,39 @@ ArmyStateSet (Updated State)
 
 ---
 
-## Pattern 2: GPU Sync
+## Pattern 2: Custom GPU Rendering
 
 ### Province Rendering
 
-Province ownership data flows from the Entity Set to GPU buffers.
+Province ownership data flows from the Entity Set to GPU buffers via manual updates each frame.
 
 ```mermaid
 graph LR
     subgraph "CPU"
         P_SET[(ProvinceStateSet)]
-        SYNC[GPU Sync<br/>OnChanged]
+        UPDATE[UpdateProvinceBuffer<br/>Per Frame]
     end
 
     subgraph "GPU"
-        P_BUF[StructuredBuffer<br/>ProvinceState]
+        P_BUF[GraphicsBuffer<br/>ProvinceState]
         SHADER[MapComposition.shader]
     end
 
-    P_SET --> |OnChanged| SYNC --> P_BUF --> SHADER
+    P_SET --> UPDATE --> P_BUF --> SHADER
 ```
 
-**What Gets Synced**:
+**What Gets Copied**:
 
 - Owner nation ID (determines province color)
 - Occupation progress (shows invasion overlay)
 - Terrain type (affects visual appearance)
 
-> **Key Insight** - Entity Set changes automatically trigger GPU buffer updates. The renderer doesn't poll for changes; it reacts to them.
+> **Note** - This sample uses manual `GraphicsBuffer.SetData()` calls rather than Reactive SO's GPU Sync feature. This approach gives full control over when and how data is uploaded to the GPU.
 {: .note }
 
 ### Army Rendering
 
-Army positions are synced to GPU every frame for instanced rendering.
+Army positions are copied to GPU every frame for instanced rendering.
 
 ```mermaid
 graph LR
@@ -144,7 +144,7 @@ graph LR
     end
 
     subgraph "GPU"
-        A_BUF[StructuredBuffer<br/>ArmyGPU]
+        A_BUF[GraphicsBuffer<br/>ArmyGPU]
         INST[DrawMeshInstancedIndirect]
     end
 
@@ -292,8 +292,8 @@ The sample uses several strategies to minimize memory allocation:
 | `ScriptableObjects/EntitySets/NationStateSet.asset` | Nation entity set |
 | `Scripts/TinyHistorySimulation.cs` | Orchestrator setup and job scheduling |
 | `Scripts/HistoryManager.cs` | Snapshot capture and restoration |
-| `Scripts/MapRenderer.cs` | Province GPU sync |
-| `Scripts/ArmyRenderer.cs` | Army GPU sync |
+| `Scripts/MapRenderer.cs` | Province GPU rendering |
+| `Scripts/ArmyRenderer.cs` | Army GPU rendering |
 
 ---
 

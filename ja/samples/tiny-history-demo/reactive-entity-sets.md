@@ -12,16 +12,16 @@ nav_order: 3
 
 ## 目的
 
-このページでは、Tiny History デモが Reactive Entity Sets を Jobs 統合、GPU 同期、履歴スナップショットにどのように使用しているかを説明します。
+このページでは、Tiny History デモが Reactive Entity Sets を Jobs 統合、カスタム GPU レンダリング、履歴スナップショットにどのように使用しているかを説明します。
 
 ---
 
 ## 概要
 
-このサンプルは4つの Reactive Entity Set パターンを示しています。
+このサンプルは4つのパターンを示しています。
 
 1. **Jobs 統合**: 安全な並列処理のためのダブルバッファリング
-2. **GPU Sync**: レンダリング用の自動バッファ更新
+2. **カスタム GPU レンダリング**: レンダリング用の手動バッファ更新
 3. **状態クエリ**: アロケーションなしの集計とフィルタリング
 4. **履歴スナップショット**: タイムトラベル用のエンティティ状態の保存と復元
 
@@ -102,39 +102,39 @@ ArmyStateSet (Updated State)
 
 ---
 
-## パターン2: GPU Sync
+## パターン2: カスタム GPU レンダリング
 
 ### 州のレンダリング
 
-州の所有権データは Entity Set から GPU バッファへ流れます。
+州の所有権データは毎フレームの手動更新により Entity Set から GPU バッファへ流れます。
 
 ```mermaid
 graph LR
     subgraph "CPU"
         P_SET[(ProvinceStateSet)]
-        SYNC[GPU Sync<br/>OnChanged]
+        UPDATE[UpdateProvinceBuffer<br/>Per Frame]
     end
 
     subgraph "GPU"
-        P_BUF[StructuredBuffer<br/>ProvinceState]
+        P_BUF[GraphicsBuffer<br/>ProvinceState]
         SHADER[MapComposition.shader]
     end
 
-    P_SET --> |OnChanged| SYNC --> P_BUF --> SHADER
+    P_SET --> UPDATE --> P_BUF --> SHADER
 ```
 
-**同期される内容**:
+**コピーされる内容**:
 
 - 所有国 ID（州の色を決定）
 - 占領進捗（侵攻オーバーレイを表示）
 - 地形タイプ（見た目に影響）
 
-> **重要なポイント** - Entity Set の変更が自動的に GPU バッファ更新をトリガーします。レンダラーは変更をポーリングしません。反応するのです。
+> **注意** - このサンプルは Reactive SO の GPU Sync 機能ではなく、手動の `GraphicsBuffer.SetData()` 呼び出しを使用しています。このアプローチにより、データを GPU にアップロードするタイミングと方法を完全に制御できます。
 {: .note }
 
 ### 軍隊のレンダリング
 
-軍隊の位置は毎フレーム GPU に同期され、インスタンスレンダリングに使用されます。
+軍隊の位置は毎フレーム GPU にコピーされ、インスタンスレンダリングに使用されます。
 
 ```mermaid
 graph LR
@@ -144,7 +144,7 @@ graph LR
     end
 
     subgraph "GPU"
-        A_BUF[StructuredBuffer<br/>ArmyGPU]
+        A_BUF[GraphicsBuffer<br/>ArmyGPU]
         INST[DrawMeshInstancedIndirect]
     end
 
@@ -292,8 +292,8 @@ Timeline: [Yr10] [Yr20] [Yr30] [Yr40] [Yr41] [Yr42] ...
 | `ScriptableObjects/EntitySets/NationStateSet.asset` | 国家 Entity Set |
 | `Scripts/TinyHistorySimulation.cs` | Orchestrator セットアップとジョブスケジューリング |
 | `Scripts/HistoryManager.cs` | スナップショットの取得と復元 |
-| `Scripts/MapRenderer.cs` | 州の GPU 同期 |
-| `Scripts/ArmyRenderer.cs` | 軍隊の GPU 同期 |
+| `Scripts/MapRenderer.cs` | 州の GPU レンダリング |
+| `Scripts/ArmyRenderer.cs` | 軍隊の GPU レンダリング |
 
 ---
 

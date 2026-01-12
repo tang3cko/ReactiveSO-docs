@@ -12,7 +12,7 @@ has_children: true
 
 ## 目的
 
-このサンプルは、Event Channels、Reactive Entity Sets、GPU Sync が本番レベルのアプリケーションでどのように連携するかを示します。Reactive SO を使用して複雑なシステムを構築する際のリファレンスとしてご活用ください。
+このサンプルは、Event Channels と Reactive Entity Sets が本番レベルのアプリケーションでどのように連携するかを示します。Reactive SO を使用して複雑なシステムを構築する際のリファレンスとしてご活用ください。
 
 > **上級者向けショーケース** - これはすべての機能が連携して動作する統合サンプルです。Reactive SO を初めて使う方は、まずシンプルなサンプル（[基本デモ]({{ '/ja/samples/basic-demo' | relative_url }})、[Mote デモ]({{ '/ja/samples/mote-demo' | relative_url }})）と機能ガイドからお始めください。
 {: .note }
@@ -40,8 +40,7 @@ has_children: true
 | Event Channels | UI通信 | タイムラインシークリクエスト |
 | Reactive Variables | 状態同期 | 再生/一時停止、現在フレーム、シミュレーション速度 |
 | Reactive Entity Sets | Jobs統合 | 軍隊、州、国家の状態（ダブルバッファリング） |
-| Reactive Entity Sets | GPU Sync | 州の所有権をマップシェーダーへ |
-| GPU Sync | レンダリング | 州の色、軍隊の位置 |
+| カスタムGPUレンダリング | レンダリング | GraphicsBuffer経由での州の色、軍隊のインスタンシング |
 
 ---
 
