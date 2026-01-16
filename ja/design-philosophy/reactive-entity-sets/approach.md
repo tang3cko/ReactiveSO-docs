@@ -81,9 +81,9 @@ entitySet.UpdateData(enemyId, state => {
 
 ### デバッグのしやすさ
 
-RESはUnityのInspectorと深く統合し、モニタリングツールを提供します。
+RESはUnityのエディタと深く統合し、モニタリングツールを提供します。
 
-- Play Mode中にInspectorですべてのエンティティ状態を確認
+- Play Mode中にTable Viewですべてのエンティティ状態を確認
 - どのエンティティが登録されているか追跡
 - リアルタイムでイベントフローを監視
 - ブラックボックス的な動作がない

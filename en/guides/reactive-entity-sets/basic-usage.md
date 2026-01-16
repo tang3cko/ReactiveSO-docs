@@ -162,8 +162,7 @@ public class EnemyManager : MonoBehaviour
 | `TryGetData(owner, out data)` | Safely get entity's state |
 | `SetData(owner, data)` | Update entity's state |
 | `UpdateData(owner, func)` | Update state with function |
-| `GetDataRef(id)` | Get reference to state for direct modification |
-| `NotifyDataChanged(owner)` | Manually notify after GetDataRef modification |
+| `NotifyDataChanged(owner)` | Manually notify that an entity's data has changed |
 | `Contains(owner)` | Check if entity exists |
 | `Clear()` | Remove all entities |
 | `ForEach(action)` | Iterate all entities |

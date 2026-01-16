@@ -142,20 +142,6 @@ Sets state data. Raises OnDataChanged if the value differs.
 entitySet.SetData(123, new EnemyState { Health = 50 });
 ```
 
-### GetDataRef
-
-```csharp
-public ref TData GetDataRef(int id)
-```
-
-Gets a reference to state data for direct modification. More efficient for frequent updates but requires manual notification.
-
-```csharp
-ref var state = ref entitySet.GetDataRef(123);
-state.Health -= damage;
-entitySet.NotifyDataChanged(123);  // Must call manually
-```
-
 ### UpdateData
 
 ```csharp
@@ -192,7 +178,7 @@ if (entitySet.Contains(123))
 public void NotifyDataChanged(int id)
 ```
 
-Manually triggers data changed event. Use after GetDataRef modifications.
+Manually triggers data changed event.
 
 ---
 
@@ -247,7 +233,6 @@ All ID-based methods have MonoBehaviour overloads.
 - `GetData(MonoBehaviour owner)`
 - `TryGetData(MonoBehaviour owner, out TData data)`
 - `SetData(MonoBehaviour owner, TData data)`
-- `GetDataRef(MonoBehaviour owner)`
 - `UpdateData(MonoBehaviour owner, Func<TData, TData> updater)`
 - `Contains(MonoBehaviour owner)`
 - `NotifyDataChanged(MonoBehaviour owner)`

@@ -162,8 +162,7 @@ public class EnemyManager : MonoBehaviour
 | `TryGetData(owner, out data)` | エンティティの状態を安全に取得 |
 | `SetData(owner, data)` | エンティティの状態を更新 |
 | `UpdateData(owner, func)` | 関数で状態を更新 |
-| `GetDataRef(id)` | 直接変更用に状態への参照を取得 |
-| `NotifyDataChanged(owner)` | GetDataRef変更後に手動で通知 |
+| `NotifyDataChanged(owner)` | データ変更を手動で通知 |
 | `Contains(owner)` | エンティティが存在するか確認 |
 | `Clear()` | すべてのエンティティを削除 |
 | `ForEach(action)` | すべてのエンティティを反復 |

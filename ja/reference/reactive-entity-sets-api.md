@@ -153,20 +153,6 @@ entitySet.UpdateData(123, state => {
 });
 ```
 
-### GetDataRef
-
-```csharp
-public ref TData GetDataRef(int id)
-```
-
-直接変更のための状態データへの参照を取得します。頻繁な更新に対してより効率的ですが、手動での通知が必要です。
-
-```csharp
-ref var state = ref entitySet.GetDataRef(123);
-state.Health -= damage;
-entitySet.NotifyDataChanged(123);  // 手動で呼び出す必要あり
-```
-
 ### Contains
 
 ```csharp
@@ -188,7 +174,7 @@ if (entitySet.Contains(123))
 public void NotifyDataChanged(int id)
 ```
 
-手動でデータ変更イベントをトリガーします。GetDataRefでの変更後に使用します。
+手動でデータ変更イベントをトリガーします。
 
 ---
 
@@ -243,7 +229,6 @@ entitySet[this] = new EnemyState { Health = 50 };
 - `GetData(MonoBehaviour owner)`
 - `TryGetData(MonoBehaviour owner, out TData data)`
 - `SetData(MonoBehaviour owner, TData data)`
-- `GetDataRef(MonoBehaviour owner)`
 - `UpdateData(MonoBehaviour owner, Func<TData, TData> updater)`
 - `Contains(MonoBehaviour owner)`
 - `NotifyDataChanged(MonoBehaviour owner)`

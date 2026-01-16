@@ -81,9 +81,9 @@ entitySet.UpdateData(enemyId, state => {
 
 ### Debuggability
 
-RES integrates deeply with Unity's Inspector and provides monitoring tools.
+RES integrates deeply with Unity's editor and provides monitoring tools.
 
-- See all entity states in the Inspector during Play Mode
+- See all entity states in the Table View during Play Mode
 - Track which entities are registered
 - Monitor event flow in real-time
 - No black-box behavior
