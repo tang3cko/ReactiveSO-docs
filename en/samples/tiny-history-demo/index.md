@@ -21,7 +21,7 @@ This sample demonstrates how Event Channels and Reactive Entity Sets work togeth
 
 ## What is Tiny History?
 
-<!-- TODO: Add video/GIF showing simulation running and timeline seek in action -->
+<iframe width="560" height="315" src="https://www.youtube.com/embed/8it_Js-iabI" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" allowfullscreen></iframe>
 
 A nation simulation with timeline navigation. Watch AI-controlled nations compete for territory on a procedurally generated map, then rewind time to explore alternate histories.
 

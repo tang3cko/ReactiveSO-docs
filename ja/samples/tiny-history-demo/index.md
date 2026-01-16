@@ -21,7 +21,7 @@ has_children: true
 
 ## Tiny History とは？
 
-<!-- TODO: Add video/GIF showing simulation running and timeline seek in action -->
+<iframe width="560" height="315" src="https://www.youtube.com/embed/8it_Js-iabI" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" allowfullscreen></iframe>
 
 タイムライン操作機能付きの国家シミュレーションです。手続き生成されたマップ上で AI が操作する国家が領土を争い、タイムラインを巻き戻して別の歴史を探索できます。
 

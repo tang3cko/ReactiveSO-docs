@@ -8,6 +8,8 @@ nav_order: 1
 
 Unity向けのScriptableObjectベースのリアクティブアーキテクチャ。Event Channels、Variables、Runtime Sets、Reactive Entity Setsを提供します。
 
+<iframe width="560" height="315" src="https://www.youtube.com/embed/8it_Js-iabI" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" allowfullscreen></iframe>
+
 ---
 
 ## 目的

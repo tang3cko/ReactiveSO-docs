@@ -8,6 +8,8 @@ nav_order: 1
 
 ScriptableObject-based reactive architecture for Unity with Event Channels, Variables, Runtime Sets, and Reactive Entity Sets.
 
+<iframe width="560" height="315" src="https://www.youtube.com/embed/8it_Js-iabI" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" allowfullscreen></iframe>
+
 ---
 
 ## Purpose
