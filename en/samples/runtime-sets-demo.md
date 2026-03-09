@@ -95,7 +95,9 @@ graph LR
 
 This pattern is applicable to any scenario requiring dynamic object collection management.
 
-- **Enemy Management**: Track all active enemies without a manager singleton
-- **Spawned Objects**: Manage dynamically created pickups, projectiles, effects
-- **UI Elements**: Track active panels for bulk operations (close all, minimize all)
-- **Level Cleanup**: Destroy all spawned objects when changing scenes
+| Use Case | Example |
+| :--- | :--- |
+| Enemy Management | Track all active enemies without a manager singleton |
+| Spawned Objects | Manage dynamically created pickups, projectiles, effects |
+| UI Elements | Track active panels for bulk operations (close all, minimize all) |
+| Level Cleanup | Destroy all spawned objects when changing scenes |

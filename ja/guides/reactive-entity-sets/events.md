@@ -12,7 +12,7 @@ nav_order: 2
 
 ## 目的
 
-このページでは、エンティティの状態変更をサブスクライブする方法を説明します。エンティティごとのサブスクリプション、ReactiveEntityベースクラスのイベント、セットレベルのイベントチャンネルについて学びます。
+このページでは、エンティティの状態変更をサブスクライブする方法を説明します。エンティティごとのサブスクリプション、ReactiveEntityベースクラスのイベント、セットレベルのイベントチャンネルを取り上げます。
 
 ---
 
@@ -137,7 +137,7 @@ public class EnemyStatusUI : MonoBehaviour
 
 イベントチャンネル経由でセットレベルの変更をサブスクライブします。セット内のいずれかのエンティティが変更されると発火します。
 
-### 利用可能なイベントフィールド
+### イベントフィールド
 
 | フィールド | 発火タイミング |
 |-----------|---------------|
@@ -145,8 +145,10 @@ public class EnemyStatusUI : MonoBehaviour
 | On Item Removed | エンティティが登録解除されたとき |
 | On Data Changed | いずれかのエンティティのデータが変更されたとき |
 | On Set Changed | 任意の変更が発生したとき |
+| On Trait Added | エンティティにトレイトが追加されたとき |
+| On Trait Removed | エンティティからトレイトが削除されたとき |
 
-### 例: 敵カウンター
+### 敵カウンターの例
 
 ```csharp
 public class EnemyCounter : MonoBehaviour
@@ -239,6 +241,14 @@ sequenceDiagram
     RES->>EC: OnItemRemoved(id)
     RES->>EC: OnSetChanged
     end
+
+    rect rgb(230, 220, 180)
+    Note over C,EC: トレイト変更フロー
+    C->>RES: AddTraits(id, traits)
+    RES->>SS: Write trait mask(id)
+    RES->>EC: OnTraitAdded(id)
+    RES->>EC: OnSetChanged
+    end
 ```
 
 ### 状態更新フロー
@@ -272,9 +282,54 @@ Unregister() または ReactiveEntity.OnDisable()
 
 ---
 
+## トレイトイベント
+
+`AddTraits`、`RemoveTraits`、`SetTraits`、`ClearTraits` を呼び出すとトレイトイベントが発火します。`OnItemAdded` と同様にエンティティIDを渡します。
+
+```csharp
+public class AggroUI : MonoBehaviour
+{
+    [SerializeField] private IntEventChannelSO onTraitAdded;
+    [SerializeField] private IntEventChannelSO onTraitRemoved;
+    [SerializeField] private EnemyEntitySetSO enemySet;
+
+    private void OnEnable()
+    {
+        onTraitAdded.OnEventRaised += HandleTraitAdded;
+        onTraitRemoved.OnEventRaised += HandleTraitRemoved;
+    }
+
+    private void OnDisable()
+    {
+        onTraitAdded.OnEventRaised -= HandleTraitAdded;
+        onTraitRemoved.OnEventRaised -= HandleTraitRemoved;
+    }
+
+    private void HandleTraitAdded(int entityId)
+    {
+        if (enemySet.HasTraits<EnemyTraits>(entityId, EnemyTraits.IsAggro))
+        {
+            ShowAggroIndicator(entityId);
+        }
+    }
+
+    private void HandleTraitRemoved(int entityId)
+    {
+        if (!enemySet.HasTraits<EnemyTraits>(entityId, EnemyTraits.IsAggro))
+        {
+            HideAggroIndicator(entityId);
+        }
+    }
+}
+```
+
+トレイトAPIの詳細は[トレイト](traits)を参照してください。
+
+---
+
 ## サブスクリプションのライフサイクル
 
-サブスクライバーが無効化または破棄されるときは、常にサブスクライブを解除してください。
+サブスクライバーが無効化または破棄されるときは、サブスクライブを解除してください。
 
 ```csharp
 // 良い: バランスの取れたサブスクリプション
@@ -302,5 +357,6 @@ private void Start()
 
 ## 次のステップ
 
-- [パターン](patterns) - 一般的な使用パターンを見る
-- [ベストプラクティス](best-practices) - パフォーマンスとトラブルシューティングについて学ぶ
+- [トレイト](traits) — トレイトの追加、照会、イテレート
+- [パターン](patterns) — 一般的な使用パターン
+- [ベストプラクティス](best-practices) — パフォーマンスとトラブルシューティング

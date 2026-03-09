@@ -6,7 +6,7 @@ grand_parent: Design Philosophy
 nav_order: 2
 ---
 
-# Entity, Object, and View
+# Entity, object, and view
 
 ---
 
@@ -16,7 +16,7 @@ This page explains the core conceptual model of Reactive Entity Sets: the distin
 
 ---
 
-## Entity vs Object
+## Entity vs object
 
 RES makes a clear distinction between two concepts that Unity typically conflates.
 
@@ -57,7 +57,7 @@ Visual exists, but not tracked in the set.
 
 ---
 
-## GameObjects as Views
+## GameObjects as views
 
 RES inverts the typical Unity ownership pattern.
 

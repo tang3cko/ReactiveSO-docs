@@ -12,7 +12,7 @@ nav_order: 2
 
 ## Purpose
 
-This page explains how to subscribe to entity state changes. You will learn about per-entity subscriptions, the ReactiveEntity base class events, and set-level event channels.
+This page covers per-entity subscriptions, ReactiveEntity base class events, and set-level event channels.
 
 ---
 
@@ -87,7 +87,7 @@ The callback receives both the old and new state.
 void OnStateChanged(TData oldState, TData newState)
 ```
 
-This allows you to detect what changed and react accordingly.
+Compare the two values to detect what changed.
 
 ---
 
@@ -145,8 +145,10 @@ Subscribe to set-level changes via event channels. These fire whenever any entit
 | On Item Removed | An entity unregisters |
 | On Data Changed | Any entity's data changes |
 | On Set Changed | Any change occurs |
+| On Trait Added | Traits are added to an entity |
+| On Trait Removed | Traits are removed from an entity |
 
-### Example: Enemy counter
+### Example: enemy counter
 
 ```csharp
 public class EnemyCounter : MonoBehaviour
@@ -204,7 +206,7 @@ public class EnemyCounter : MonoBehaviour
 
 ## Event timing
 
-Understanding when events fire helps you structure your code correctly.
+Events fire at specific points during registration, state updates, and unregistration.
 
 ```mermaid
 sequenceDiagram
@@ -237,6 +239,14 @@ sequenceDiagram
     RES->>CB: Clear(id)
     RES->>SS: Remove(id)
     RES->>EC: OnItemRemoved(id)
+    RES->>EC: OnSetChanged
+    end
+
+    rect rgb(230, 220, 180)
+    Note over C,EC: Trait mutation flow
+    C->>RES: AddTraits(id, traits)
+    RES->>SS: Write trait mask(id)
+    RES->>EC: OnTraitAdded(id)
     RES->>EC: OnSetChanged
     end
 ```
@@ -272,6 +282,51 @@ Unregister() or ReactiveEntity.OnDisable()
 
 ---
 
+## Trait events
+
+Trait events fire when you call `AddTraits`, `RemoveTraits`, `SetTraits`, or `ClearTraits`. They pass the entity ID, same as `OnItemAdded`.
+
+```csharp
+public class AggroUI : MonoBehaviour
+{
+    [SerializeField] private IntEventChannelSO onTraitAdded;
+    [SerializeField] private IntEventChannelSO onTraitRemoved;
+    [SerializeField] private EnemyEntitySetSO enemySet;
+
+    private void OnEnable()
+    {
+        onTraitAdded.OnEventRaised += HandleTraitAdded;
+        onTraitRemoved.OnEventRaised += HandleTraitRemoved;
+    }
+
+    private void OnDisable()
+    {
+        onTraitAdded.OnEventRaised -= HandleTraitAdded;
+        onTraitRemoved.OnEventRaised -= HandleTraitRemoved;
+    }
+
+    private void HandleTraitAdded(int entityId)
+    {
+        if (enemySet.HasTraits<EnemyTraits>(entityId, EnemyTraits.IsAggro))
+        {
+            ShowAggroIndicator(entityId);
+        }
+    }
+
+    private void HandleTraitRemoved(int entityId)
+    {
+        if (!enemySet.HasTraits<EnemyTraits>(entityId, EnemyTraits.IsAggro))
+        {
+            HideAggroIndicator(entityId);
+        }
+    }
+}
+```
+
+For the full traits API, see [Traits](traits).
+
+---
+
 ## Subscription lifecycle
 
 Always unsubscribe when the subscriber is disabled or destroyed.
@@ -302,5 +357,6 @@ private void Start()
 
 ## Next steps
 
+- [Traits](traits) - Trait mutation, querying, and iteration
 - [Patterns](patterns) - See common usage patterns
-- [Best Practices](best-practices) - Learn about performance and troubleshooting
+- [Best Practices](best-practices) - Performance tips and troubleshooting

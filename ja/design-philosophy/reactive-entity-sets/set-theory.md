@@ -111,9 +111,9 @@ var lowHealthView = enemies.CreateView(state => state.Health < 30);
 
 **特徴**
 
-- 述語は作成時に固定
-- エンティティデータが変更されるとView所属が自動更新
-- 外部コンテキスト不要
+- 述語は作成時に固定されます
+- エンティティデータが変更されるとView所属が自動更新されます
+- 外部コンテキストは不要です
 
 ### 動的View R(c₁)
 
@@ -125,23 +125,20 @@ R(c₁) = { (id, data) ∈ S | P(data, context) = true }
 
 ここでPは述語関数: `P: (TData, TContext) → bool`
 
-**例**
+**例（概念）**
+
+動的/コンテキスト依存のViewは将来拡張であり、現時点では未実装です。概念としては次のようなイメージになります。
 
 ```csharp
 // 指定位置から10ユニット以内のすべての敵
-var inRangeView = enemies.CreateView<Vector3>(
-    (state, position) => Vector3.Distance(state.Position, position) < 10f
-);
-
-// 特定のコンテキストで評価
-var nearbyEnemies = inRangeView.Evaluate(playerPosition);
+// （予定API）
 ```
 
 **特徴**
 
-- 述語の評価にコンテキストが必要
-- エンティティデータの変更は自動再評価をトリガー
-- コンテキストの変更は明示的な再評価が必要
+- 述語の評価にコンテキストが必要です
+- エンティティデータの変更は自動再評価をトリガーします
+- コンテキストの変更には明示的な再評価が必要です
 
 ### Viewの「Reactive」
 
@@ -213,7 +210,7 @@ view.ForEach(...)
 
 ## 形式的定義
 
-厳密な数学的定式化に興味がある方向け。
+厳密な数学的定式化に興味がある方のための定義です。
 
 ### ReactiveEntitySet
 

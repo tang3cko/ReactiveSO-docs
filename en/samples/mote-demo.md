@@ -122,10 +122,12 @@ graph LR
 
 This pattern is applicable to scenarios where GPU effects need to react to gameplay.
 
-- **Particles / Motes**: Glow and scatter when player approaches
-- **Magic Aura**: Visual effects that follow or react to player position
-- **Environmental Effects**: GPU-simulated effects responding to gameplay state
-- **Shader Parameters**: Any shader property that needs to react to game variables
+| Use Case | Example |
+| :--- | :--- |
+| Particles / Motes | Glow and scatter when player approaches |
+| Magic Aura | Visual effects that follow or react to player position |
+| Environmental Effects | GPU-simulated effects responding to gameplay state |
+| Shader Parameters | Any shader property that needs to react to game variables |
 
 ## GPU Sync Usage
 

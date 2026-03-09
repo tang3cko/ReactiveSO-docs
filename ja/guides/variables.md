@@ -433,7 +433,7 @@ public class WeaponEventChannelSO : EventChannelSO<Weapon>
 
 ### シリアライズ要件
 
-カスタム型は完全にシリアライズ可能である必要があります。Unityは特定の型をシリアライズしません。
+カスタム型は完全にシリアライズ可能にしてください。Unityは特定の型をシリアライズしません。
 
 **サポートされる型**
 

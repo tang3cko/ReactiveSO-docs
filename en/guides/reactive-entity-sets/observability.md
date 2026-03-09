@@ -1,12 +1,12 @@
 ---
 layout: default
-title: Observability & Snapshots
+title: Observability & snapshots
 parent: Reactive Entity Sets
 grand_parent: Guides
 nav_order: 7
 ---
 
-# Observability & Snapshots
+# Observability & snapshots
 
 ---
 
@@ -16,7 +16,7 @@ This page explains the "True Observability" provided by Reactive Entity Sets. It
 
 ---
 
-## Theoretical Foundation: Set Theoretic Observability
+## Theoretical foundation
 
 To understand why RES handles data the way it does, we must look at the nature of "Observation" itself.
 

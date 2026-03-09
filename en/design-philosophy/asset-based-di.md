@@ -40,7 +40,7 @@ In simpler terms: **a component receives its dependencies from outside rather th
 {: .important }
 > **Dependency Injection** is a design pattern. **DI Containers** (like VContainer or Zenject) are tools that automate DI. You do not need a DI Container to practice Dependency Injection.
 
-This distinction is crucial:
+This distinction matters:
 
 | Term | What it is |
 |:-----|:-----------|
@@ -146,7 +146,7 @@ public class EnemySpawner : MonoBehaviour
 }
 ```
 
-This is **Pure DI**: the dependency (`enemySet`) is provided externally via the Inspector. The Unity Inspector serves as the "assembler" in Fowler's terminology, manually wiring dependencies without requiring a DI Container framework.
+This is **Pure DI**: the dependency (`enemySet`) is provided externally via the Inspector. The Unity Inspector is the "assembler" in Fowler's terminology, manually wiring dependencies without requiring a DI Container framework.
 
 ---
 

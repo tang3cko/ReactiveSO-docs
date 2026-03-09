@@ -6,7 +6,7 @@ grand_parent: Guides
 nav_order: 3
 ---
 
-# Common Patterns
+# Common patterns
 
 ---
 

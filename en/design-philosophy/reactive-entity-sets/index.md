@@ -6,7 +6,7 @@ nav_order: 3
 has_children: true
 ---
 
-# Reactive Entity Sets: Design Philosophy
+# Reactive Entity Sets: design philosophy
 
 ---
 

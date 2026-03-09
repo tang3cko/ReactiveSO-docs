@@ -12,8 +12,8 @@ has_children: true
 > **実験的機能** - Reactive Entity Setsはv2.1.0（未リリース）で利用可能です。APIは将来のバージョンで変更される可能性があります。本番環境での使用は自己責任で行ってください。
 
 {: .warning }
-> **重要な注意: ランタイムデータの永続性について**
-> ScriptableObjectはシーンを跨いでデータを保持できますが、**シーン遷移中にどのオブジェクトからも参照されなくなると、Unityによってメモリからアンロードされ、ランタイムデータが消失する可能性があります**。これを防ぐには、Manager Sceneパターンと`ReactiveEntitySetHolder`を使用してください。詳細は[永続化](persistence)を参照してください。
+> **重要な注意 — ランタイムデータの永続性**
+> ScriptableObjectはシーンをまたいでデータを保持できますが、**シーン遷移中にどのオブジェクトからも参照されなくなると、Unityによってメモリからアンロードされランタイムデータが消失します**。これを防ぐには、Manager Sceneパターンと`ReactiveEntitySetHolder`を使用してください。詳細は[永続化](persistence)を参照してください。
 
 ---
 
@@ -43,10 +43,10 @@ entitySet.UpdateData(this, state => {
 
 このアーキテクチャは以下を可能にします。
 
-- **シーン永続化** - エンティティ状態がシーンロードを生き残る
-- **グローバルアクセス** - IDで任意のエンティティの状態にアクセス
-- **O(1)パフォーマンス** - Sparse Setを使用した定数時間操作
-- **エンティティごとのイベント** - 特定のエンティティの変更をサブスクライブ
+- エンティティ状態がシーンロードをまたいで保持される
+- IDで任意のエンティティの状態にアクセスできる
+- Sparse Setによる定数時間操作（O(1)）
+- 特定のエンティティの変更をサブスクライブできる
 
 ---
 
@@ -54,16 +54,16 @@ entitySet.UpdateData(this, state => {
 
 ### Reactive Entity Setsを使う場合
 
-- **エンティティごとの状態**が必要（体力、マナ、ステータスエフェクト）
-- オブジェクトを見つけずに**IDベースのルックアップ**が必要
-- 状態が**シーン間で永続化**する必要がある
-- 外部システムが**エンティティデータを読み取る**必要がある（UI、AI、ネットワーク）
+- エンティティごとの状態が必要（体力、マナ、ステータスエフェクト）
+- オブジェクトを取得せずにIDでルックアップしたい
+- 状態をシーン間で永続化する
+- 外部システムからエンティティデータを読み取る（UI、AI、ネットワーク）
 
 ### Runtime Setsを使う場合
 
-- **アクティブなオブジェクトの追跡**のみが必要（エンティティごとの状態なし）
-- 個別データを必要とせず**すべてのオブジェクト**を反復
-- **IDベースのルックアップ**が不要
+- アクティブなオブジェクトの追跡のみが必要（エンティティごとの状態なし）
+- 個別データを必要とせず全オブジェクトを反復する
+- IDベースのルックアップが不要
 
 ### 比較
 
@@ -97,30 +97,37 @@ flowchart TB
             D2["ID: 102 → Health: 100"]
             D3["ID: 103 → Health: 45"]
         end
+        Traits["トレイトマスク (ulong)"]
         subgraph Events["イベントチャンネル"]
             E1[OnItemAdded]
             E2[OnItemRemoved]
             E3[OnDataChanged]
+            E4[OnTraitAdded]
         end
     end
+
+    View[ReactiveView]
 
     Enemy1[Enemy 101] -->|Register/Update| SS
     Enemy2[Enemy 102] -->|Register/Update| SS
     SS --> Data
+    SS --> Traits
 
     Data -->|状態変更| E3
+    Traits -->|トレイト変更| E4
     E3 -->|通知| UI[ヘルスバーUI]
     E3 -->|通知| AI[AIシステム]
+    E4 -->|フィルタードメンバーシップ| View
 ```
 
 {: .note }
-> **Sparse Set**: O(1)の登録・検索・削除を実現するデータ構造。エンティティIDから状態データへの高速なマッピングを提供します。
+> **Sparse Set** — O(1)の登録・検索・削除を実現するデータ構造です。エンティティIDから状態データへの高速なマッピングを提供します。
 
 データは3つのステージでシステムを流れます。
 
-1. **エンティティスポーン** → `ReactiveEntity.OnEnable()` → EntitySetに登録
-2. **状態更新** → `UpdateData()` → エンティティごとのコールバックが発火
-3. **エンティティ破棄** → `ReactiveEntity.OnDisable()` → EntitySetから登録解除
+1. エンティティスポーン → `ReactiveEntity.OnEnable()` → EntitySetに登録
+2. 状態更新 → `UpdateData()` → エンティティごとのコールバックが発火
+3. エンティティ破棄 → `ReactiveEntity.OnDisable()` → EntitySetから登録解除
 
 ---
 
@@ -130,6 +137,8 @@ flowchart TB
 |--------|------|
 | [基本的な使い方](basic-usage) | state構造体の定義、アセット作成、エンティティ登録 |
 | [イベント](events) | エンティティごとのサブスクリプション、セットレベルの通知 |
+| [トレイト](traits) | エンティティの分類とフィルタリングのためのビットマスクフラグ |
+| [ビュー](views) | メンバーシップを自動追跡するリアクティブなフィルタードサブセット |
 | [パターン](patterns) | ボスヘルスバー、ステータスエフェクト、セーブ/ロード |
 | [ベストプラクティス](best-practices) | パフォーマンスのヒント、トラブルシューティング |
 | [永続化](persistence) | シーン遷移時のデータ消失を防ぐ |
@@ -140,4 +149,4 @@ flowchart TB
 
 ## 関連ドキュメント
 
-設計思想と理論的基礎については、[RES設計]({{ '/ja/design-philosophy/reactive-entity-sets/' | relative_url }})を参照してください。
+設計思想と理論的基礎は[RES設計]({{ '/ja/design-philosophy/reactive-entity-sets/' | relative_url }})を参照してください。

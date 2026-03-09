@@ -71,11 +71,7 @@ Orchestratorはデータの2つのコピーを保持します。
 └─────────────────┘     └─────────────────┘
 ```
 
-このパターンにより以下が可能になります。
-
-- **ロックフリーの読み取り**: メインスレッドがフロントバッファを読み取る間、Jobsがバックバッファに書き込み
-- **コピー不要**: バッファはポインタ交換でスワップし、データコピーは発生しない
-- **一貫した状態**: 読み取り側は常に完全で一貫したフレームを参照
+このパターンには3つの利点があります。メインスレッドがフロントバッファを読み取る間、Jobsがバックバッファに書き込むため読み取りはロックフリーです。バッファはポインタ交換でスワップするためデータコピーが発生しません。読み取り側は常に完全で一貫したフレームを参照します。
 
 ### Orchestratorのライフサイクル
 
@@ -112,7 +108,7 @@ void OnDestroy()
 
 ### ステップ1: データ構造体を定義
 
-Job System互換性のため、データは`unmanaged`（マネージド参照なし）である必要があります。
+Job System互換性のため、データは`unmanaged`（マネージド参照なし）にしてください。
 
 ```csharp
 // Good: すべてのフィールドがunmanaged型
@@ -217,14 +213,9 @@ public class SimulationManager : MonoBehaviour
     {
         // フロントバッファから読み取り（現在の状態）
         NativeSlice<UnitState> srcData = unitSet.Data;
-        NativeSlice<int> srcIds = unitSet.EntityIds;
 
         // バックバッファに書き込み（次の状態）
         NativeArray<UnitState> dstData = orchestrator.GetBackBuffer();
-        NativeArray<int> dstIds = orchestrator.GetBackBufferIds();
-
-        // IDをコピー（このシミュレーションでは変更なし）
-        new NativeSlice<int>(dstIds, 0, srcIds.Length).CopyFrom(srcIds);
 
         // シミュレーションJobをスケジュール
         var job = new UnitSimulationJob
@@ -238,6 +229,10 @@ public class SimulationManager : MonoBehaviour
     }
 }
 ```
+
+{: .note }
+> Orchestratorはデフォルトで **DataOnly** 更新を使うため、ID配列のコピーは不要です。  
+> IDやエンティティ数を変更する場合は `UpdateMode.DataAndIds` を指定し、`GetBackBufferIds()` に書き込んでください。
 
 ### ステップ4: BurstコンパイルされたJobを作成
 
@@ -407,9 +402,9 @@ unitSet.RestoreSnapshot(snapshot);
 
 復元により以下の処理が行われます。
 
-1. 現在のEntitySetがクリアされる
-2. スナップショットからすべてのエンティティが登録される
-3. OnSetChangedイベントが発火する
+1. 現在のEntitySetがクリアされます
+2. スナップショットからすべてのエンティティが登録されます
+3. OnSetChangedイベントが発火します
 
 ### メモリ管理
 
@@ -593,20 +588,24 @@ void Update()
 }
 ```
 
-### 3. IDのコピーを忘れる
+### 3. DataAndIdsなのにIDを書かない
 
 ```csharp
-// バグ: IDがバックバッファにコピーされていない
+// バグ: DataAndIdsを選んだのにIDを書いていない
 private JobHandle ScheduleSimulation()
 {
     var dstData = orchestrator.GetBackBuffer();
     var dstIds = orchestrator.GetBackBufferIds();
 
-    // IDのコピーを忘れた！
-    // new NativeSlice<int>(dstIds, 0, srcIds.Length).CopyFrom(srcIds);
+    // IDの書き込みを忘れた
 
     var job = new MyJob { Output = dstData };
-    return job.Schedule(count, 64);
+    var handle = job.Schedule(count, 64);
+
+    // DataAndIdsの場合、IDが未設定だと壊れる
+    orchestrator.ScheduleUpdate(handle, count,
+        updateMode: ReactiveEntitySetOrchestrator<MyData>.UpdateMode.DataAndIds);
+    return handle;
 }
 ```
 

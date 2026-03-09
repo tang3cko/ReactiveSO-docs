@@ -6,7 +6,7 @@ grand_parent: Design Philosophy
 nav_order: 1
 ---
 
-# Design Approach
+# Design approach
 
 ---
 

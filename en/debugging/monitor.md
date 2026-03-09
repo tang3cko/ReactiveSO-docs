@@ -30,17 +30,20 @@ The Monitor Window shares a common interface across all tabs.
 
 ### Toolbar
 
-- **Clear**: Removes all current log entries.
-- **Search**: Filters the log list by name, type, or other text.
-- **Menu (⋮)**
-    - **Export/CSV**: Save the current logs to a CSV file.
-    - **Export/CSV (Excel)**: Save with UTF-8 BOM for Excel compatibility.
-    - **Max Entries**: Set the maximum number of logs to keep (100 - 10K).
+| Control | Description |
+|---------|-------------|
+| Clear | Removes all current log entries. |
+| Search | Filters the log list by name, type, or other text. |
+| Menu (⋮) > Export/CSV | Save the current logs to a CSV file. |
+| Menu (⋮) > Export/CSV (Excel) | Save with UTF-8 BOM for Excel compatibility. |
+| Menu (⋮) > Max Entries | Set the maximum number of logs to keep (100 - 10K). |
 
 ### Footer
 
-- **Status**: Shows the total number of logs and how many are currently visible (filtered).
-- **[LIVE]**: Indicates that real-time updates are active (Play Mode).
+| Element | Description |
+|---------|-------------|
+| Status | Shows the total number of logs and how many are currently visible (filtered). |
+| [LIVE] | Indicates that real-time updates are active (Play Mode). |
 
 ### Log persistence
 

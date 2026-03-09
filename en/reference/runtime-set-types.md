@@ -49,7 +49,7 @@ All runtime set types share this API.
 | onItemsChanged | `VoidEventChannelSO` | Raised when items added/removed |
 | onCountChanged | `IntEventChannelSO` | Raised with new count |
 
-### Editor Events
+### Editor events
 
 | Event | Description |
 |-------|-------------|

@@ -6,7 +6,7 @@ grand_parent: Guides
 nav_order: 1
 ---
 
-# Basic Usage
+# Basic usage
 
 ---
 
@@ -73,10 +73,12 @@ Create > Reactive SO > Channels > Int Event
 
 Assign them to the entity set's fields. The available event fields are described below.
 
-- **On Item Added** - Fires when entity registers
-- **On Item Removed** - Fires when entity unregisters
-- **On Data Changed** - Fires when any entity's data changes
-- **On Set Changed** - Fires on any change
+| Field | Fires when |
+|-------|------------|
+| `On Item Added` | Entity registers |
+| `On Item Removed` | Entity unregisters |
+| `On Data Changed` | Any entity's data changes |
+| `On Set Changed` | Any change occurs |
 
 ---
 

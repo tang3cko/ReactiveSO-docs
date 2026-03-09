@@ -6,7 +6,7 @@ grand_parent: Samples
 nav_order: 2
 ---
 
-# Event Channels Integration
+# Event channels integration
 
 ---
 
@@ -167,7 +167,7 @@ graph TB
 
 ---
 
-## Architecture Benefits
+## Architecture benefits
 
 Using Event Channels in this sample provides:
 

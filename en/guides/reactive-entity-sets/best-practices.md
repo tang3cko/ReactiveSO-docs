@@ -6,7 +6,7 @@ grand_parent: Guides
 nav_order: 4
 ---
 
-# Best Practices
+# Best practices
 
 ---
 

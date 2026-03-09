@@ -6,7 +6,7 @@ nav_order: 4
 has_children: true
 ---
 
-# Reactive Entity Sets Guide
+# Reactive entity sets guide
 
 {: .warning }
 > **Experimental Feature** - Reactive Entity Sets are available in v2.1.0 (unreleased). The API may change in future versions. Use in production at your own discretion.
@@ -19,7 +19,7 @@ has_children: true
 
 ## Purpose
 
-This guide explains how to use Reactive Entity Sets for centralized entity state management. You will learn the difference from Runtime Sets, how to define entity data, and how to subscribe to per-entity state changes.
+This guide covers Reactive Entity Sets for centralized entity state management. It walks through what makes them different from Runtime Sets, defining entity data, and subscribing to per-entity state changes.
 
 ---
 
@@ -43,10 +43,10 @@ entitySet.UpdateData(this, state => {
 
 This architecture enables:
 
-- **Scene Persistence** - Entity state survives scene loading
-- **Global Access** - Access any entity's state by ID
-- **O(1) Performance** - Constant time operations using Sparse Set
-- **Per-Entity Events** - Subscribe to specific entity changes
+- Entity state survives scene loading
+- Any entity's state is accessible by ID
+- Sparse Set backing gives constant-time operations (O(1))
+- Observers can subscribe to specific entity changes
 
 ---
 
@@ -54,16 +54,16 @@ This architecture enables:
 
 ### Use reactive entity sets when
 
-- You need **per-entity state** (health, mana, status effects)
-- You need **ID-based lookup** without finding the object
-- State must **persist across scenes**
-- External systems need to **read entity data** (UI, AI, networking)
+- You need per-entity state (health, mana, status effects)
+- You need ID-based lookup without finding the object
+- State must persist across scenes
+- External systems need to read entity data (UI, AI, networking)
 
 ### Use runtime sets when
 
-- You only need to **track active objects** (no per-entity state)
-- You iterate over **all objects** without needing individual data
-- You don't need **ID-based lookup**
+- You only need to track active objects (no per-entity state)
+- The code iterates over all objects without needing individual data
+- ID-based lookup is not required
 
 ### Comparison
 
@@ -97,30 +97,37 @@ flowchart TB
             D2["ID: 102 → Health: 100"]
             D3["ID: 103 → Health: 45"]
         end
+        Traits["Trait Masks (ulong)"]
         subgraph Events["Event Channels"]
             E1[OnItemAdded]
             E2[OnItemRemoved]
             E3[OnDataChanged]
+            E4[OnTraitAdded]
         end
     end
+
+    View[ReactiveView]
 
     Enemy1[Enemy 101] -->|Register/Update| SS
     Enemy2[Enemy 102] -->|Register/Update| SS
     SS --> Data
+    SS --> Traits
 
     Data -->|state changed| E3
+    Traits -->|trait changed| E4
     E3 -->|notifies| UI[Health Bar UI]
     E3 -->|notifies| AI[AI System]
+    E4 -->|filtered membership| View
 ```
 
 {: .note }
-> **Sparse Set**: A data structure that achieves O(1) registration, lookup, and removal. It provides fast mapping from entity IDs to state data.
+> **Sparse Set** — A data structure that achieves O(1) registration, lookup, and removal. It provides fast mapping from entity IDs to state data.
 
 The data flows through the system in three stages.
 
-1. **Entity spawns** → `ReactiveEntity.OnEnable()` → Registers with EntitySet
-2. **State updates** → `UpdateData()` → Per-entity callbacks fire
-3. **Entity destroyed** → `ReactiveEntity.OnDisable()` → Unregisters from EntitySet
+1. When an entity spawns, `ReactiveEntity.OnEnable()` registers it with the EntitySet.
+2. State updates go through `UpdateData()`, which fires per-entity callbacks.
+3. On destruction, `ReactiveEntity.OnDisable()` unregisters the entity from the EntitySet.
 
 ---
 
@@ -130,6 +137,8 @@ The data flows through the system in three stages.
 |------|-------------|
 | [Basic Usage](basic-usage) | Define state structs, create assets, register entities |
 | [Events](events) | Per-entity subscriptions, set-level notifications |
+| [Traits](traits) | Bitmask flags for entity classification and filtering |
+| [Views](views) | Reactive filtered subsets with automatic membership |
 | [Patterns](patterns) | Boss health bars, status effects, save/load |
 | [Best Practices](best-practices) | Performance tips, troubleshooting |
 | [Persistence](persistence) | Prevent data loss across scene transitions |

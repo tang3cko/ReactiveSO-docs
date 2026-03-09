@@ -36,11 +36,9 @@ graph TB
 
 **Checklist**
 
-1. **Is the event channel assigned?**
-   - Check for `None` in the Inspector
-   - Drag the correct ScriptableObject asset
+1. Check whether the event channel is assigned. Look for `None` in the Inspector and drag the correct ScriptableObject asset.
 
-2. **Are you using null-conditional operator?**
+2. Check whether you are using the null-conditional operator.
    ```csharp
    // Good
    eventChannel?.RaiseEvent();
@@ -49,15 +47,9 @@ graph TB
    eventChannel.RaiseEvent();
    ```
 
-3. **Is anyone subscribed?**
-   - Open Event Monitor and check #L column
-   - Use Subscribers List to see listeners
-   - Verify subscriber's GameObject is active
+3. Check whether anyone is subscribed. Open Event Monitor and check the #L column, use Subscribers List to see listeners, and verify the subscriber's GameObject is active.
 
-4. **Is the event actually raising?**
-   - Open Event Monitor
-   - If event appears, the problem is in subscribers
-   - If event does not appear, check the publisher code
+4. Check whether the event is actually raising. Open Event Monitor. If the event appears, the problem is in subscribers. If the event does not appear, check the publisher code.
 
 ### Memory leaks / duplicate events
 

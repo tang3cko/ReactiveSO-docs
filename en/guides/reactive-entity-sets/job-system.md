@@ -6,7 +6,7 @@ grand_parent: Guides
 nav_order: 6
 ---
 
-# Job System Integration
+# Job system integration
 
 ---
 
@@ -73,9 +73,9 @@ Frame N+1 (after CompleteAndApply):
 
 This pattern allows:
 
-- **Lock-free reads**: Main thread reads front buffer while Jobs write to back buffer
-- **No copying**: Buffers swap by pointer exchange, not data copy
-- **Consistent state**: Readers always see a complete, consistent frame
+- The main thread reads the front buffer while Jobs write to the back buffer, so no locks are needed.
+- Buffers swap by pointer exchange, not data copy.
+- Readers always see a complete, consistent frame.
 
 ### The Orchestrator lifecycle
 
@@ -110,7 +110,7 @@ void OnDestroy()
 
 ## Step-by-step implementation
 
-### Step 1: Define your data struct
+### Step 1 — define your data struct
 
 Your data must be `unmanaged` (no managed references) for Job System compatibility.
 
@@ -135,7 +135,7 @@ public struct BadState
 {: .warning }
 > The `unmanaged` constraint is enforced by `ReactiveEntitySetSO<TData>`. If your struct contains managed types, you'll get a compile error.
 
-### Step 2: Create your EntitySet asset
+### Step 2 — create your EntitySet asset
 
 ```csharp
 using Tang3cko.ReactiveSO;
@@ -151,7 +151,7 @@ public class UnitStateSetSO : ReactiveEntitySetSO<UnitState>
 }
 ```
 
-### Step 3: Create the simulation manager
+### Step 3 — create the simulation manager
 
 ```csharp
 using UnityEngine;
@@ -217,14 +217,9 @@ public class SimulationManager : MonoBehaviour
     {
         // Read from front buffer (current state)
         NativeSlice<UnitState> srcData = unitSet.Data;
-        NativeSlice<int> srcIds = unitSet.EntityIds;
 
         // Write to back buffer (next state)
         NativeArray<UnitState> dstData = orchestrator.GetBackBuffer();
-        NativeArray<int> dstIds = orchestrator.GetBackBufferIds();
-
-        // Copy IDs (they don't change in this simulation)
-        new NativeSlice<int>(dstIds, 0, srcIds.Length).CopyFrom(srcIds);
 
         // Schedule the simulation Job
         var job = new UnitSimulationJob
@@ -239,7 +234,11 @@ public class SimulationManager : MonoBehaviour
 }
 ```
 
-### Step 4: Write the Burst-compiled Job
+{: .note }
+> By default, the Orchestrator uses **DataOnly** updates, so ID arrays are not copied.  
+> If your job changes IDs or entity count, use `UpdateMode.DataAndIds` and write to `GetBackBufferIds()`.
+
+### Step 4 — write the Burst-compiled Job
 
 ```csharp
 using Unity.Burst;
@@ -274,7 +273,7 @@ public struct UnitSimulationJob : IJobParallelFor
 
 ## Advanced patterns
 
-### Pattern 1: Reading map data in Jobs
+### Pattern 1 — reading map data in Jobs
 
 Jobs can read from other NativeArrays alongside the entity data.
 
@@ -308,7 +307,7 @@ public struct TerrainAwareJob : IJobParallelFor
 }
 ```
 
-### Pattern 2: Writing to shared data (with caution)
+### Pattern 2 — writing to shared data (with caution)
 
 Use `[NativeDisableParallelForRestriction]` when multiple Jobs need to write to shared data.
 
@@ -345,7 +344,7 @@ public struct TerritoryPaintJob : IJobParallelFor
 {: .warning }
 > When multiple threads write to the same memory location, results are non-deterministic. Only use this pattern when "last write wins" behavior is acceptable.
 
-### Pattern 3: Chaining multiple Jobs
+### Pattern 3 — chaining multiple Jobs
 
 ```csharp
 private JobHandle ScheduleSimulation()
@@ -423,7 +422,7 @@ using (var tempSnapshot = unitSet.CreateSnapshot(Allocator.Temp))
 } // Automatically disposed
 ```
 
-### Use case: Time-travel / Rewind
+### Use case — time-travel / rewind
 
 ```csharp
 public class TimeController : MonoBehaviour
@@ -464,7 +463,7 @@ public class TimeController : MonoBehaviour
 }
 ```
 
-### Use case: Save/Load
+### Use case — save/load
 
 ```csharp
 public void SaveGame(string path)
@@ -592,20 +591,24 @@ void Update()
 }
 ```
 
-### 3. Forgetting to copy IDs
+### 3. Using DataAndIds without writing IDs
 
 ```csharp
-// Bug: IDs not copied to back buffer
+// Bug: DataAndIds chosen but IDs not written
 private JobHandle ScheduleSimulation()
 {
     var dstData = orchestrator.GetBackBuffer();
     var dstIds = orchestrator.GetBackBufferIds();
 
-    // Forgot to copy IDs!
-    // new NativeSlice<int>(dstIds, 0, srcIds.Length).CopyFrom(srcIds);
+    // Forgot to write IDs into dstIds
 
     var job = new MyJob { Output = dstData };
-    return job.Schedule(count, 64);
+    var handle = job.Schedule(count, 64);
+
+    // IDs may be garbage if DataAndIds is selected
+    orchestrator.ScheduleUpdate(handle, count,
+        updateMode: ReactiveEntitySetOrchestrator<MyData>.UpdateMode.DataAndIds);
+    return handle;
 }
 ```
 

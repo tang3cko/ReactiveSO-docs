@@ -1,12 +1,12 @@
 ---
 layout: default
-title: Data Guidelines
+title: Data guidelines
 parent: RES Design
 grand_parent: Design Philosophy
 nav_order: 3
 ---
 
-# Data Guidelines
+# Data guidelines
 
 ---
 
@@ -45,10 +45,12 @@ Position seems like important entity data, but it usually does not belong in RES
 
 ### Reasons
 
-1. **Ownership**: The GameObject's Transform component owns position
-2. **Update frequency**: Position often changes every frame
-3. **Dual source of truth**: Storing in RES creates synchronization problems
-4. **No benefit**: Transform already provides this data to anyone who needs it
+| Reason | Detail |
+|--------|--------|
+| Ownership | The GameObject's Transform component owns position |
+| Update frequency | Position often changes every frame |
+| Dual source of truth | Storing in RES creates synchronization problems |
+| No benefit | Transform already provides this data to anyone who needs it |
 
 ### The exception
 
@@ -122,7 +124,7 @@ graph TB
 
 ---
 
-## Data/Logic separation
+## Data/logic separation
 
 RES naturally enforces a clean architectural pattern.
 
@@ -206,9 +208,11 @@ If you are familiar with any of these patterns, the RES approach will feel natur
 
 The data/logic separation enables future async processing.
 
-- **State (struct)**: Copyable, can be passed between threads
-- **Calculation logic**: Pure functions, thread-safe
-- **RES update**: Single synchronization point on main thread
+| Component | Property |
+|-----------|----------|
+| State (struct) | Copyable, can be passed between threads |
+| Calculation logic | Pure functions, thread-safe |
+| RES update | Single synchronization point on main thread |
 
 Heavy computations can run off the main thread, with results applied to RES when complete.
 

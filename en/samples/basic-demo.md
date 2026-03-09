@@ -66,7 +66,9 @@ graph LR
 
 This pattern is applicable to any scenario requiring decoupled component communication.
 
-- **Score Systems**: Multiple UI elements displaying shared score
-- **Inventory Updates**: Events for item pickup, Variables for item counts
-- **Game State**: Pause/resume events, health/mana variables
-- **Settings**: Toggle events, preference variables
+| Use Case | Example |
+| :--- | :--- |
+| Score Systems | Multiple UI elements displaying shared score |
+| Inventory Updates | Events for item pickup, Variables for item counts |
+| Game State | Pause/resume events, health/mana variables |
+| Settings | Toggle events, preference variables |

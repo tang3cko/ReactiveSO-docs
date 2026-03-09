@@ -16,7 +16,7 @@ This guide explains how to use RES Table View to view and edit ReactiveEntitySet
 
 ---
 
-## Opening the Window
+## Opening the window
 
 Open the window using one of the following methods:
 
@@ -29,7 +29,7 @@ Open the window using one of the following methods:
 
 ## Basic Usage
 
-### Capturing a Snapshot
+### Capturing a snapshot
 
 1. Enter Play Mode
 2. Pause the game (Pause button)
@@ -41,7 +41,7 @@ When capture succeeds, entity data is displayed in the table.
 {: .note }
 > Snapshots can only be captured while paused. Data is cleared when you resume.
 
-### Editing Data
+### Editing data
 
 1. Double-click the cell you want to edit
 2. Enter the new value
@@ -62,15 +62,17 @@ Edited values are immediately applied to the ReactiveEntitySet, firing the `OnDa
 
 ---
 
-## Save / Load Feature
+## Save / load feature
 
 ### Save
 
 Saves captured snapshot data as a `.resdata` file.
 
-- **Enabled when**: Captured data exists
-- **File format**: Binary (.resdata)
-- **Contents**: EntityID and all TData struct fields
+| Property | Value |
+|----------|-------|
+| Enabled when | Captured data exists |
+| File format | Binary (.resdata) |
+| Contents | EntityID and all TData struct fields |
 
 ### Load
 
@@ -79,9 +81,11 @@ Saves captured snapshot data as a `.resdata` file.
 
 Restores from a saved `.resdata` file, completely replacing the ReactiveEntitySet data.
 
-- **Enabled when**: Paused and RES is selected
-- **Behavior**: Calls `RestoreSnapshot()`, replacing all entities
-- **Warning**: A confirmation dialog appears after file selection
+| Property | Value |
+|----------|-------|
+| Enabled when | Paused and RES is selected |
+| Behavior | Calls `RestoreSnapshot()`, replacing all entities |
+| Warning | A confirmation dialog appears after file selection |
 
 ### Binary Format
 
@@ -107,7 +111,7 @@ Restores from a saved `.resdata` file, completely replacing the ReactiveEntitySe
 | Entity ID | Unique entity identifier (read-only) |
 | (TData fields) | Each field of the TData struct is dynamically displayed as a column |
 
-### Supported Types
+### Supported types
 
 | Type | Display Format | Editable |
 |------|----------------|----------|
@@ -123,21 +127,21 @@ Restores from a saved `.resdata` file, completely replacing the ReactiveEntitySe
 
 ---
 
-## Use Cases
+## Use cases
 
-### Inspecting Entity States
+### Inspecting entity states
 
 Examine the current values of specific entities to identify the cause of issues. Pause during Play Mode and capture a snapshot to see all entity data at that point in time.
 
-### Testing Game Logic
+### Testing game logic
 
 Test game logic behavior by directly editing values. For example, set an entity's HP to 0 to verify that death processing works correctly.
 
-### Saving Bug Reproduction Data
+### Saving bug reproduction data
 
 Save the entity state at the moment a bug occurs as a `.resdata` file, then restore it later to continue debugging.
 
-### Regression Test Baselines
+### Regression test baselines
 
 Save specific states and load them during test execution to enable consistent testing under the same conditions.
 
@@ -145,11 +149,13 @@ Save specific states and load them during test execution to enable consistent te
 
 ## Limitations
 
-- **Play Mode required**: Does not work in Edit Mode
-- **Pause required**: Capture, edit, and load only work while paused
-- **Type compatibility**: Loading a file with a different TData type shows a warning
-- **Compound type editing**: Vector, Quaternion, Color cannot be edited
-- **Large data**: Works with 10,000+ entities through virtualization, but initial capture may take time
+| Limitation | Detail |
+|------------|--------|
+| Play Mode required | Does not work in Edit Mode |
+| Pause required | Capture, edit, and load only work while paused |
+| Type compatibility | Loading a file with a different TData type shows a warning |
+| Compound type editing | Vector, Quaternion, Color cannot be edited |
+| Large data | Works with 10,000+ entities through virtualization, but initial capture may take time |
 
 ---
 

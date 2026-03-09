@@ -40,8 +40,10 @@ Use the tabs at the top to switch between asset categories.
 
 ### Search and filter
 
-- **Search Bar**: Filter assets by name.
-- **Type Filter**: Filter assets by their specific type (e.g., show only `IntEventChannelSO`).
+| Control | Description |
+|---|---|
+| Search Bar | Filter assets by name. |
+| Type Filter | Filter assets by their specific type (e.g., show only `IntEventChannelSO`). |
 
 ### Drag and drop
 
@@ -55,26 +57,29 @@ The Asset Browser becomes interactive during Play Mode.
 
 ### Event Channels
 
-- **Void Events**: Click the **Raise** button to fire the event immediately.
-- **Other Events**: Click **Raise** to ping the asset in the Project window (manual trigger requires Inspector).
+| Event type | Behavior |
+|---|---|
+| Void Events | Click the **Raise** button to fire the event immediately. |
+| Other Events | Click **Raise** to ping the asset in the Project window (manual trigger requires Inspector). |
 
 ### Actions
 
-- **Execute Button**: Click to execute the action immediately.
-- **Typed Actions**: For `ActionSO<T>`, clicking Execute selects the asset in the Project window. You can then provide parameters via the Inspector's Manual Execute section.
+| Action type | Behavior |
+|---|---|
+| Execute Button | Click to execute the action immediately. |
+| Typed Actions | For `ActionSO<T>`, clicking Execute selects the asset in the Project window. You can then provide parameters via the Inspector's Manual Execute section. |
 
 ### Variables
 
-- **Value Column**: Displays the current runtime value of the variable.
-- Updates in real-time.
+The Value Column displays the current runtime value of the variable and updates in real-time.
 
 ### Runtime Sets
 
-- **Count Column**: Displays the number of items currently in the set.
+The Count Column displays the number of items currently in the set.
 
 ### Reactive Entity Sets
 
-- **Count Column**: Displays the number of registered entities.
+The Count Column displays the number of registered entities.
 
 ---
 

@@ -272,7 +272,7 @@ Accumulate battle history visually on the map:
 
 ---
 
-## Next Steps
+## Next steps
 
 - Learn how domain events and UI communication work in [Event Channels](event-channels)
 - Learn how Jobs and GPU integration work in [Reactive Entity Sets](reactive-entity-sets)

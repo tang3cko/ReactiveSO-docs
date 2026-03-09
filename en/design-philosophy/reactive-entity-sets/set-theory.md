@@ -1,12 +1,12 @@
 ---
 layout: default
-title: Set Theory Foundation
+title: Set theory foundation
 parent: RES Design
 grand_parent: Design Philosophy
 nav_order: 4
 ---
 
-# Set Theory Foundation
+# Set theory foundation
 
 ---
 
@@ -92,7 +92,7 @@ flowchart TB
     style Dynamic fill:#fff3e6
 ```
 
-### Static View R(c₀)
+### Static view R(c₀)
 
 A static view depends only on the entity data.
 
@@ -102,20 +102,20 @@ R(c₀) = { (id, data) ∈ S | P(data) = true }
 
 Where P is a predicate function: `P: TData → bool`
 
-**Example**
+#### Example
 
 ```csharp
 // All enemies with health below 30
 var lowHealthView = enemies.CreateView(state => state.Health < 30);
 ```
 
-**Characteristics**
+#### Characteristics
 
 - Predicate is fixed at creation time
 - View membership updates automatically when entity data changes
 - No external context required
 
-### Dynamic View R(c₁)
+### Dynamic view R(c₁)
 
 A dynamic view depends on both entity data and an external context.
 
@@ -125,25 +125,22 @@ R(c₁) = { (id, data) ∈ S | P(data, context) = true }
 
 Where P is a predicate function: `P: (TData, TContext) → bool`
 
-**Example**
+#### Example (conceptual)
+
+Dynamic/context-dependent views are a planned extension and are not implemented yet. The following is a conceptual example:
 
 ```csharp
 // All enemies within 10 units of a given position
-var inRangeView = enemies.CreateView<Vector3>(
-    (state, position) => Vector3.Distance(state.Position, position) < 10f
-);
-
-// Evaluate with specific context
-var nearbyEnemies = inRangeView.Evaluate(playerPosition);
+// (Planned API)
 ```
 
-**Characteristics**
+#### Characteristics
 
 - Predicate requires context to evaluate
 - Entity data changes trigger automatic re-evaluation
 - Context changes require explicit re-evaluation
 
-### The "Reactive" in Views
+### The "Reactive" in views
 
 Both R(c₀) and R(c₁) are **Reactive** with respect to entity state changes.
 
@@ -198,7 +195,7 @@ Query → Traverse all entities → Filter → Result
 Cost: O(n) per query
 ```
 
-### Reactive View approach
+### Reactive view approach
 
 ```
 Entity state change
@@ -227,7 +224,7 @@ Where:
   notify: S × Σ → Events (notification function)
 ```
 
-### Static View R(c₀)
+### Static view R(c₀)
 
 ```
 R(c₀) = σ[P](S) = { e ∈ S | P(e.data) }
@@ -237,7 +234,7 @@ Where:
   σ: Selection operator
 ```
 
-### Dynamic View R(c₁)
+### Dynamic view R(c₁)
 
 ```
 R(c₁)(ctx) = σ[P(_, ctx)](S) = { e ∈ S | P(e.data, ctx) }

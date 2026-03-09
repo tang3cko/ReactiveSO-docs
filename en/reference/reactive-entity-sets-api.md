@@ -15,9 +15,9 @@ This reference documents the complete API for ReactiveEntitySetSO and ReactiveEn
 
 ## Overview
 
-Reactive Entity Sets provide three API styles.
+Reactive entity sets provide three API styles.
 
-| API Style | Class | Use Case |
+| API style | Class | Use case |
 |-----------|-------|----------|
 | ID-based | `ReactiveEntitySetSO<TData>` | Direct ID operations, network sync |
 | MonoBehaviour-based | `ReactiveEntitySetSO<TData>` | Convenience wrappers using owner references |
@@ -56,6 +56,8 @@ TData must be an unmanaged type (value type without managed references). This en
 | OnItemRemoved | `IntEventChannelSO` | Raised when entity unregistered (passes ID) |
 | OnDataChanged | `IntEventChannelSO` | Raised when entity data changes (passes ID) |
 | OnSetChanged | `VoidEventChannelSO` | Raised on any change |
+| OnTraitAdded | `IntEventChannelSO` | Raised when traits are added (passes ID) |
+| OnTraitRemoved | `IntEventChannelSO` | Raised when traits are removed (passes ID) |
 
 ---
 
@@ -179,6 +181,275 @@ public void NotifyDataChanged(int id)
 ```
 
 Manually triggers data changed event.
+
+---
+
+## Traits API (generic)
+
+Traits live directly on `ReactiveEntitySetSO<TData>`. `TTraits` is constrained to `unmanaged, Enum` and is type-locked on first use. Mixing different trait enums in the same set throws `InvalidOperationException`.
+
+Traits are stored as a 64-bit `ulong` mask (up to 64 flags).
+
+### Mutation methods
+
+```csharp
+public void AddTraits<TTraits>(int id, TTraits traits)
+```
+
+Adds traits using bitwise OR. Fires `OnTraitAdded` and `OnSetChanged`.
+
+```csharp
+public void RemoveTraits<TTraits>(int id, TTraits traits)
+```
+
+Removes traits using bitwise AND-NOT. Fires `OnTraitRemoved` and `OnSetChanged`.
+
+```csharp
+public void SetTraits<TTraits>(int id, TTraits traits)
+```
+
+Replaces all traits. Fires the appropriate trait event depending on whether the mask increased or decreased.
+
+```csharp
+public void ClearTraits(int id)
+```
+
+Sets the trait mask to 0. Fires `OnTraitRemoved` and `OnSetChanged` if the entity had traits.
+
+### Query methods
+
+```csharp
+public bool HasTraits<TTraits>(int id, TTraits traits)
+```
+
+Returns true if ALL specified flags are set.
+
+```csharp
+public bool HasAnyTrait<TTraits>(int id, TTraits traits)
+```
+
+Returns true if ANY specified flag is set.
+
+```csharp
+public TTraits GetTraits<TTraits>(int id)
+```
+
+Gets the current traits. Throws `KeyNotFoundException` if the entity is not registered.
+
+```csharp
+public bool TryGetTraits<TTraits>(int id, out TTraits traits)
+```
+
+Safe version that returns false if the entity is not registered.
+
+### Iteration methods
+
+```csharp
+public void WithTraits<TTraits>(TTraits traits, Action<int, TData> callback)
+```
+
+Calls callback for every entity where ALL specified flags are set.
+
+```csharp
+public void WithAnyTraits<TTraits>(TTraits traits, Action<int, TData> callback)
+```
+
+Calls callback for every entity where ANY specified flag is set.
+
+```csharp
+public int CountWithTraits<TTraits>(TTraits traits)
+```
+
+Returns the count of entities with ALL specified flags set.
+
+```csharp
+public int CountWithAnyTraits<TTraits>(TTraits traits)
+```
+
+Returns the count of entities with ANY specified flag set.
+
+### Type locking
+
+`TTraits` is type-locked on first use. The first call that specifies a `TTraits` enum type locks the set to that type. Subsequent calls with a different enum type throw `InvalidOperationException`.
+
+### Example
+
+```csharp
+[Flags]
+public enum EnemyTraits
+{
+    None      = 0,
+    IsAggro   = 1 << 0,
+    IsStunned = 1 << 1,
+}
+
+public class EnemyAISystem : MonoBehaviour
+{
+    [SerializeField] private EnemyEntitySetSO enemySet;
+
+    private void Update()
+    {
+        // Process only aggro enemies
+        enemySet.WithTraits<EnemyTraits>(EnemyTraits.IsAggro, (id, state) =>
+        {
+            // AI logic for aggro enemies
+        });
+    }
+
+    public void SetAggro(int entityId, bool aggro)
+    {
+        if (aggro)
+            enemySet.AddTraits<EnemyTraits>(entityId, EnemyTraits.IsAggro);
+        else
+            enemySet.RemoveTraits<EnemyTraits>(entityId, EnemyTraits.IsAggro);
+    }
+
+    public int GetAggroCount()
+    {
+        return enemySet.CountWithTraits<EnemyTraits>(EnemyTraits.IsAggro);
+    }
+}
+```
+
+### Performance
+
+| Operation | Complexity |
+|-----------|------------|
+| `AddTraits` / `RemoveTraits` / `SetTraits` / `ClearTraits` | O(1) |
+| `HasTraits` / `HasAnyTrait` / `GetTraits` / `TryGetTraits` | O(1) |
+| `WithTraits` / `WithAnyTraits` | O(n) |
+| `CountWithTraits` / `CountWithAnyTraits` | O(n) |
+
+Memory: 8 bytes per entity (64-bit bitmask, up to 64 flags).
+
+---
+
+## Views API
+
+A view is a live-filtered subset of entities in a set. It recalculates membership automatically when entity data or traits change, and fires `OnEnter` / `OnExit` events as entities cross the predicate boundary.
+
+### ViewTrigger enum
+
+```csharp
+public enum ViewTrigger
+{
+    None       = 0,
+    DataOnly   = 1,
+    TraitsOnly = 2,
+    All        = 3,
+}
+```
+
+| Value | When the view recalculates membership |
+|-------|--------------------------------------|
+| `None` | Never. Use for manually-triggered views. |
+| `DataOnly` | When any entity's data changes. |
+| `TraitsOnly` | When any entity's traits change. |
+| `All` | On both data and trait changes. |
+
+### CreateView (data-only)
+
+```csharp
+public ReactiveView<TData> CreateView(
+    Func<TData, bool> predicate,
+    ViewTrigger triggerOn = ViewTrigger.DataOnly
+)
+```
+
+Creates a view that filters entities by data only.
+
+```csharp
+var lowHealthView = enemySet.CreateView(
+    state => state.Health < state.MaxHealth * 0.3f,
+    ViewTrigger.DataOnly
+);
+```
+
+### CreateView (trait-aware)
+
+```csharp
+public ReactiveView<TData> CreateView(
+    Func<TData, ulong, bool> predicate,
+    ViewTrigger triggerOn,
+    ulong observedTraitMask
+)
+```
+
+Creates a view whose predicate also receives the entity's trait bitmask. The `observedTraitMask` tells the view which trait flags trigger re-evaluation.
+
+Use `TraitMaskUtility.ToUInt64<TTraits>(flags)` to build the mask.
+
+```csharp
+ulong aggroMask = TraitMaskUtility.ToUInt64<EnemyTraits>(EnemyTraits.IsAggro);
+
+var aggroLowHealthView = enemySet.CreateView(
+    (state, traits) => (traits & aggroMask) != 0 && state.HealthPercent < 0.5f,
+    ViewTrigger.All,
+    aggroMask
+);
+```
+
+### ReactiveView\<TData\> members
+
+| Member | Description |
+|--------|-------------|
+| `Count` | Number of entities currently in the view |
+| `Contains(int id)` | O(1) membership check |
+| `GetEnumerator()` | Enumerate member IDs (foreach compatible) |
+| `OnEnter` | Fires when an entity joins the view |
+| `OnExit` | Fires when an entity leaves the view |
+| `Dispose()` | Unregisters the view from its parent set |
+
+### Example
+
+```csharp
+public class LowHealthSystem : MonoBehaviour
+{
+    [SerializeField] private EnemyEntitySetSO enemySet;
+
+    private ReactiveView<EnemyState> lowHealthView;
+
+    private void OnEnable()
+    {
+        lowHealthView = enemySet.CreateView(
+            state => state.HealthPercent < 0.3f,
+            ViewTrigger.DataOnly
+        );
+
+        lowHealthView.OnEnter += OnEnemyEnteredLowHealth;
+        lowHealthView.OnExit += OnEnemyLeftLowHealth;
+    }
+
+    private void OnDisable()
+    {
+        lowHealthView.OnEnter -= OnEnemyEnteredLowHealth;
+        lowHealthView.OnExit -= OnEnemyLeftLowHealth;
+        lowHealthView.Dispose();
+    }
+
+    private void OnEnemyEnteredLowHealth(int entityId)
+    {
+        // Start flee behavior, play warning sound, etc.
+    }
+
+    private void OnEnemyLeftLowHealth(int entityId)
+    {
+        // Cancel flee behavior
+    }
+}
+```
+
+{: .note }
+> `OnEnter` and `OnExit` do not fire during `Clear()` or `RestoreSnapshot()`. Membership is rebuilt silently in those cases.
+
+### Performance
+
+| Operation | Complexity |
+|-----------|------------|
+| `Contains` | O(1) |
+| `GetEnumerator` (full iteration) | O(n) |
+| `CreateView` | O(n) (evaluates predicate for all current entities) |
+| Membership update per entity change | O(v) where v = number of views |
 
 ---
 
@@ -492,6 +763,8 @@ ReactiveEntitySetSO is **NOT thread-safe**. All operations must be performed on 
 
 ## References
 
-- [Reactive Entity Sets Guide]({{ '/en/guides/reactive-entity-sets' | relative_url }}) - How to use RES
-- [Runtime Sets Reference](runtime-set-types) - For simpler object tracking
-- [Event Types Reference](event-types) - Event channels used by RES
+- [Reactive entity sets guide]({{ '/en/guides/reactive-entity-sets' | relative_url }}) - How to use reactive entity sets
+- [Traits guide]({{ '/en/guides/traits' | relative_url }}) - How to define and use trait enums
+- [Views guide]({{ '/en/guides/views' | relative_url }}) - How to create and manage views
+- [Runtime sets reference](runtime-set-types) - For simpler object tracking
+- [Event types reference](event-types) - Event channels used by reactive entity sets

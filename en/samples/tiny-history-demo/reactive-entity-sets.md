@@ -6,7 +6,7 @@ grand_parent: Samples
 nav_order: 3
 ---
 
-# Reactive Entity Sets Integration
+# Reactive entity sets integration
 
 ---
 
@@ -20,14 +20,14 @@ This page explains how Tiny History Demo uses Reactive Entity Sets for Jobs inte
 
 The sample demonstrates four patterns:
 
-1. **Jobs Integration**: Double buffering for safe parallel processing
-2. **Custom GPU Rendering**: Manual buffer updates for rendering
-3. **State Queries**: Aggregation and filtering without allocation
-4. **History Snapshots**: Save and restore entity state for time travel
+1. Jobs integration -- double buffering for safe parallel processing
+2. Custom GPU rendering -- manual buffer updates for rendering
+3. State queries -- aggregation and filtering without allocation
+4. History snapshots -- save and restore entity state for time travel
 
 ---
 
-## Entity Sets Used
+## Entity sets used
 
 | Entity Set | Entity Type | Typical Count | Purpose |
 | :--- | :--- | :--- | :--- |
@@ -37,13 +37,13 @@ The sample demonstrates four patterns:
 
 ---
 
-## Pattern 1: Jobs Integration with Double Buffering
+## Pattern 1: Jobs integration with double buffering
 
-### The Challenge
+### The challenge
 
 Unity Jobs require stable data during execution. If entity state changes mid-job, race conditions and data corruption can occur.
 
-### The Solution: ReactiveEntitySetOrchestrator
+### The solution: ReactiveEntitySetOrchestrator
 
 The sample uses `ReactiveEntitySetOrchestrator<T>` to manage double buffering automatically.
 
@@ -66,17 +66,21 @@ graph TB
     READ_A --> COMPUTE --> APPLY --> SWAP --> READ_B
 ```
 
-### How It Works
+### How it works
 
-1. **Schedule Phase**: Jobs receive a `NativeArray` snapshot of current state
-2. **Execution Phase**: Jobs read from snapshot, write results to separate output
-3. **Completion Phase**: Results are applied to the entity set
-4. **Next Frame**: Updated state is available for the next job batch
+1. During scheduling, jobs receive a `NativeArray` snapshot of the current state.
+2. While executing, jobs read from that snapshot and write results to separate output.
+3. On completion, results are applied to the entity set.
+4. The next frame sees the updated state, ready for the next job batch.
 
-> **Key Insight** - Jobs never directly modify the entity set. They work with snapshots and produce results that are applied atomically between frames.
+> Jobs never directly modify the entity set. They work with snapshots and produce results that are applied atomically between frames.
 {: .note }
 
-### Job Pipeline Example
+{: .note }
+> TinyHistory uses **DataOnly** updates: IDs never change during simulation, so the ID buffer is **not copied**.  
+> If your job changes IDs or entity count, use `UpdateMode.DataAndIds` and write to `GetBackBufferIds()`.
+
+### Job pipeline example
 
 ```
 ArmyStateSet (Current State)
@@ -102,9 +106,9 @@ ArmyStateSet (Updated State)
 
 ---
 
-## Pattern 2: Custom GPU Rendering
+## Pattern 2: Custom GPU rendering
 
-### Province Rendering
+### Province rendering
 
 Province ownership data flows from the Entity Set to GPU buffers via manual updates each frame.
 
@@ -123,16 +127,12 @@ graph LR
     P_SET --> UPDATE --> P_BUF --> SHADER
 ```
 
-**What Gets Copied**:
+Each frame copies the owner nation ID (which determines province color), occupation progress (for the invasion overlay), and terrain type (which affects visual appearance).
 
-- Owner nation ID (determines province color)
-- Occupation progress (shows invasion overlay)
-- Terrain type (affects visual appearance)
-
-> **Note** - This sample uses manual `GraphicsBuffer.SetData()` calls rather than Reactive SO's GPU Sync feature. This approach gives full control over when and how data is uploaded to the GPU.
+> This sample uses manual `GraphicsBuffer.SetData()` calls rather than Reactive SO's GPU Sync feature. This approach gives full control over when and how data reaches the GPU.
 {: .note }
 
-### Army Rendering
+### Army rendering
 
 Army positions are copied to GPU every frame for instanced rendering.
 
@@ -151,23 +151,18 @@ graph LR
     A_SET --> CONV --> A_BUF --> INST
 ```
 
-**ArmyGPU Data**:
+The `ArmyGPU` struct holds current position, target position, march progress for interpolation, and nation ID for color lookup.
 
-- Current position
-- Target position
-- March progress (for interpolation)
-- Nation ID (for color lookup)
-
-> **Key Insight** - The shader interpolates army positions using march progress, creating smooth movement without per-army CPU updates.
+> The shader interpolates army positions using march progress, so movement looks smooth without per-army CPU updates.
 {: .note }
 
 ---
 
-## Pattern 3: State Queries
+## Pattern 3: State queries
 
 Entity Sets support LINQ-style queries for aggregation and filtering.
 
-### Nation Elimination Check
+### Nation elimination check
 
 ```csharp
 // Check if any province is owned by this nation
@@ -181,7 +176,7 @@ if (!hasTerritory)
 }
 ```
 
-### Army Count by Nation
+### Army count by nation
 
 ```csharp
 // Count armies for each nation
@@ -194,14 +189,14 @@ foreach (var nation in nationStateSet)
 }
 ```
 
-> **Key Insight** - Queries use the underlying `NativeArray` for zero-allocation iteration. No garbage is generated during gameplay.
+> Queries iterate over the underlying `NativeArray` directly, so no garbage is generated during gameplay.
 {: .note }
 
 ---
 
-## Pattern 4: History Snapshots
+## Pattern 4: History snapshots
 
-### Capturing State
+### Capturing state
 
 The sample captures entity set snapshots at regular intervals for timeline navigation.
 
@@ -226,13 +221,9 @@ graph TB
     CAPTURE --> S_N --> BUFFER
 ```
 
-**Snapshot Contents**:
+Each snapshot stores a copy of all entity arrays, the frame number (year), and metadata needed for restoration.
 
-- Copy of all entity arrays
-- Frame number (year)
-- Metadata for restoration
-
-### Restoring State
+### Restoring state
 
 When the user seeks to a past year, entity sets are restored from the snapshot.
 
@@ -251,10 +242,10 @@ sequenceDiagram
     HistoryManager->>NationStateSet: Clear + AddRange(snapshot.nations)
 ```
 
-> **Key Insight** - The collection-like API (`Clear`, `AddRange`) makes save/restore trivial. Entity Sets behave like standard collections but with reactive capabilities.
+> Because entity sets expose a collection-like API (`Clear`, `AddRange`), save and restore is straightforward. They behave like standard collections but fire reactive callbacks on change.
 {: .note }
 
-### Timeline Branching
+### Timeline branching
 
 When seeking to the past and resuming play, future snapshots are discarded.
 
@@ -270,7 +261,7 @@ Timeline: [Yr10] [Yr20] [Yr30] [Yr40] [Yr41] [Yr42] ...
 
 ---
 
-## Memory Efficiency
+## Memory efficiency
 
 The sample uses several strategies to minimize memory allocation:
 
@@ -283,7 +274,7 @@ The sample uses several strategies to minimize memory allocation:
 
 ---
 
-## Key Files
+## Key files
 
 | File | Description |
 | :--- | :--- |
@@ -297,14 +288,14 @@ The sample uses several strategies to minimize memory allocation:
 
 ---
 
-## Next Steps
+## Next steps
 
 - Return to [Architecture](architecture) for the full system overview
 - Learn about Event Channels in [Event Channels](event-channels)
 
 ---
 
-## Learn More
+## Learn more
 
 Want to use Reactive Entity Sets in your own project?
 
