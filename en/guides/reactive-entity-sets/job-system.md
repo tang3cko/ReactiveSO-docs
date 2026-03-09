@@ -1,6 +1,6 @@
 ---
 layout: default
-title: Job System Integration
+title: Job System integration
 parent: Reactive Entity Sets
 grand_parent: Guides
 nav_order: 6
@@ -646,7 +646,7 @@ This demo simulates 10,000 units painting territory on a map, achieving 200+ fps
 
 ## References
 
-- [Job System Integration (Technical)]({{ '/en/design-philosophy/reactive-entity-sets/job-system-integration' | relative_url }}) - Detailed architecture
+- [Job System Integration (Technical)]({{ '/en/design-philosophy/reactive-entity-sets/' | relative_url }}) - Detailed architecture
 - [Unity Job System Manual](https://docs.unity3d.com/Manual/JobSystem.html)
 - [Burst Compiler Manual](https://docs.unity3d.com/Packages/com.unity.burst@latest)
 - [NativeArray Documentation](https://docs.unity3d.com/ScriptReference/Unity.Collections.NativeArray_1.html)

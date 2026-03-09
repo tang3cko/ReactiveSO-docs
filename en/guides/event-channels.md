@@ -1,11 +1,11 @@
 ---
 layout: default
-title: Event channels
+title: Event Channels
 parent: Guides
 nav_order: 1
 ---
 
-# Event channels
+# Event Channels
 
 {: .note }
 > Event Channels are available since v1.0.0 (stable release). Long, Double, Quaternion, and Color event types were added in v1.1.0.

@@ -8,6 +8,9 @@ nav_order: 4
 
 # Views
 
+{: .warning }
+> **Experimental Feature** - Views are available in v2.2.0 (unreleased). The API may change in future versions. Use in production at your own discretion.
+
 ---
 
 ## Purpose

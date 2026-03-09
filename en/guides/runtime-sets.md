@@ -1,11 +1,11 @@
 ---
 layout: default
-title: Runtime sets
+title: Runtime Sets
 parent: Guides
 nav_order: 3
 ---
 
-# Runtime sets
+# Runtime Sets
 
 {: .note }
 > Runtime Sets are available since v1.1.0.

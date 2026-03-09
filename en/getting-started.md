@@ -1,10 +1,10 @@
 ---
 layout: default
-title: Getting Started
+title: Getting started
 nav_order: 2
 ---
 
-# Getting Started
+# Getting started
 
 ---
 

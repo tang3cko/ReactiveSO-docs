@@ -760,7 +760,7 @@ ReactiveEntitySetSOは**スレッドセーフではありません**。すべて
 ## 参考資料
 
 - [リアクティブエンティティセットガイド]({{ '/ja/guides/reactive-entity-sets' | relative_url }}) - リアクティブエンティティセットの使い方
-- [トレイトガイド]({{ '/ja/guides/traits' | relative_url }}) - トレイト enum の定義と使い方
-- [ビューガイド]({{ '/ja/guides/views' | relative_url }}) - ビューの作成と管理
+- [トレイトガイド]({{ '/ja/guides/reactive-entity-sets/traits' | relative_url }}) - トレイト enum の定義と使い方
+- [ビューガイド]({{ '/ja/guides/reactive-entity-sets/views' | relative_url }}) - ビューの作成と管理
 - [ランタイムセットリファレンス](runtime-set-types) - シンプルなオブジェクト追跡
 - [イベントタイプリファレンス](event-types) - リアクティブエンティティセットが使用するイベントチャンネル

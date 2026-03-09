@@ -1,6 +1,6 @@
 ---
 layout: default
-title: Basic Usage
+title: Basic usage
 parent: Reactive Entity Sets
 grand_parent: Guides
 nav_order: 1

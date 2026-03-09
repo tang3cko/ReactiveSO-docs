@@ -8,25 +8,28 @@ nav_order: 4
 
 # ビュー
 
+{: .warning }
+> **実験的機能** - Viewsはv2.2.0（未リリース）で利用可能です。APIは将来のバージョンで変更される可能性があります。本番環境での使用は自己責任で行ってください。
+
 ---
 
 ## 目的
 
-このページでは、`ReactiveView<TData>`を使ってエンティティのサブセットを動的に管理する方法を説明します。データ条件だけのビュー、トレイト条件を含むビュー、メンバーシップイベント、ライフサイクルの各トピックを扱います。
+このページでは、`ReactiveView<TData>`を使ってエンティティのサブセットを動的に管理する方法を説明します。データ条件だけのView、Traits条件を含むView、メンバーシップイベント、ライフサイクルの各トピックを扱います。
 
 ---
 
 ## ビューとは
 
-ビューはセット内のエンティティのうち、指定した条件を満たすものだけを追跡するオブジェクトです。エンティティのデータやトレイトが変わると、ビューは自動的にメンバーシップを再評価します。条件を満たすようになったエンティティには`OnEnter`、満たさなくなったエンティティには`OnExit`が発火します。
+Viewはセット内のエンティティのうち、指定した条件を満たすものだけを追跡するオブジェクトです。エンティティのデータやTraitsが変わると、Viewは自動的にメンバーシップを再評価します。条件を満たすようになったエンティティには`OnEnter`、満たさなくなったエンティティには`OnExit`が発火します。
 
-毎フレーム`ForEach`でセット全体を走査して絞り込む代わりに、ビューを使うと変更があったエンティティだけを再評価するため効率的です。
+毎フレーム`ForEach`でセット全体を走査して絞り込む代わりに、Viewを使うと変更があったエンティティだけを再評価するため効率的です。
 
 ---
 
-## データのみのビューを作成する
+## データのみのViewを作成する
 
-HPが0より大きいエンティティだけを追跡するビューを作ります。
+HPが0より大きいエンティティだけを追跡するViewを作ります。
 
 ```csharp
 public class EnemyAIManager : MonoBehaviour
@@ -57,9 +60,9 @@ public class EnemyAIManager : MonoBehaviour
 
 ---
 
-## トレイト対応ビューを作成する
+## Traits対応Viewを作成する
 
-トレイトとデータの両方を条件に使う場合、`Func<TData, ulong, bool>`のオーバーロードを使います。
+Traitsとデータの両方を条件に使う場合、`Func<TData, ulong, bool>`のオーバーロードを使います。
 
 ```csharp
 // IsAggroが立っていて、かつHPが50%以上の敵
@@ -74,31 +77,31 @@ var aggroAlive = enemySet.CreateView(
 );
 ```
 
-第3引数`observedTraitMask`には、このビューが反応するトレイトフラグを渡します。`IsAggro`の変化に限定することで、無関係なトレイト変更での不要な再評価を防ぎます。
+第3引数`observedTraitMask`には、このViewが反応するTraitsフラグを渡します。`IsAggro`の変化に限定することで、無関係なTraits変更での不要な再評価を防ぎます。
 
 ---
 
 ## ViewTriggerモード
 
-`ViewTrigger`は、ビューがどのタイミングで再評価するかを制御します。
+`ViewTrigger`は、Viewがどのタイミングで再評価するかを制御します。
 
 | 値 | 説明 |
 |---|------|
 | `None` | 再評価しない（登録・登録解除のみ追跡） |
 | `DataOnly` | データ変更時に再評価 |
-| `TraitsOnly` | トレイト変更時に再評価 |
-| `All` | データ変更とトレイト変更の両方で再評価 |
+| `TraitsOnly` | Traits変更時に再評価 |
+| `All` | データ変更とTraits変更の両方で再評価 |
 
-データのみのビューには`ViewTrigger.DataOnly`（デフォルト）を使います。トレイトに反応させたい場合は`TraitsOnly`か`All`を指定します。
+データのみのViewには`ViewTrigger.DataOnly`（デフォルト）を使います。Traitsに反応させたい場合は`TraitsOnly`か`All`を指定します。
 
 ```csharp
-// データが変わったときだけ再評価（トレイト変更は無視）
+// データが変わったときだけ再評価（Traits変更は無視）
 var dataView = enemySet.CreateView(
     state => state.Health > 0,
     ViewTrigger.DataOnly
 );
 
-// トレイトが変わったときだけ再評価（データ変更は無視）
+// Traitsが変わったときだけ再評価（データ変更は無視）
 var traitView = enemySet.CreateView(
     (state, mask) => (mask & TraitMaskUtility.ToUInt64(EnemyTraits.IsDead)) == 0,
     ViewTrigger.TraitsOnly,
@@ -110,7 +113,7 @@ var traitView = enemySet.CreateView(
 
 ## メンバーシップイベント
 
-エンティティがビューに入るときと出るときにイベントが発火します。
+エンティティがViewに入るときと出るときにイベントが発火します。
 
 ```csharp
 private ReactiveView<EnemyState> stunView;
@@ -151,14 +154,14 @@ private void OnDisable()
 
 ---
 
-## ビューメンバーをイテレートする
+## Viewメンバーをイテレートする
 
-ビューのメンバーを`foreach`で走査します。
+Viewのメンバーを`foreach`で走査します。
 
 ```csharp
 private void Update()
 {
-    // ビューに所属するエンティティだけ処理
+    // Viewに所属するエンティティだけ処理
     foreach (int id in aliveEnemies)
     {
         if (enemySet.TryGetData(id, out var state))
@@ -169,7 +172,7 @@ private void Update()
 }
 ```
 
-特定のエンティティがビューに含まれているかどうかはO(1)で確認できます。
+特定のエンティティがViewに含まれているかどうかはO(1)で確認できます。
 
 ```csharp
 if (aliveEnemies.Contains(targetId))
@@ -184,7 +187,7 @@ Debug.Log($"生存中の敵: {aliveEnemies.Count}");
 
 ## ライフサイクルと破棄
 
-ビューはNativeメモリを保持するため、使い終わったら必ず`Dispose`を呼びます。`Dispose`を呼ぶとビューはセットから登録解除され、`OnEnter`/`OnExit`のイベントも解放されます。
+ViewはNativeメモリを保持するため、使い終わったら必ず`Dispose`を呼びます。`Dispose`を呼ぶとViewはセットから登録解除され、`OnEnter`/`OnExit`のイベントも解放されます。
 
 ```csharp
 private ReactiveView<EnemyState> view;
@@ -207,7 +210,7 @@ private void OnDisable()
 
 ## バルク操作時の挙動
 
-`Clear()`や`RestoreSnapshot()`を実行すると、ビューのメンバーシップはサイレントに再構築されます。この場合、`OnEnter`と`OnExit`は発火しません。UI要素のリフレッシュなど、バルク操作後に一括更新が必要な場合は`Count`や`Contains`で状態を確認してください。
+`Clear()`や`RestoreSnapshot()`を実行すると、Viewのメンバーシップはサイレントに再構築されます。この場合、`OnEnter`と`OnExit`は発火しません。UI要素のリフレッシュなど、バルク操作後に一括更新が必要な場合は`Count`や`Contains`で状態を確認してください。
 
 ```csharp
 // バルク操作後に手動でUIを同期
@@ -219,12 +222,12 @@ RefreshAllUIFromScratch();  // OnExit/OnEnterを待たず即時同期
 
 ## APIサマリー
 
-### ビューの作成
+### Viewの作成
 
 | メソッド | 説明 |
 |---------|------|
-| `CreateView(Func<TData, bool> predicate, ViewTrigger triggerOn)` | データのみのビューを作成 |
-| `CreateView(Func<TData, ulong, bool> predicate, ViewTrigger triggerOn, ulong observedTraitMask)` | トレイト対応ビューを作成 |
+| `CreateView(Func<TData, bool> predicate, ViewTrigger triggerOn)` | データのみのViewを作成 |
+| `CreateView(Func<TData, ulong, bool> predicate, ViewTrigger triggerOn, ulong observedTraitMask)` | Traits対応Viewを作成 |
 
 ### ReactiveView<TData>
 
@@ -233,9 +236,9 @@ RefreshAllUIFromScratch();  // OnExit/OnEnterを待たず即時同期
 | `bool Contains(int id)` | メンバーかどうかをO(1)で確認 |
 | `int Count` | 現在のメンバー数 |
 | `GetEnumerator()` | `NativeHashSet<int>`のEnumeratorを取得 |
-| `event Action<int> OnEnter` | エンティティがビューに入ったとき発火 |
-| `event Action<int> OnExit` | エンティティがビューから出たとき発火 |
-| `void Dispose()` | ビューを破棄してリソースを解放 |
+| `event Action<int> OnEnter` | エンティティがViewに入ったとき発火 |
+| `event Action<int> OnExit` | エンティティがViewから出たとき発火 |
+| `void Dispose()` | Viewを破棄してリソースを解放 |
 
 ---
 
@@ -248,7 +251,7 @@ RefreshAllUIFromScratch();  // OnExit/OnEnterを待たず即時同期
 | 初期化時の全評価 | O(n) |
 | バルク操作後の再構築 | O(n) |
 
-ビューのメンバーシップはNativeHashSetで管理されます。登録済みのビュー数が増えるほど、データ変更やトレイト変更時のオーバーヘッドも増えます。不要になったビューはすぐに`Dispose`してください。
+ViewのメンバーシップはNativeHashSetで管理されます。登録済みのViews数が増えるほど、データ変更やTraits変更時のオーバーヘッドも増えます。不要になったViewはすぐに`Dispose`してください。
 
 ---
 

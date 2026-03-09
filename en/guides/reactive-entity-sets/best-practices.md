@@ -1,6 +1,6 @@
 ---
 layout: default
-title: Best Practices
+title: Best practices
 parent: Reactive Entity Sets
 grand_parent: Guides
 nav_order: 4

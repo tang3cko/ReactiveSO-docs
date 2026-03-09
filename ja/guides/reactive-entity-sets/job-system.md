@@ -643,7 +643,7 @@ Assets/_Project/Samples/TinyHistoryDemo/
 
 ## 参考資料
 
-- [Job System連携（技術詳細）]({{ '/ja/design-philosophy/reactive-entity-sets/job-system-integration' | relative_url }}) - 詳細なアーキテクチャ
+- [Job System連携（技術詳細）]({{ '/ja/design-philosophy/reactive-entity-sets/' | relative_url }}) - 詳細なアーキテクチャ
 - [Unity Job Systemマニュアル](https://docs.unity3d.com/ja/current/Manual/JobSystem.html)
 - [Burstコンパイラマニュアル](https://docs.unity3d.com/Packages/com.unity.burst@latest)
 - [NativeArrayドキュメント](https://docs.unity3d.com/ScriptReference/Unity.Collections.NativeArray_1.html)

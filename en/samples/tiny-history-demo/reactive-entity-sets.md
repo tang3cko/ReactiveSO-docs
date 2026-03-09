@@ -6,7 +6,7 @@ grand_parent: Samples
 nav_order: 3
 ---
 
-# Reactive entity sets integration
+# Reactive Entity Sets integration
 
 ---
 

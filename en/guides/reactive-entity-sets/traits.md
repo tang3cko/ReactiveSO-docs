@@ -8,6 +8,9 @@ nav_order: 3
 
 # Traits
 
+{: .warning }
+> **Experimental Feature** - Traits are available in v2.2.0 (unreleased). The API may change in future versions. Use in production at your own discretion.
+
 ---
 
 ## Purpose

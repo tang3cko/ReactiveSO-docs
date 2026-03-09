@@ -8,21 +8,24 @@ nav_order: 3
 
 # トレイト
 
+{: .warning }
+> **実験的機能** - Traitsはv2.2.0（未リリース）で利用可能です。APIは将来のバージョンで変更される可能性があります。本番環境での使用は自己責任で行ってください。
+
 ---
 
 ## 目的
 
-このページでは、エンティティにビットフラグのトレイトを付与して管理する方法を説明します。トレイトの定義、変更、照会、フィルタリングイテレーションの各操作を順番に示します。
+このページでは、エンティティにビットフラグのTraitsを付与して管理する方法を説明します。Traitsの定義、変更、照会、フィルタリングイテレーションの各操作を順番に示します。
 
 ---
 
 ## トレイトとは
 
-トレイトは1つのエンティティに付与するビットフラグの集合です。内部では64ビットの`ulong`マスクとして格納されるため、GCアロケーションを発生させません。`IsDead`や`IsStunned`といった状態をデータ構造体に含めずに管理できます。
+Traitsは1つのエンティティに付与するビットフラグの集合です。内部では64ビットの`ulong`マスクとして格納されるため、GCアロケーションを発生させません。`IsDead`や`IsStunned`といった状態をデータ構造体に含めずに管理できます。
 
 ---
 
-## ステップ1 — トレイトenumを定義する
+## ステップ1 — Traitsのenumを定義する
 
 `[Flags]`属性を付けた`enum`を作成します。各メンバーは2のべき乗にします。
 
@@ -39,21 +42,21 @@ public enum EnemyTraits
 
 ---
 
-## ステップ2 — トレイトを変更する
+## ステップ2 — Traitsを変更する
 
-エンティティが登録済みであることを前提として、以下のメソッドでトレイトを操作します。
+エンティティが登録済みであることを前提として、以下のメソッドでTraitsを操作します。
 
 ```csharp
-// IsAggroを追加（既存のトレイトはそのまま）
+// IsAggroを追加（既存のTraitsはそのまま）
 enemySet.AddTraits(entityId, EnemyTraits.IsAggro);
 
 // IsStunnedを削除
 enemySet.RemoveTraits(entityId, EnemyTraits.IsStunned);
 
-// トレイトを全て置き換え
+// Traitsを全て置き換え
 enemySet.SetTraits(entityId, EnemyTraits.IsDead);
 
-// 全トレイトを削除（マスクを0にリセット）
+// 全Traitsを削除（マスクを0にリセット）
 enemySet.ClearTraits(entityId);
 ```
 
@@ -61,7 +64,7 @@ enemySet.ClearTraits(entityId);
 
 ---
 
-## ステップ3 — トレイトを照会する
+## ステップ3 — Traitsを照会する
 
 ```csharp
 // IsAggroとIsStunnedが両方立っているか
@@ -70,7 +73,7 @@ bool bothSet = enemySet.HasTraits(entityId, EnemyTraits.IsAggro | EnemyTraits.Is
 // IsAggroまたはIsStunnedのどちらかが立っているか
 bool anySet = enemySet.HasAnyTrait(entityId, EnemyTraits.IsAggro | EnemyTraits.IsStunned);
 
-// 現在のトレイトを取得
+// 現在のTraitsを取得
 EnemyTraits current = enemySet.GetTraits<EnemyTraits>(entityId);
 
 // 安全な取得（エンティティが存在しない場合でも例外を投げない）
@@ -82,9 +85,9 @@ if (enemySet.TryGetTraits<EnemyTraits>(entityId, out var traits))
 
 ---
 
-## ステップ4 — トレイトでフィルタリングしてイテレートする
+## ステップ4 — Traitsでフィルタリングしてイテレートする
 
-トレイトに一致するエンティティだけを対象に処理します。
+Traitsに一致するエンティティだけを対象に処理します。
 
 ```csharp
 // IsDeadが立っているエンティティのみ処理
@@ -108,14 +111,14 @@ int activeCount = enemySet.CountWithAnyTraits(EnemyTraits.IsAggro | EnemyTraits.
 
 ---
 
-## トレイトイベント
+## Traitsイベント
 
-トレイトが変更されたとき、セットに割り当てた`IntEventChannelSO`が発火します。
+Traitsが変更されたとき、セットに割り当てた`IntEventChannelSO`が発火します。
 
 | フィールド | 発火タイミング |
 |-----------|---------------|
-| On Trait Added | トレイトが追加されたとき |
-| On Trait Removed | トレイトが削除されたとき |
+| On Trait Added | Traitsが追加されたとき |
+| On Trait Removed | Traitsが削除されたとき |
 
 Inspectorでイベントチャンネルを作成して割り当てます。
 
@@ -151,7 +154,7 @@ private void HandleTraitAdded(int entityId)
 
 ## 型ロック
 
-1つのセットで使えるトレイトのenum型は1種類だけです。最初に`AddTraits<TTraits>`や`HasTraits<TTraits>`を呼び出した時点で、その型がセットにロックされます。異なるenum型でメソッドを呼び出すと`InvalidOperationException`が発生します。
+1つのセットで使えるTraitsのenum型は1種類だけです。最初に`AddTraits<TTraits>`や`HasTraits<TTraits>`を呼び出した時点で、その型がセットにロックされます。異なるenum型でメソッドを呼び出すと`InvalidOperationException`が発生します。
 
 ```csharp
 // 最初の呼び出しでEnemyTraitsがロックされる
@@ -171,9 +174,9 @@ enemySet.AddTraits(id, SomeOtherEnum.Flag); // InvalidOperationException
 
 | メソッド | 説明 |
 |---------|------|
-| `AddTraits<TTraits>(id, traits)` | 既存のトレイトにビットORで追加 |
+| `AddTraits<TTraits>(id, traits)` | 既存のTraitsにビットORで追加 |
 | `RemoveTraits<TTraits>(id, traits)` | ビットAND-NOTで削除 |
-| `SetTraits<TTraits>(id, traits)` | 全トレイトを置き換え |
+| `SetTraits<TTraits>(id, traits)` | 全Traitsを置き換え |
 | `ClearTraits(id)` | マスクを0にリセット |
 
 ### 照会
@@ -182,7 +185,7 @@ enemySet.AddTraits(id, SomeOtherEnum.Flag); // InvalidOperationException
 |---------|------|
 | `HasTraits<TTraits>(id, traits)` | 指定フラグが全て立っているか |
 | `HasAnyTrait<TTraits>(id, traits)` | 指定フラグのいずれかが立っているか |
-| `GetTraits<TTraits>(id)` | 現在のトレイトを取得 |
+| `GetTraits<TTraits>(id)` | 現在のTraitsを取得 |
 | `TryGetTraits<TTraits>(id, out traits)` | 例外なしで安全に取得 |
 
 ### フィルタリングイテレーション
@@ -198,7 +201,7 @@ enemySet.AddTraits(id, SomeOtherEnum.Flag); // InvalidOperationException
 
 ## パフォーマンス特性
 
-トレイトマスクはNativeArrayに連続して格納されるため、イテレーション時のキャッシュ効率は高いです。
+TraitsマスクはNativeArrayに連続して格納されるため、イテレーション時のキャッシュ効率は高いです。
 
 | 操作 | 時間計算量 |
 |------|-----------|
@@ -207,11 +210,11 @@ enemySet.AddTraits(id, SomeOtherEnum.Flag); // InvalidOperationException
 | WithTraits / WithAnyTraits | O(n) |
 | CountWithTraits / CountWithAnyTraits | O(n) |
 
-メモリは1エンティティあたり8バイト（`ulong`1つ）です。トレイトストレージはトレイトAPIを初めて呼び出したときに遅延初期化されます。
+メモリは1エンティティあたり8バイト（`ulong`1つ）です。TraitsストレージはTraits APIを初めて呼び出したときに遅延初期化されます。
 
 ---
 
 ## 次のステップ
 
-- [ビュー](views) - トレイトとデータに基づくリアクティブなエンティティサブセットについて学べます
+- [Views](views) - Traitsとデータに基づくリアクティブなエンティティサブセットについて学べます
 - [パターン](patterns) - 一般的な使用パターンを確認できます

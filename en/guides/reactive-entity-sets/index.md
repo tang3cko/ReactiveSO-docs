@@ -6,10 +6,10 @@ nav_order: 4
 has_children: true
 ---
 
-# Reactive entity sets guide
+# Reactive Entity Sets guide
 
 {: .warning }
-> **Experimental Feature** - Reactive Entity Sets are available in v2.1.0 (unreleased). The API may change in future versions. Use in production at your own discretion.
+> **Experimental Feature** - Reactive Entity Sets are available in v2.1.0. The API may change in future versions. Use in production at your own discretion.
 
 {: .warning }
 > **Critical Note: Runtime Data Persistence**

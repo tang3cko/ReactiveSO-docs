@@ -6,7 +6,7 @@ grand_parent: Samples
 nav_order: 2
 ---
 
-# Event channels integration
+# Event Channels integration
 
 ---
 

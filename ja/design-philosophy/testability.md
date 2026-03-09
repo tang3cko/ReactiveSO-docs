@@ -115,7 +115,7 @@ public void BossBattle_Enraged_Test()
 
 ### テストケースとしてのスナップショット
 
-[Snapshot API]({{ '/ja/advanced/reactive-entity-sets' | relative_url }})は、テスト容易性を究極のレベルに引き上げます。RESのデータはロジックから厳密に分離されているため、以下のことが可能です。
+[Snapshot API]({{ '/ja/guides/reactive-entity-sets/' | relative_url }})は、テスト容易性を究極のレベルに引き上げます。RESのデータはロジックから厳密に分離されているため、以下のことが可能です。
 
 1.  本番環境でバグが発生した際にスナップショットを**キャプチャ**する。
 2.  そのスナップショットをアセットまたはバイナリファイルとして**保存**する。

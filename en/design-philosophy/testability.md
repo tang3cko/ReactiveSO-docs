@@ -115,7 +115,7 @@ This "State Injection" turns hours of manual debugging into milliseconds of auto
 
 ### Snapshots as Test Cases
 
-The [Snapshot API]({{ '/en/advanced/reactive-entity-sets' | relative_url }}) takes testability to the ultimate level. Because RES data is strictly separated from logic, you can:
+The [Snapshot API]({{ '/en/guides/reactive-entity-sets/' | relative_url }}) takes testability to the ultimate level. Because RES data is strictly separated from logic, you can:
 
 1.  **Capture** a snapshot when a bug occurs in production.
 2.  **Save** that snapshot as an asset or binary file.

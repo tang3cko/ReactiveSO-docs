@@ -1,6 +1,6 @@
 ---
 layout: default
-title: Design Approach
+title: Design approach
 parent: RES Design
 grand_parent: Design Philosophy
 nav_order: 1

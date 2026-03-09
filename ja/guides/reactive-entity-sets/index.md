@@ -9,7 +9,7 @@ has_children: true
 # Reactive Entity Setsガイド
 
 {: .warning }
-> **実験的機能** - Reactive Entity Setsはv2.1.0（未リリース）で利用可能です。APIは将来のバージョンで変更される可能性があります。本番環境での使用は自己責任で行ってください。
+> **実験的機能** - Reactive Entity Setsはv2.1.0で利用可能です。APIは将来のバージョンで変更される可能性があります。本番環境での使用は自己責任で行ってください。
 
 {: .warning }
 > **重要な注意 — ランタイムデータの永続性**
@@ -97,7 +97,7 @@ flowchart TB
             D2["ID: 102 → Health: 100"]
             D3["ID: 103 → Health: 45"]
         end
-        Traits["トレイトマスク (ulong)"]
+        Traits["Traitsマスク (ulong)"]
         subgraph Events["イベントチャンネル"]
             E1[OnItemAdded]
             E2[OnItemRemoved]
@@ -114,7 +114,7 @@ flowchart TB
     SS --> Traits
 
     Data -->|状態変更| E3
-    Traits -->|トレイト変更| E4
+    Traits -->|Traits変更| E4
     E3 -->|通知| UI[ヘルスバーUI]
     E3 -->|通知| AI[AIシステム]
     E4 -->|フィルタードメンバーシップ| View
@@ -137,8 +137,8 @@ flowchart TB
 |--------|------|
 | [基本的な使い方](basic-usage) | state構造体の定義、アセット作成、エンティティ登録 |
 | [イベント](events) | エンティティごとのサブスクリプション、セットレベルの通知 |
-| [トレイト](traits) | エンティティの分類とフィルタリングのためのビットマスクフラグ |
-| [ビュー](views) | メンバーシップを自動追跡するリアクティブなフィルタードサブセット |
+| [Traits](traits) | エンティティの分類とフィルタリングのためのビットマスクフラグ |
+| [Views](views) | メンバーシップを自動追跡するリアクティブなフィルタードサブセット |
 | [パターン](patterns) | ボスヘルスバー、ステータスエフェクト、セーブ/ロード |
 | [ベストプラクティス](best-practices) | パフォーマンスのヒント、トラブルシューティング |
 | [永続化](persistence) | シーン遷移時のデータ消失を防ぐ |

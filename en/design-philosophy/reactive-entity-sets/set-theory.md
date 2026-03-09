@@ -262,7 +262,7 @@ Where:
 ## Implementation status
 
 {: .note }
-> Views are currently in the design phase and not yet implemented. The concepts described here represent the planned architecture.
+> Views are implemented and available in v2.2.0 (unreleased).
 
 ---
 

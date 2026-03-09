@@ -1,11 +1,11 @@
 ---
 layout: default
-title: Runtime set types
+title: Runtime Set types
 parent: Reference
 nav_order: 3
 ---
 
-# Runtime set types
+# Runtime Set types
 
 ## Purpose
 

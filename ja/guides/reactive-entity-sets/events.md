@@ -145,8 +145,8 @@ public class EnemyStatusUI : MonoBehaviour
 | On Item Removed | エンティティが登録解除されたとき |
 | On Data Changed | いずれかのエンティティのデータが変更されたとき |
 | On Set Changed | 任意の変更が発生したとき |
-| On Trait Added | エンティティにトレイトが追加されたとき |
-| On Trait Removed | エンティティからトレイトが削除されたとき |
+| On Trait Added | エンティティにTraitsが追加されたとき |
+| On Trait Removed | エンティティからTraitsが削除されたとき |
 
 ### 敵カウンターの例
 
@@ -243,7 +243,7 @@ sequenceDiagram
     end
 
     rect rgb(230, 220, 180)
-    Note over C,EC: トレイト変更フロー
+    Note over C,EC: Traits変更フロー
     C->>RES: AddTraits(id, traits)
     RES->>SS: Write trait mask(id)
     RES->>EC: OnTraitAdded(id)
@@ -282,9 +282,9 @@ Unregister() または ReactiveEntity.OnDisable()
 
 ---
 
-## トレイトイベント
+## Traitsイベント
 
-`AddTraits`、`RemoveTraits`、`SetTraits`、`ClearTraits` を呼び出すとトレイトイベントが発火します。`OnItemAdded` と同様にエンティティIDを渡します。
+`AddTraits`、`RemoveTraits`、`SetTraits`、`ClearTraits` を呼び出すとTraitsイベントが発火します。`OnItemAdded` と同様にエンティティIDを渡します。
 
 ```csharp
 public class AggroUI : MonoBehaviour
@@ -323,7 +323,7 @@ public class AggroUI : MonoBehaviour
 }
 ```
 
-トレイトAPIの詳細は[トレイト](traits)を参照してください。
+Traits APIの詳細は[Traits](traits)を参照してください。
 
 ---
 
@@ -357,6 +357,6 @@ private void Start()
 
 ## 次のステップ
 
-- [トレイト](traits) — トレイトの追加、照会、イテレート
+- [Traits](traits) — Traitsの追加、照会、イテレート
 - [パターン](patterns) — 一般的な使用パターン
 - [ベストプラクティス](best-practices) — パフォーマンスとトラブルシューティング

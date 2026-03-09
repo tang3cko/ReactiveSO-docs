@@ -1,11 +1,11 @@
 ---
 layout: default
-title: Reactive entity sets API
+title: Reactive Entity Sets API
 parent: Reference
 nav_order: 4
 ---
 
-# Reactive entity sets API
+# Reactive Entity Sets API
 
 ## Purpose
 
@@ -764,7 +764,7 @@ ReactiveEntitySetSO is **NOT thread-safe**. All operations must be performed on 
 ## References
 
 - [Reactive entity sets guide]({{ '/en/guides/reactive-entity-sets' | relative_url }}) - How to use reactive entity sets
-- [Traits guide]({{ '/en/guides/traits' | relative_url }}) - How to define and use trait enums
-- [Views guide]({{ '/en/guides/views' | relative_url }}) - How to create and manage views
+- [Traits guide]({{ '/en/guides/reactive-entity-sets/traits' | relative_url }}) - How to define and use trait enums
+- [Views guide]({{ '/en/guides/reactive-entity-sets/views' | relative_url }}) - How to create and manage views
 - [Runtime sets reference](runtime-set-types) - For simpler object tracking
 - [Event types reference](event-types) - Event channels used by reactive entity sets
