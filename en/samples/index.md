@@ -26,3 +26,4 @@ You can find the source code for these samples in the package under `Samples~`. 
 | [GPU Sync (Motes)](mote-demo) | GPU Sync, Variables, Compute Shaders | Demonstrates how to sync VariableSO values directly to shaders for high-performance visual effects. |
 | [Runtime Sets Demo](runtime-sets-demo) | Runtime Sets, Dynamic Lists | Shows how to manage dynamic collections of objects (like spawned enemies) without manager singletons. |
 | [Tiny History Demo](tiny-history-demo/) | Event Channels, Reactive Entity Sets, GPU Sync | An integrated example: nation simulation with timeline navigation, demonstrating Jobs integration and history snapshots. |
+| [Status Board Demo](status-board-demo) | Reactive Entity Sets, Traits, Views | Interactive dashboard for exploring Traits and ReactiveViews: entity editing with draggable windows and live membership updates. |
