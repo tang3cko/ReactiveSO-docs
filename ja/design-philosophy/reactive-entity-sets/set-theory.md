@@ -125,13 +125,18 @@ R(c₁) = { (id, data) ∈ S | P(data, context) = true }
 
 ここでPは述語関数: `P: (TData, TContext) → bool`
 
-**例（概念）**
+**例**
 
-動的/コンテキスト依存のViewは将来拡張であり、現時点では未実装です。概念としては次のようなイメージになります。
+動的/コンテキスト依存のViewは`CreateContextView<TContext>`として実装済みです（`ReactiveView<TData, TContext>`）。
 
 ```csharp
 // 指定位置から10ユニット以内のすべての敵
-// （予定API）
+var nearbyEnemiesView = enemySet.CreateContextView<Vector3>(
+    predicate: (data, traitMask, playerPos) => Vector3.Distance(data.Position, playerPos) < 10f,
+    initialContext: player.transform.position);
+
+// プレイヤーが移動したら明示的に再評価をトリガー（コンテキスト変化は自動検知されない）
+nearbyEnemiesView.Refresh(player.transform.position);
 ```
 
 **特徴**

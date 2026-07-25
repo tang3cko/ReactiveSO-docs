@@ -125,13 +125,18 @@ R(c₁) = { (id, data) ∈ S | P(data, context) = true }
 
 Where P is a predicate function: `P: (TData, TContext) → bool`
 
-#### Example (conceptual)
+#### Example
 
-Dynamic/context-dependent views are a planned extension and are not implemented yet. The following is a conceptual example:
+Dynamic/context-dependent views are implemented as `CreateContextView<TContext>` (`ReactiveView<TData, TContext>`).
 
 ```csharp
 // All enemies within 10 units of a given position
-// (Planned API)
+var nearbyEnemiesView = enemySet.CreateContextView<Vector3>(
+    predicate: (data, traitMask, playerPos) => Vector3.Distance(data.Position, playerPos) < 10f,
+    initialContext: player.transform.position);
+
+// Trigger re-evaluation explicitly when the player moves (context changes are not observed automatically)
+nearbyEnemiesView.Refresh(player.transform.position);
 ```
 
 #### Characteristics
