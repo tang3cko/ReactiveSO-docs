@@ -110,6 +110,8 @@ Restores from a saved `.resdata` file, completely replacing the ReactiveEntitySe
 |--------|-------------|
 | Entity ID | Unique entity identifier (read-only) |
 | (TData fields) | Each field of the TData struct is dynamically displayed as a column |
+| Traits | Shown only when the set uses Traits. Displays the trait bitmask in hex (read-only) |
+| (View name) | One column per registered `ReactiveView`, showing ✓ if the entity is a member of that view (read-only) |
 
 ### Supported types
 
@@ -121,9 +123,15 @@ Restores from a saved `.resdata` file, completely replacing the ReactiveEntitySe
 | Vector2, Vector3 | (x, y, z) | × |
 | Quaternion | Euler angles | × |
 | Color | (r, g, b, a) | × |
+| Non-primitive value type fields (nested structs) | Recursively flattened into dot-separated columns (e.g. `Position.X`, `Position.Y`), up to a maximum nesting depth of 5 | × |
 
 {: .note }
-> Compound types like Vector and Quaternion are display-only and cannot currently be edited.
+> Compound types like Vector and Quaternion, as well as flattened nested-struct columns, are display-only and cannot currently be edited. Only top-level fields support editing. Reference type (class) fields are not flattened, to avoid circular references.
+
+### Trait / View columns
+
+- **Traits column**: Shown only when the target ReactiveEntitySetSO has used trait storage at least once (e.g. `AddTraits`/`SetTraits`). This is an MVP implementation that displays the raw bitmask in hex (e.g. `0x05`); human-readable trait name decoding is planned for a future update.
+- **View columns**: One column is added per `ReactiveView` registered via `CreateView`. The column title uses the `name` argument passed to `CreateView` (or a sequential fallback like `View #0` if omitted), and shows ✓ when the entity is a member of that view.
 
 ---
 

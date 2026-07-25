@@ -95,23 +95,21 @@ public class SpawnEffectAction : ActionSO
     [SerializeField] private Vector3 offset;
     [SerializeField] private float duration = 2f;
 
-    public override void Execute(
-        string callerMember = "",
-        string callerFile = "",
-        int callerLine = 0)
+    protected override void OnExecute()
     {
         var instance = Object.Instantiate(effectPrefab);
         instance.transform.position += offset;
         Object.Destroy(instance, duration);
 
 #if UNITY_EDITOR
-        var callerInfo = new CallerInfo(callerMember, callerFile, callerLine);
-        NotifyActionExecuted(callerInfo);
         LogAction($"Spawned {effectPrefab.name}");
 #endif
     }
 }
 ```
+
+{: .note }
+> `Execute()` is non-virtual and centralizes caller-info capture and Monitor Window notification. Derived classes never override `Execute()` itself; instead they implement `OnExecute()` (or `OnExecute(T value)` for `ActionSO<T>`), which holds the actual behavior.
 
 ### Step 2: Create an action asset
 
@@ -163,17 +161,12 @@ public class DamageAction : ActionSO<int>
     [SerializeField] private GameObject damageVFX;
     [SerializeField] private AudioClip damageSound;
 
-    public override void Execute(int damage,
-        string callerMember = "",
-        string callerFile = "",
-        int callerLine = 0)
+    protected override void OnExecute(int damage)
     {
         Debug.Log($"Dealing {damage} damage");
         // Apply damage logic here
 
 #if UNITY_EDITOR
-        var callerInfo = new CallerInfo(callerMember, callerFile, callerLine);
-        NotifyActionExecuted(callerInfo);
         LogAction($"Damage: {damage}");
 #endif
     }
@@ -205,16 +198,9 @@ public class GiveItemAction : ActionSO
     [SerializeField] private ItemData item;
     [SerializeField] private int quantity = 1;
 
-    public override void Execute(
-        string callerMember = "",
-        string callerFile = "",
-        int callerLine = 0)
+    protected override void OnExecute()
     {
         InventoryManager.Instance.AddItem(item, quantity);
-
-#if UNITY_EDITOR
-        NotifyActionExecuted(new CallerInfo(callerMember, callerFile, callerLine));
-#endif
     }
 }
 ```
@@ -369,7 +355,7 @@ For detailed debugging instructions, see the [Debugging Overview]({{ '/en/debugg
 ### Action not executing
 
 1. Check that the action asset is assigned in the Inspector
-2. Verify the action's `Execute` method contains your logic
+2. Verify the action's `OnExecute` method contains your logic
 3. Confirm you are calling `Execute()` not just referencing the action
 4. Check the Monitor Window for execution logs
 
@@ -380,9 +366,8 @@ For detailed debugging instructions, see the [Debugging Overview]({{ '/en/debugg
 
 ### Caller info not showing
 
-1. Do not pass explicit values to the caller parameters
-2. Ensure `NotifyActionExecuted` is called in the `Execute` method
-3. Check that `showInMonitor` is enabled in the action's Inspector
+1. Do not pass explicit values when calling `Execute()`; let the compiler fill them in
+2. Check that `showInMonitor` is enabled in the action's Inspector
 
 ---
 

@@ -39,7 +39,8 @@ Commandパターンを実装するScriptableObjectベースのアクション用
 
 | メソッド | 戻り値 | 説明 |
 |----------|--------|------|
-| `Execute(...)` | `void` | アクションを実行（抽象、オーバーライド必須） |
+| `Execute(...)` | `void` | アクションを実行（非virtual。呼び出し元情報の記録とMonitor通知を一元管理し、内部で`OnExecute()`を呼び出す） |
+| `OnExecute(...)` | `void` | アクションの実際の処理を実装（抽象、オーバーライド必須） |
 
 ### エディタ専用プロパティ
 
@@ -52,8 +53,7 @@ Commandパターンを実装するScriptableObjectベースのアクション用
 
 | メソッド | 戻り値 | 説明 |
 |----------|--------|------|
-| `NotifyActionExecuted(CallerInfo)` | `void` | 実行をMonitor Windowに通知 |
-| `LogAction(string)` | `void` | アクション実行をConsoleにログ出力 |
+| `LogAction(string)` | `void` | アクション実行をConsoleにログ出力（`OnExecute()`内から呼び出す） |
 
 ### エディタ専用イベント
 
@@ -71,8 +71,9 @@ Commandパターンを実装するScriptableObjectベースのアクション用
 
 | メソッド | 戻り値 | 説明 |
 |----------|--------|------|
-| `Execute(T value, ...)` | `void` | パラメータ付きで実行（抽象、オーバーライド必須） |
-| `Execute(...)` | `void` | デフォルト値で実行（`Execute(default)`を呼び出す） |
+| `Execute(T value, ...)` | `void` | パラメータ付きで実行（非virtual。内部で`OnExecute(T value)`を呼び出す） |
+| `OnExecute(T value)` | `void` | パラメータ付きの実際の処理を実装（抽象、オーバーライド必須） |
+| `Execute(...)` | `void` | デフォルト値で実行（内部で`OnExecute(default)`を呼び出す） |
 
 ---
 
@@ -96,16 +97,11 @@ public class PlaySoundAction : ActionSO
     [SerializeField] private AudioClip clip;
     [SerializeField] private float volume = 1f;
 
-    public override void Execute(
-        string callerMember = "",
-        string callerFile = "",
-        int callerLine = 0)
+    protected override void OnExecute()
     {
         AudioSource.PlayClipAtPoint(clip, Vector3.zero, volume);
 
 #if UNITY_EDITOR
-        var callerInfo = new CallerInfo(callerMember, callerFile, callerLine);
-        NotifyActionExecuted(callerInfo);
         LogAction($"Played {clip.name}");
 #endif
     }
@@ -144,16 +140,11 @@ public class SpawnAtPositionAction : ActionSO<Vector3>
     [Header("Settings")]
     [SerializeField] private GameObject prefab;
 
-    public override void Execute(Vector3 position,
-        string callerMember = "",
-        string callerFile = "",
-        int callerLine = 0)
+    protected override void OnExecute(Vector3 position)
     {
         Object.Instantiate(prefab, position, Quaternion.identity);
 
 #if UNITY_EDITOR
-        var callerInfo = new CallerInfo(callerMember, callerFile, callerLine);
-        NotifyActionExecuted(callerInfo);
         LogAction($"Spawned at {position}");
 #endif
     }
@@ -223,18 +214,17 @@ action.Execute("", "", 0);
 ### Consoleロギング
 
 1. Inspectorで`Show In Console`を有効化
-2. Executeメソッド内で`LogAction(string)`を呼び出す
+2. `OnExecute`メソッド内で`LogAction(string)`を呼び出す
 3. Play Mode中にConsoleにメッセージが表示される
 
 ### カスタムログメッセージ
 
 ```csharp
-public override void Execute(...)
+protected override void OnExecute()
 {
     // ロジックをここに
 
 #if UNITY_EDITOR
-    NotifyActionExecuted(new CallerInfo(callerMember, callerFile, callerLine));
     LogAction($"カスタムメッセージ {details}");
 #endif
 }
@@ -251,19 +241,12 @@ public class SequenceAction : ActionSO
 {
     [SerializeField] private ActionSO[] actions;
 
-    public override void Execute(
-        string callerMember = "",
-        string callerFile = "",
-        int callerLine = 0)
+    protected override void OnExecute()
     {
         foreach (var action in actions)
         {
             action?.Execute();
         }
-
-#if UNITY_EDITOR
-        NotifyActionExecuted(new CallerInfo(callerMember, callerFile, callerLine));
-#endif
     }
 }
 ```
@@ -277,10 +260,7 @@ public class ConditionalAction : ActionSO
     [SerializeField] private ActionSO trueAction;
     [SerializeField] private ActionSO falseAction;
 
-    public override void Execute(
-        string callerMember = "",
-        string callerFile = "",
-        int callerLine = 0)
+    protected override void OnExecute()
     {
         if (condition != null && condition.Value)
         {
@@ -290,10 +270,6 @@ public class ConditionalAction : ActionSO
         {
             falseAction?.Execute();
         }
-
-#if UNITY_EDITOR
-        NotifyActionExecuted(new CallerInfo(callerMember, callerFile, callerLine));
-#endif
     }
 }
 ```
@@ -305,20 +281,13 @@ public class RandomAction : ActionSO
 {
     [SerializeField] private ActionSO[] actions;
 
-    public override void Execute(
-        string callerMember = "",
-        string callerFile = "",
-        int callerLine = 0)
+    protected override void OnExecute()
     {
         if (actions.Length > 0)
         {
             int index = Random.Range(0, actions.Length);
             actions[index]?.Execute();
         }
-
-#if UNITY_EDITOR
-        NotifyActionExecuted(new CallerInfo(callerMember, callerFile, callerLine));
-#endif
     }
 }
 ```
@@ -330,13 +299,12 @@ public class RandomAction : ActionSO
 ### エディタコードは常にラップ
 
 ```csharp
-public override void Execute(...)
+protected override void OnExecute()
 {
     // ランタイムロジックをここに
 
 #if UNITY_EDITOR
-    // 監視とロギングはエディタのみ
-    NotifyActionExecuted(new CallerInfo(callerMember, callerFile, callerLine));
+    // ロギングはエディタのみ（Monitor通知はExecute()が自動的に行う）
     LogAction("詳細");
 #endif
 }

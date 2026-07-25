@@ -348,11 +348,12 @@ public enum ViewTrigger
 ```csharp
 public ReactiveView<TData> CreateView(
     Func<TData, bool> predicate,
-    ViewTrigger triggerOn = ViewTrigger.DataOnly
+    ViewTrigger triggerOn = ViewTrigger.DataOnly,
+    string name = null
 )
 ```
 
-データのみでエンティティをフィルタリングするビューを作成します。
+データのみでエンティティをフィルタリングするビューを作成します。`name`はエディタツール（RES Table Viewなど）向けの任意の人間可読ラベルで、ランタイムの挙動には影響しません。
 
 ```csharp
 var lowHealthView = enemySet.CreateView(
@@ -366,12 +367,13 @@ var lowHealthView = enemySet.CreateView(
 ```csharp
 public ReactiveView<TData> CreateView(
     Func<TData, ulong, bool> predicate,
-    ViewTrigger triggerOn,
-    ulong observedTraitMask
+    ViewTrigger triggerOn = ViewTrigger.All,
+    ulong observedTraitMask = ulong.MaxValue,
+    string name = null
 )
 ```
 
-エンティティのトレイトビットマスクも受け取る述語でビューを作成します。`observedTraitMask` は、どのトレイトフラグが変わったときに再評価するかを指定します。
+エンティティのトレイトビットマスクも受け取る述語でビューを作成します。`observedTraitMask` は、どのトレイトフラグが変わったときに再評価するかを指定します。`name`はデータのみのオーバーロードと同様に任意です。
 
 マスクの構築には `TraitMaskUtility.ToUInt64<TTraits>(flags)` を使います。
 
@@ -389,6 +391,7 @@ var aggroLowHealthView = enemySet.CreateView(
 
 | メンバー | 説明 |
 |---------|------|
+| `Name` | `CreateView`に渡した任意の人間可読ラベル。未指定時は`null` |
 | `Count` | ビューに現在含まれるエンティティ数 |
 | `Contains(int id)` | O(1)のメンバーシップチェック |
 | `GetEnumerator()` | メンバーIDを列挙します（foreach対応） |

@@ -106,6 +106,8 @@ nav_order: 5
 |----|------|
 | Entity ID | エンティティの一意識別子（読み取り専用） |
 | (TData フィールド) | TData 構造体の各フィールドが動的に列として表示される |
+| Traits | Trait を使用している場合のみ表示。Trait ビットマスクを16進数で表示（読み取り専用） |
+| (View 名) | 登録済みの `ReactiveView` ごとに1列表示され、対象エンティティがビューに含まれるかを ✓ で表示（読み取り専用） |
 
 ### 対応する型
 
@@ -117,9 +119,15 @@ nav_order: 5
 | Vector2, Vector3 | (x, y, z) | × |
 | Quaternion | オイラー角 | × |
 | Color | (r, g, b, a) | × |
+| プリミティブ以外の値型フィールド（ネストされたstruct） | ドット区切りの列に再帰的に展開（例: `Position.X`, `Position.Y`）。最大ネスト深度は5階層 | × |
 
 {: .note }
-> Vector や Quaternion などの複合型は表示のみで、現在は編集できません。
+> Vector や Quaternion などの複合型、およびネストされたstructの展開列は表示のみで、現在は編集できません。編集はトップレベルのフィールドのみ対応しています。参照型（class）のフィールドは循環参照を避けるため展開されません。
+
+### Trait / View 列
+
+- **Traits 列**: 対象の ReactiveEntitySetSO で Trait機能（`AddTraits`/`SetTraits`など）が一度でも使用されている場合にのみ表示されます。値は生のビットマスクを16進数（例: `0x05`）で表示するMVP実装で、人間可読なTrait名へのデコードは今後の対応予定です。
+- **View 列**: `CreateView` で登録された `ReactiveView` ごとに1列追加されます。列名は `CreateView` の `name` 引数（省略時は `View #0` のような連番）が使われ、該当エンティティがそのビューに含まれていれば ✓ が表示されます。
 
 ---
 

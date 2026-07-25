@@ -39,7 +39,8 @@ Abstract base class for ScriptableObject-based actions implementing the Command 
 
 | Method | Returns | Description |
 |--------|---------|-------------|
-| `Execute(...)` | `void` | Execute the action (abstract, must override) |
+| `Execute(...)` | `void` | Execute the action (non-virtual; centralizes caller-info capture and Monitor notification, then calls `OnExecute()` internally) |
+| `OnExecute(...)` | `void` | Implements the action's actual behavior (abstract, must override) |
 
 ### Editor-only properties
 
@@ -52,8 +53,7 @@ Abstract base class for ScriptableObject-based actions implementing the Command 
 
 | Method | Returns | Description |
 |--------|---------|-------------|
-| `NotifyActionExecuted(CallerInfo)` | `void` | Notify Monitor Window of execution |
-| `LogAction(string)` | `void` | Log action execution to Console |
+| `LogAction(string)` | `void` | Log action execution to Console (call from within `OnExecute()`) |
 
 ### Editor-only events
 
@@ -71,8 +71,9 @@ Generic base class for actions that accept a parameter at execution time.
 
 | Method | Returns | Description |
 |--------|---------|-------------|
-| `Execute(T value, ...)` | `void` | Execute with parameter (abstract, must override) |
-| `Execute(...)` | `void` | Execute with default value (calls `Execute(default)`) |
+| `Execute(T value, ...)` | `void` | Execute with parameter (non-virtual; calls `OnExecute(T value)` internally) |
+| `OnExecute(T value)` | `void` | Implements the actual behavior with a parameter (abstract, must override) |
+| `Execute(...)` | `void` | Execute with default value (calls `OnExecute(default)` internally) |
 
 ---
 
@@ -96,16 +97,11 @@ public class PlaySoundAction : ActionSO
     [SerializeField] private AudioClip clip;
     [SerializeField] private float volume = 1f;
 
-    public override void Execute(
-        string callerMember = "",
-        string callerFile = "",
-        int callerLine = 0)
+    protected override void OnExecute()
     {
         AudioSource.PlayClipAtPoint(clip, Vector3.zero, volume);
 
 #if UNITY_EDITOR
-        var callerInfo = new CallerInfo(callerMember, callerFile, callerLine);
-        NotifyActionExecuted(callerInfo);
         LogAction($"Played {clip.name}");
 #endif
     }
@@ -144,16 +140,11 @@ public class SpawnAtPositionAction : ActionSO<Vector3>
     [Header("Settings")]
     [SerializeField] private GameObject prefab;
 
-    public override void Execute(Vector3 position,
-        string callerMember = "",
-        string callerFile = "",
-        int callerLine = 0)
+    protected override void OnExecute(Vector3 position)
     {
         Object.Instantiate(prefab, position, Quaternion.identity);
 
 #if UNITY_EDITOR
-        var callerInfo = new CallerInfo(callerMember, callerFile, callerLine);
-        NotifyActionExecuted(callerInfo);
         LogAction($"Spawned at {position}");
 #endif
     }
@@ -223,18 +214,17 @@ Actions integrate with the Monitor Window for real-time debugging.
 ### Console logging
 
 1. Enable `Show In Console` in Inspector
-2. Call `LogAction(string)` in your Execute method
+2. Call `LogAction(string)` in your `OnExecute` method
 3. Messages appear in Console during Play Mode
 
 ### Custom log messages
 
 ```csharp
-public override void Execute(...)
+protected override void OnExecute()
 {
     // Your logic here
 
 #if UNITY_EDITOR
-    NotifyActionExecuted(new CallerInfo(callerMember, callerFile, callerLine));
     LogAction($"Custom message with {details}");
 #endif
 }
@@ -251,19 +241,12 @@ public class SequenceAction : ActionSO
 {
     [SerializeField] private ActionSO[] actions;
 
-    public override void Execute(
-        string callerMember = "",
-        string callerFile = "",
-        int callerLine = 0)
+    protected override void OnExecute()
     {
         foreach (var action in actions)
         {
             action?.Execute();
         }
-
-#if UNITY_EDITOR
-        NotifyActionExecuted(new CallerInfo(callerMember, callerFile, callerLine));
-#endif
     }
 }
 ```
@@ -277,10 +260,7 @@ public class ConditionalAction : ActionSO
     [SerializeField] private ActionSO trueAction;
     [SerializeField] private ActionSO falseAction;
 
-    public override void Execute(
-        string callerMember = "",
-        string callerFile = "",
-        int callerLine = 0)
+    protected override void OnExecute()
     {
         if (condition != null && condition.Value)
         {
@@ -290,10 +270,6 @@ public class ConditionalAction : ActionSO
         {
             falseAction?.Execute();
         }
-
-#if UNITY_EDITOR
-        NotifyActionExecuted(new CallerInfo(callerMember, callerFile, callerLine));
-#endif
     }
 }
 ```
@@ -305,20 +281,13 @@ public class RandomAction : ActionSO
 {
     [SerializeField] private ActionSO[] actions;
 
-    public override void Execute(
-        string callerMember = "",
-        string callerFile = "",
-        int callerLine = 0)
+    protected override void OnExecute()
     {
         if (actions.Length > 0)
         {
             int index = Random.Range(0, actions.Length);
             actions[index]?.Execute();
         }
-
-#if UNITY_EDITOR
-        NotifyActionExecuted(new CallerInfo(callerMember, callerFile, callerLine));
-#endif
     }
 }
 ```
@@ -330,13 +299,12 @@ public class RandomAction : ActionSO
 ### Always wrap editor code
 
 ```csharp
-public override void Execute(...)
+protected override void OnExecute()
 {
     // Runtime logic here
 
 #if UNITY_EDITOR
-    // Monitoring and logging only in editor
-    NotifyActionExecuted(new CallerInfo(callerMember, callerFile, callerLine));
+    // Logging only in editor (Monitor notification is handled by Execute() automatically)
     LogAction("Details");
 #endif
 }

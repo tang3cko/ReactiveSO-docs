@@ -352,11 +352,12 @@ public enum ViewTrigger
 ```csharp
 public ReactiveView<TData> CreateView(
     Func<TData, bool> predicate,
-    ViewTrigger triggerOn = ViewTrigger.DataOnly
+    ViewTrigger triggerOn = ViewTrigger.DataOnly,
+    string name = null
 )
 ```
 
-Creates a view that filters entities by data only.
+Creates a view that filters entities by data only. `name` is an optional human-readable label used by editor tooling (e.g. RES Table View); it has no effect on runtime behavior.
 
 ```csharp
 var lowHealthView = enemySet.CreateView(
@@ -370,12 +371,13 @@ var lowHealthView = enemySet.CreateView(
 ```csharp
 public ReactiveView<TData> CreateView(
     Func<TData, ulong, bool> predicate,
-    ViewTrigger triggerOn,
-    ulong observedTraitMask
+    ViewTrigger triggerOn = ViewTrigger.All,
+    ulong observedTraitMask = ulong.MaxValue,
+    string name = null
 )
 ```
 
-Creates a view whose predicate also receives the entity's trait bitmask. The `observedTraitMask` tells the view which trait flags trigger re-evaluation.
+Creates a view whose predicate also receives the entity's trait bitmask. The `observedTraitMask` tells the view which trait flags trigger re-evaluation. `name` is optional, same as the data-only overload.
 
 Use `TraitMaskUtility.ToUInt64<TTraits>(flags)` to build the mask.
 
@@ -393,6 +395,7 @@ var aggroLowHealthView = enemySet.CreateView(
 
 | Member | Description |
 |--------|-------------|
+| `Name` | Optional human-readable label passed to `CreateView`, or `null` if not set |
 | `Count` | Number of entities currently in the view |
 | `Contains(int id)` | O(1) membership check |
 | `GetEnumerator()` | Enumerate member IDs (foreach compatible) |

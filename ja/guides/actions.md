@@ -95,23 +95,21 @@ public class SpawnEffectAction : ActionSO
     [SerializeField] private Vector3 offset;
     [SerializeField] private float duration = 2f;
 
-    public override void Execute(
-        string callerMember = "",
-        string callerFile = "",
-        int callerLine = 0)
+    protected override void OnExecute()
     {
         var instance = Object.Instantiate(effectPrefab);
         instance.transform.position += offset;
         Object.Destroy(instance, duration);
 
 #if UNITY_EDITOR
-        var callerInfo = new CallerInfo(callerMember, callerFile, callerLine);
-        NotifyActionExecuted(callerInfo);
         LogAction($"Spawned {effectPrefab.name}");
 #endif
     }
 }
 ```
+
+{: .note }
+> `Execute()`は非virtualで、呼び出し元情報の記録とMonitor Windowへの通知を一元管理します。派生クラスは`Execute()`をオーバーライドせず、代わりに実際の処理を行う`OnExecute()`（`ActionSO<T>`の場合は`OnExecute(T value)`）を実装します。
 
 ### ステップ2: アクションアセットを作成
 
@@ -163,17 +161,12 @@ public class DamageAction : ActionSO<int>
     [SerializeField] private GameObject damageVFX;
     [SerializeField] private AudioClip damageSound;
 
-    public override void Execute(int damage,
-        string callerMember = "",
-        string callerFile = "",
-        int callerLine = 0)
+    protected override void OnExecute(int damage)
     {
         Debug.Log($"Dealing {damage} damage");
         // ダメージロジックをここに実装
 
 #if UNITY_EDITOR
-        var callerInfo = new CallerInfo(callerMember, callerFile, callerLine);
-        NotifyActionExecuted(callerInfo);
         LogAction($"Damage: {damage}");
 #endif
     }
@@ -205,16 +198,9 @@ public class GiveItemAction : ActionSO
     [SerializeField] private ItemData item;
     [SerializeField] private int quantity = 1;
 
-    public override void Execute(
-        string callerMember = "",
-        string callerFile = "",
-        int callerLine = 0)
+    protected override void OnExecute()
     {
         InventoryManager.Instance.AddItem(item, quantity);
-
-#if UNITY_EDITOR
-        NotifyActionExecuted(new CallerInfo(callerMember, callerFile, callerLine));
-#endif
     }
 }
 ```
@@ -369,7 +355,7 @@ Reactive SOにはアクション実行を追跡するためのデバッグツー
 ### アクションが実行されない
 
 1. Inspectorでアクションアセットが割り当てられているか確認
-2. アクションの`Execute`メソッドにロジックが含まれているか確認
+2. アクションの`OnExecute`メソッドにロジックが含まれているか確認
 3. アクションを参照するだけでなく`Execute()`を呼び出しているか確認
 4. Monitor Windowで実行ログを確認
 
@@ -380,9 +366,8 @@ Reactive SOにはアクション実行を追跡するためのデバッグツー
 
 ### 呼び出し元情報が表示されない
 
-1. callerパラメータに明示的な値を渡さない
-2. `Execute`メソッドで`NotifyActionExecuted`を呼び出しているか確認
-3. アクションのInspectorで`showInMonitor`が有効になっているか確認
+1. `Execute()`に明示的な値を渡さず、呼び出し元でコンパイラに自動補完させる
+2. アクションのInspectorで`showInMonitor`が有効になっているか確認
 
 ---
 
