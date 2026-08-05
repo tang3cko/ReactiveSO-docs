@@ -36,6 +36,39 @@ All tabs provide the same functionality for their respective asset types.
 
 ---
 
+## What gets scanned
+
+Every tab scans **scenes and prefabs** for components holding a reference to its asset type.
+
+The Event Channels tab additionally scans the built-in ScriptableObject types that hold event
+channel references — `VariableSO` (`onValueChanged`), `RuntimeSetSO` (`onItemsChanged`,
+`onCountChanged`), and `ReactiveEntitySetSO` (`onItemAdded`, `onItemRemoved`, `onDataChanged`,
+`onSetChanged`, `onTraitAdded`, `onTraitRemoved`). The other tabs have no equivalent to scan,
+because no built-in type holds an action, variable, or runtime set reference.
+
+**A reference held only by your own ScriptableObject is not found.** This affects every tab
+equally. If an asset is reported as unused, check whether the only reference to it lives on a
+ScriptableObject rather than in a scene or prefab:
+
+```csharp
+// Found: the reference is on a component in a scene or prefab
+public class RewardGiver : MonoBehaviour
+{
+    [SerializeField] private ActionSO rewardAction;
+}
+
+// Not found: the reference is on a ScriptableObject
+[CreateAssetMenu(menuName = "MyGame/Quest")]
+public class QuestSO : ScriptableObject
+{
+    [SerializeField] private ActionSO rewardAction;
+}
+```
+
+Both are valid designs. The second one simply cannot be counted by the analyzer today.
+
+---
+
 ## Use cases
 
 ### Detecting unassigned fields

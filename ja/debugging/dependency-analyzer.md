@@ -36,6 +36,33 @@ Dependency Analyzerには4つのタブがあります。
 
 ---
 
+## 走査される対象
+
+どのタブも、**シーンとプレハブ**を走査して、対象のアセットタイプへの参照を持つコンポーネントを探します。
+
+Event Channels タブだけは追加で、イベントチャンネル参照を持つ組み込み ScriptableObject 型も走査します。具体的には `VariableSO`(`onValueChanged`)、`RuntimeSetSO`(`onItemsChanged` / `onCountChanged`)、`ReactiveEntitySetSO`(`onItemAdded` / `onItemRemoved` / `onDataChanged` / `onSetChanged` / `onTraitAdded` / `onTraitRemoved`)です。他のタブに同等の走査対象が無いのは、アクション・変数・ランタイムセットへの参照を持つ組み込み型が存在しないためです。
+
+**自作の ScriptableObject だけが参照を持っている場合は検出されません。** これはすべてのタブに共通します。使用されていないと報告されたアセットがある場合は、唯一の参照がシーンやプレハブではなく ScriptableObject 上にないか確認してください。
+
+```csharp
+// 検出される: 参照がシーンまたはプレハブ上のコンポーネントにある
+public class RewardGiver : MonoBehaviour
+{
+    [SerializeField] private ActionSO rewardAction;
+}
+
+// 検出されない: 参照が ScriptableObject 上にある
+[CreateAssetMenu(menuName = "MyGame/Quest")]
+public class QuestSO : ScriptableObject
+{
+    [SerializeField] private ActionSO rewardAction;
+}
+```
+
+どちらも正当な設計です。後者が現状の Dependency Analyzer では数えられない、というだけです。
+
+---
+
 ## ユースケース
 
 ### 未割り当てフィールドの検出
