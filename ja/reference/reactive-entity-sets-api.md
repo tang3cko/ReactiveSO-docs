@@ -456,6 +456,8 @@ public class LowHealthSystem : MonoBehaviour
 
 `owner.GetInstanceID()`をエンティティIDとして使用する便利なラッパーです。
 
+> **このIDはプロセスローカルです。** `GetInstanceID()`はプロセスごと・セッションごとに採番されるため、同じエンティティでもホストとクライアントで値が異なり、リロード後にも変わります。ネットワークスナップショットやセーブデータのようにプロセスの外へIDを持ち出す場合は、外部の安定したID（認証プレイヤーID、スポーンカウンタ、セーブキーなど）を用意して`int`版のコアAPIを使ってください。
+
 ### Register
 
 ```csharp
@@ -613,7 +615,7 @@ ReactiveEntitySetSOに自動登録するエンティティの基底クラスで�
 
 | プロパティ | タイプ | 説明 |
 |----------|------|-------------|
-| EntityId | `int` | このエンティティの一意なID (GetInstanceID) |
+| EntityId | `int` | このエンティティの一意なID (GetInstanceID)。**プロセスローカルなのでネットワーク越しに送らないこと** |
 | State | `TData` | セット内の状態を取得/設定 (protected) |
 | IsRegistered | `bool` | 現在登録されているかどうか (protected) |
 

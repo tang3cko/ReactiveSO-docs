@@ -460,6 +460,8 @@ public class LowHealthSystem : MonoBehaviour
 
 Convenience wrappers that use `owner.GetInstanceID()` as the entity ID.
 
+> **This ID is process-local.** `GetInstanceID()` is assigned per process and per session, so the same logical entity has a different ID on the host than on each client, and a different one again after a reload. Anything that carries an entity ID out of the process — a network snapshot, a save file — needs a stable ID from an external source (an authentication player ID, a spawn counter, a save-file key) passed to the `int`-based Core API.
+
 ### Register
 
 ```csharp
@@ -617,7 +619,7 @@ Base class for entities that auto-register to a ReactiveEntitySetSO.
 
 | Property | Type | Description |
 |----------|------|-------------|
-| EntityId | `int` | This entity's unique ID (GetInstanceID) |
+| EntityId | `int` | This entity's unique ID (GetInstanceID). **Process-local — never send it over a network** |
 | State | `TData` | Get/set state in the set (protected) |
 | IsRegistered | `bool` | Whether currently registered (protected) |
 
