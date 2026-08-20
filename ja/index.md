@@ -61,9 +61,12 @@ onPlayerDeath.OnEventRaised += HandlePlayerDeath;
 自動変更検出付きのリアクティブな共有状態。
 
 ```csharp
-// 値の変更で自動的にイベントが発火
+// Variableのイベントチャンネル経由で購読する
+// （InspectorでOnValueChangedにIntEventChannelSOを割り当てておく必要があります）
+playerHealth.OnValueChanged.OnEventRaised += UpdateHealthUI;
+
+// 異なる値を代入すると自動的にイベントが発火
 playerHealth.Value = 100;
-playerHealth.OnValueChanged += UpdateHealthUI;
 ```
 
 [Variablesの詳細]({{ '/ja/guides/variables' | relative_url }})

@@ -267,7 +267,7 @@ Where:
 ## Implementation status
 
 {: .note }
-> Views are implemented and available in v2.2.0 (unreleased).
+> Views are implemented and available in v2.2.0 (released 2026-03-14).
 
 ---
 

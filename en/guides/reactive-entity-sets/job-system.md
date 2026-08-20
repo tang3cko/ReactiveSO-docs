@@ -632,12 +632,12 @@ history.Add(snapshot);
 For a complete working example, see the **TinyHistoryDemo** sample in the package:
 
 ```
-Assets/_Project/Samples/TinyHistoryDemo/
+Assets/ReactiveSO/Samples/TinyHistoryDemo/
 ├── Scripts/
-│   ├── SimulationManager.cs    // Orchestrator usage
-│   └── MapManager.cs           // Texture rendering
+│   ├── TinyHistorySimulation.cs      // Orchestrator usage
+│   └── Rendering/MapRenderer.cs      // Texture rendering
 └── Scenes/
-    └── TinyHistoryDemo.unity
+    └── TinyHistory.unity
 ```
 
 This demo simulates 10,000 units painting territory on a map, achieving 200+ fps on modern hardware.

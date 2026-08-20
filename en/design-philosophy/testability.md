@@ -174,7 +174,7 @@ public class MockFileService : IFileService
 }
 ```
 
-This pattern is used in Reactive SO's own tests (see `EventMonitorExporterRefactoredTests`).
+Keep the interface narrow — only the operations the code under test actually calls — and let the test double record what it was asked to do, so the assertion can be made against plain fields rather than a mocking DSL.
 
 ---
 

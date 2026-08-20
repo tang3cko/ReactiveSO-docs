@@ -61,9 +61,12 @@ onPlayerDeath.OnEventRaised += HandlePlayerDeath;
 Reactive shared state with automatic change detection.
 
 ```csharp
-// Variable changes trigger events automatically
+// Subscribe through the variable's event channel
+// (requires an IntEventChannelSO assigned to OnValueChanged in the Inspector)
+playerHealth.OnValueChanged.OnEventRaised += UpdateHealthUI;
+
+// Assigning a different value raises the event automatically
 playerHealth.Value = 100;
-playerHealth.OnValueChanged += UpdateHealthUI;
 ```
 
 [Learn more about Variables]({{ '/en/guides/variables' | relative_url }})

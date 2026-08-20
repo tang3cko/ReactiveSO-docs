@@ -629,12 +629,12 @@ history.Add(snapshot);
 完全な動作例については、パッケージ内の**TinyHistoryDemo**サンプルを参照してください。
 
 ```
-Assets/_Project/Samples/TinyHistoryDemo/
+Assets/ReactiveSO/Samples/TinyHistoryDemo/
 ├── Scripts/
-│   ├── SimulationManager.cs    // Orchestratorの使用法
-│   └── MapManager.cs           // テクスチャレンダリング
+│   ├── TinyHistorySimulation.cs      // Orchestratorの使用法
+│   └── Rendering/MapRenderer.cs      // テクスチャレンダリング
 └── Scenes/
-    └── TinyHistoryDemo.unity
+    └── TinyHistory.unity
 ```
 
 このデモは10,000ユニットがマップに領土をペイントするシミュレーションで、最新ハードウェアで200fps以上を達成します。

@@ -174,7 +174,7 @@ public class MockFileService : IFileService
 }
 ```
 
-このパターンはReactive SO自体のテスト（`EventMonitorExporterRefactoredTests`参照）で使用されています。
+インターフェースはテスト対象が実際に呼び出す操作だけに絞り、テストダブル側は「何を要求されたか」を記録するようにします。こうすることで、モックライブラリのDSLではなく通常のフィールドに対してアサーションを書けます。
 
 ---
 

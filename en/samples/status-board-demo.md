@@ -8,7 +8,7 @@ nav_order: 5
 # Status Board Demo
 
 {: .warning }
-> **Experimental Feature** - This demo uses Traits and Views from v2.2.0 (unreleased). The API may change in future versions. Use in production at your own discretion.
+> **Experimental Feature** - This demo uses Traits and Views from v2.2.0. The API may change in future versions. Use in production at your own discretion.
 
 ## Overview
 
